@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -219,7 +219,18 @@ jobs:
         if: steps.next_version.outputs.skip_release != 'true'
         run: |
           next_version="${{ steps.next_version.outputs.next }}"
-          release_branch="release/v$next_version"
+          timestamp=$(date +%s)
+          release_branch="release/v$next_version-$timestamp"
+          
+          echo "Creating release branch: $release_branch"
+          
+          # Delete any existing release branch for this version (cleanup from failed runs)
+          if git ls-remote --exit-code --heads origin "release/v$next_version" >/dev/null 2>&1; then
+            echo "Deleting existing release branch: release/v$next_version"
+            git push origin --delete "release/v$next_version" || true
+          fi
+          
+          # Create and push new release branch
           git checkout -b "$release_branch"
           git commit -m "chore(release): v$next_version"
           git push origin "$release_branch"
@@ -230,6 +241,7 @@ jobs:
         id: create_pr
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const nextVersion = '${{ steps.next_version.outputs.next }}';
             const currentVersion = '${{ steps.current_version.outputs.current }}';
@@ -280,6 +292,7 @@ jobs:
         if: steps.next_version.outputs.skip_release != 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = ${{ steps.create_pr.outputs.result }};
             const nextVersion = '${{ steps.next_version.outputs.next }}';
@@ -343,9 +356,24 @@ jobs:
               sha: mergedPr.merge_commit_sha
             });
             
-            console.log(`Created tag v${nextVersion}`);
-            
-            return mergedPr.merge_commit_sha;
+                         console.log(`Created tag v${nextVersion}`);
+             
+             // Clean up the release branch after successful merge
+             const releaseBranch = process.env.release_branch;
+             if (releaseBranch) {
+               try {
+                 await github.rest.git.deleteRef({
+                   owner: context.repo.owner,
+                   repo: context.repo.repo,
+                   ref: `heads/${releaseBranch}`
+                 });
+                 console.log(`Cleaned up release branch: ${releaseBranch}`);
+               } catch (error) {
+                 console.log(`Could not delete release branch (this is ok): ${error.message}`);
+               }
+             }
+             
+             return mergedPr.merge_commit_sha;
 
       - name: Extract changelog for release
         if: steps.next_version.outputs.skip_release != 'true'
@@ -391,6 +419,7 @@ jobs:
         if: steps.next_version.outputs.skip_release != 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { data: release } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
