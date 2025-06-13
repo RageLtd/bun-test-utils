@@ -51,7 +51,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5",
-    "@commitlint/cli": "^18.4.3",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^18.4.3",
     "commitizen": "^4.3.0",
     "conventional-changelog-cli": "^4.1.0",
