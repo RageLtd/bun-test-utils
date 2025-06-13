@@ -6,6 +6,12 @@ on:
   pull_request_target:
     branches: [main]
     types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to run tests for'
+        required: false
+        type: string
 
 permissions:
   contents: read
