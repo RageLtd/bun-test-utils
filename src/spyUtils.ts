@@ -12,8 +12,8 @@ import { spyOn } from "bun:test";
  * @returns The spy function
  */
 export function createSpy<T extends Record<string, unknown>, K extends keyof T>(
-	object: T,
-	methodName: K,
+  object: T,
+  methodName: K,
 ): ReturnType<typeof spyOn> {
-	return spyOn(object, methodName);
-} 
+  return spyOn(object, methodName);
+}

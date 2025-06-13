@@ -12,7 +12,7 @@ import { mock } from "bun:test";
  * @returns Mock hook function
  */
 export function createMockHook<T>(hookName: string, returnValue: T) {
-	const mockFn = mock(() => returnValue);
-	// Note: mockName is not available in bun:test, but we can still return a functional mock
-	return mockFn;
-} 
+  const mockFn = mock(() => returnValue);
+  // Note: mockName is not available in bun:test, but we can still return a functional mock
+  return mockFn;
+}

@@ -10,11 +10,11 @@
  * @returns Partial mock object
  */
 export function createPartialMock<T>(
-	original?: Partial<T>,
-	overrides?: Partial<T>,
+  original?: Partial<T>,
+  overrides?: Partial<T>,
 ): T {
-	return {
-		...original,
-		...overrides,
-	} as T;
-} 
+  return {
+    ...original,
+    ...overrides,
+  } as T;
+}
