@@ -1,0 +1,42 @@
+{
+  "name": "bun-test-utils",
+  "version": "1.0.0",
+  "description": "A collection of test utilities for Bun projects",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun run build:clean && bun run build:esm && bun run build:cjs && bun run build:types",
+    "build:clean": "rm -rf dist",
+    "build:esm": "bun build index.ts --outdir dist --format esm --minify --target bun",
+    "build:cjs": "bun build index.ts --outfile dist/index.cjs --format cjs --minify --target bun",
+    "build:types": "tsc --project tsconfig.build.json",
+    "build:watch": "bun run build:types --watch",
+    "dev": "bun run build:watch",
+    "test:build": "bun run build && echo 'Testing CJS:' && node -e \"console.log(Object.keys(require('./dist/index.cjs')))\" && echo 'Testing ESM:' && node --input-type=module -e \"import('./dist/index.js').then(m => console.log(Object.keys(m)))\"",
+    "prepublishOnly": "bun run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "keywords": [
+    "bun",
+    "testing",
+    "test-utils",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT"
+}
