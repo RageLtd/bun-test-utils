@@ -278,14 +278,6 @@ jobs:
             
             console.log('Created release PR:', pr.html_url);
             
-            // Set PR to enable auto-merge
-            await github.rest.pulls.createReviewRequest({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pr.number,
-              team_reviewers: []
-            });
-            
             return pr.number;
 
       - name: Wait for status checks and auto-merge
