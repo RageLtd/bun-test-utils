@@ -1,6 +1,6 @@
 {
   "name": "@rageltd/bun-test-utils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A collection of test utilities for Bun projects",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -13,7 +13,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "bun run build:clean && bun run build:esm && bun run build:cjs && bun run build:types",
     "build:clean": "rm -rf dist",
