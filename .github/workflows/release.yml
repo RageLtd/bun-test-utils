@@ -25,12 +25,22 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Validate NPM Token
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "❌ NPM_TOKEN secret is not set. Cannot proceed with release."
+            echo "Please add NPM_TOKEN to your repository secrets before creating a release."
+            exit 1
+          else
+            echo "✅ NPM_TOKEN is set. Release can proceed."
+          fi
 
       - name: Configure Git
         run: |
@@ -157,34 +167,27 @@ jobs:
           } >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v7
         with:
-          tag_name: v${{ steps.next_version.outputs.next }}
-          release_name: Release v${{ steps.next_version.outputs.next }}
-          body: |
-            ## What's Changed
+          script: |
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'v${{ steps.next_version.outputs.next }}',
+              name: 'Release v${{ steps.next_version.outputs.next }}',
+              body: `## What's Changed
             
             ${{ steps.changelog.outputs.content }}
             
-            **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.current_version.outputs.current }}...v${{ steps.next_version.outputs.next }}
-          draft: false
-          prerelease: false
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.current_version.outputs.current }}...v${{ steps.next_version.outputs.next }}`,
+              draft: false,
+              prerelease: false
+            });
+            console.log('Created release:', release.html_url);
 
-      - name: Publish to GitHub Package Registry
+      - name: Publishing Info
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-          echo "@rageltd:registry=https://npm.pkg.github.com" >> ~/.npmrc
-          bun publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to npm
-        if: env.NPM_TOKEN != ''
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          bun publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          echo "🚀 Release created successfully!"
+          echo "📦 Package will be published automatically by the 'Publish Package' workflow"
+          echo "🔗 GitHub Package Registry: Always published"
+          echo "📡 npm Registry: Published if NPM_TOKEN secret is configured" 
