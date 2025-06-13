@@ -8,6 +8,8 @@ on:
         required: true
         default: 'patch'
         type: string
+  push:
+    branches: [main]
 
 permissions:
   contents: write
@@ -53,11 +55,98 @@ jobs:
           current_version=$(node -p "require('./package.json').version")
           echo "current=$current_version" >> $GITHUB_OUTPUT
 
+      - name: Analyze commits for version bump
+        id: analyze_commits
+        run: |
+          # Get the latest tag (last release)
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          if [ -z "$latest_tag" ]; then
+            echo "No previous tags found - this will be the first release"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
+            echo "📦 First release - defaulting to minor version bump"
+            exit 0
+          fi
+          
+          echo "Latest tag: $latest_tag"
+          echo "Analyzing commits since $latest_tag..."
+          
+          # Get commits since last tag
+          commits=$(git log --oneline --pretty=format:"%s" "$latest_tag"..HEAD)
+          
+          if [ -z "$commits" ]; then
+            echo "No new commits since last release"
+            echo "bump_type=none" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "New commits:"
+          echo "$commits"
+          
+          # Initialize flags
+          has_breaking=false
+          has_feat=false
+          has_fix=false
+          
+          # Analyze each commit
+          while IFS= read -r commit; do
+            echo "Analyzing: $commit"
+            
+            # Check for breaking changes
+            if [[ "$commit" =~ BREAKING[[:space:]]CHANGE ]] || [[ "$commit" =~ ^[^:]+!: ]]; then
+              echo "  → Breaking change detected"
+              has_breaking=true
+            fi
+            
+            # Check for features
+            if [[ "$commit" =~ ^feat(\(.+\))?: ]]; then
+              echo "  → Feature detected"
+              has_feat=true
+            fi
+            
+            # Check for fixes
+            if [[ "$commit" =~ ^fix(\(.+\))?: ]]; then
+              echo "  → Fix detected"
+              has_fix=true
+            fi
+          done <<< "$commits"
+          
+          # Determine version bump
+          if [ "$has_breaking" = true ]; then
+            echo "bump_type=major" >> $GITHUB_OUTPUT
+            echo "🚨 MAJOR version bump (breaking changes detected)"
+          elif [ "$has_feat" = true ]; then
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
+            echo "✨ MINOR version bump (new features detected)"
+          elif [ "$has_fix" = true ]; then
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
+            echo "🐛 PATCH version bump (bug fixes detected)"
+          else
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
+            echo "📝 PATCH version bump (other changes detected)"
+          fi
+
       - name: Determine next version
         id: next_version
         run: |
           input_version="${{ github.event.inputs.version }}"
           current_version="${{ steps.current_version.outputs.current }}"
+          
+          # If triggered by push to main (automatic), use analyzed version bump
+          if [ "${{ github.event_name }}" = "push" ]; then
+            analyzed_bump="${{ steps.analyze_commits.outputs.bump_type }}"
+            
+            if [ "$analyzed_bump" = "none" ]; then
+              echo "No new commits since last release - skipping release"
+              echo "skip_release=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            
+            input_version="$analyzed_bump"
+            echo "🔄 Automatic release triggered - using $analyzed_bump version bump based on commit analysis"
+          fi
+          
+          echo "skip_release=false" >> $GITHUB_OUTPUT
           
           if [[ "$input_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             # Explicit version provided
@@ -88,13 +177,22 @@ jobs:
           echo "next=$next_version" >> $GITHUB_OUTPUT
           echo "Next version will be: $next_version"
 
+      - name: Skip release if no changes
+        if: steps.next_version.outputs.skip_release == 'true'
+        run: |
+          echo "🚫 No new commits since last release - skipping release process"
+          exit 0
+
       - name: Run tests
+        if: steps.next_version.outputs.skip_release != 'true'
         run: bun test
 
       - name: Build package
+        if: steps.next_version.outputs.skip_release != 'true'
         run: bun run build
 
       - name: Generate changelog
+        if: steps.next_version.outputs.skip_release != 'true'
         run: |
           # Initialize changelog if it doesn't exist
           if [ ! -f CHANGELOG.md ]; then
@@ -104,6 +202,7 @@ jobs:
           fi
 
       - name: Update package version
+        if: steps.next_version.outputs.skip_release != 'true'
         run: |
           next_version="${{ steps.next_version.outputs.next }}"
           # Update package.json version
@@ -117,17 +216,20 @@ jobs:
           git add package.json CHANGELOG.md
 
       - name: Create release commit
+        if: steps.next_version.outputs.skip_release != 'true'
         run: |
           next_version="${{ steps.next_version.outputs.next }}"
           git commit -m "chore(release): v$next_version"
           git tag "v$next_version"
 
       - name: Push changes
+        if: steps.next_version.outputs.skip_release != 'true'
         run: |
           git push origin main
           git push origin --tags
 
       - name: Extract changelog for release
+        if: steps.next_version.outputs.skip_release != 'true'
         id: changelog
         run: |
           next_version="${{ steps.next_version.outputs.next }}"
@@ -167,6 +269,7 @@ jobs:
           } >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
+        if: steps.next_version.outputs.skip_release != 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -186,6 +289,7 @@ jobs:
             console.log('Created release:', release.html_url);
 
       - name: Publishing Info
+        if: steps.next_version.outputs.skip_release != 'true'
         run: |
           echo "🚀 Release created successfully!"
           echo "📦 Package will be published automatically by the 'Publish Package' workflow"
