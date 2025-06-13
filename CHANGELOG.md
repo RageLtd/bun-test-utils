@@ -1,3 +1,20 @@
+## 1.0.0 (2025-06-13)
+
+* chore: fix build:test script ([b43bc1d](https://github.com/rageltd/bun-test-utils/commit/b43bc1d))
+* chore: fix release for real this time (#11) ([e69f74a](https://github.com/rageltd/bun-test-utils/commit/e69f74a)), closes [#11](https://github.com/rageltd/bun-test-utils/issues/11)
+* chore: fix release for real this time (#13) ([796a315](https://github.com/rageltd/bun-test-utils/commit/796a315)), closes [#13](https://github.com/rageltd/bun-test-utils/issues/13)
+* chore: fix release for real this time (#15) ([65d086a](https://github.com/rageltd/bun-test-utils/commit/65d086a)), closes [#15](https://github.com/rageltd/bun-test-utils/issues/15)
+* chore: fix release workflow (#10) ([d8b2a50](https://github.com/rageltd/bun-test-utils/commit/d8b2a50)), closes [#10](https://github.com/rageltd/bun-test-utils/issues/10)
+* chore: make the release workflow run automatically (#9) ([6c05fa7](https://github.com/rageltd/bun-test-utils/commit/6c05fa7)), closes [#9](https://github.com/rageltd/bun-test-utils/issues/9)
+* chore: release workflow fixes (#8) ([e40f640](https://github.com/rageltd/bun-test-utils/commit/e40f640)), closes [#8](https://github.com/rageltd/bun-test-utils/issues/8)
+* chore: set up workflows, script git hooks ([4654f1f](https://github.com/rageltd/bun-test-utils/commit/4654f1f))
+* chore: update deps (#7) ([bde56a1](https://github.com/rageltd/bun-test-utils/commit/bde56a1)), closes [#7](https://github.com/rageltd/bun-test-utils/issues/7)
+* test: suppress error in moduleMocker ([cdf7be8](https://github.com/rageltd/bun-test-utils/commit/cdf7be8))
+* Initial commit ([821e911](https://github.com/rageltd/bun-test-utils/commit/821e911))
+* Initial commit ([916210c](https://github.com/rageltd/bun-test-utils/commit/916210c))
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
