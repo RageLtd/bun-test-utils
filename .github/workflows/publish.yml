@@ -1,8 +1,6 @@
-name: Test and Publish
+name: Publish Package
 
 on:
-  push:
-    branches: [main]
   release:
     types: [published]
 
@@ -11,7 +9,7 @@ permissions:
   packages: write
 
 jobs:
-  test-and-publish:
+  publish:
     runs-on: ubuntu-latest
     
     steps:
@@ -43,8 +41,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish to npm (on release only)
-        if: github.event_name == 'release'
+      - name: Validate NPM Token
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "❌ NPM_TOKEN secret is not set. Cannot publish to npm."
+            echo "Please add NPM_TOKEN to your repository secrets."
+            exit 1
+          else
+            echo "✅ NPM_TOKEN is set. Proceeding with npm publish."
+          fi
+
+      - name: Publish to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           bun publish --access public
