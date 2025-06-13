@@ -215,18 +215,137 @@ jobs:
           # Stage the changes
           git add package.json CHANGELOG.md
 
-      - name: Create release commit
+      - name: Create release branch
         if: steps.next_version.outputs.skip_release != 'true'
         run: |
           next_version="${{ steps.next_version.outputs.next }}"
+          release_branch="release/v$next_version"
+          git checkout -b "$release_branch"
           git commit -m "chore(release): v$next_version"
-          git tag "v$next_version"
+          git push origin "$release_branch"
+          echo "release_branch=$release_branch" >> $GITHUB_ENV
 
-      - name: Push changes
+      - name: Create Release Pull Request
         if: steps.next_version.outputs.skip_release != 'true'
-        run: |
-          git push origin main
-          git push origin --tags
+        id: create_pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const nextVersion = '${{ steps.next_version.outputs.next }}';
+            const currentVersion = '${{ steps.current_version.outputs.current }}';
+            const releaseBranch = process.env.release_branch;
+            
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚀 Release v${nextVersion}`,
+              head: releaseBranch,
+              base: 'main',
+              body: `## Release v${nextVersion}
+
+            This is an automated release pull request.
+
+            ### Changes
+            - Updated version from \`${currentVersion}\` to \`${nextVersion}\`
+            - Updated CHANGELOG.md with latest changes
+
+            ### Version Bump Analysis
+            ${{ steps.analyze_commits.outputs.bump_type == 'major' && '🚨 **MAJOR**: Breaking changes detected' || 
+               steps.analyze_commits.outputs.bump_type == 'minor' && '✨ **MINOR**: New features added' || 
+               '🐛 **PATCH**: Bug fixes and improvements' }}
+
+            ### What's Next
+            - ⏳ Waiting for required status checks to pass
+            - 🔄 Will be auto-merged once checks are complete  
+            - 🏷️ Git tag will be created after merge
+            - 📦 Package will be published automatically
+
+            ---
+            *This PR was created automatically by the release workflow*`
+            });
+            
+            console.log('Created release PR:', pr.html_url);
+            
+            // Set PR to enable auto-merge
+            await github.rest.pulls.createReviewRequest({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              team_reviewers: []
+            });
+            
+            return pr.number;
+
+      - name: Wait for status checks and auto-merge
+        if: steps.next_version.outputs.skip_release != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ steps.create_pr.outputs.result }};
+            const nextVersion = '${{ steps.next_version.outputs.next }}';
+            
+            console.log(`Waiting for status checks on PR #${prNumber}...`);
+            
+            // Wait for status checks to complete
+            let checks_complete = false;
+            let attempts = 0;
+            const max_attempts = 30; // 15 minutes max
+            
+            while (!checks_complete && attempts < max_attempts) {
+              attempts++;
+              
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              });
+              
+              console.log(`Attempt ${attempts}: Checking PR status...`);
+              
+              // Check if PR is mergeable
+              if (pr.mergeable === true && pr.mergeable_state === 'clean') {
+                console.log('PR is ready to merge!');
+                checks_complete = true;
+              } else {
+                console.log(`PR not ready: mergeable=${pr.mergeable}, mergeable_state=${pr.mergeable_state}`);
+                await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds
+              }
+            }
+            
+            if (!checks_complete) {
+              throw new Error('Status checks did not pass within the timeout period');
+            }
+            
+            // Merge the PR
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              merge_method: 'squash',
+              commit_title: `chore(release): v${nextVersion}`,
+              commit_message: `Release version ${nextVersion}\n\nAuto-merged by release workflow`
+            });
+            
+            console.log('Successfully merged release PR');
+            
+            // Create the git tag on the merged commit
+            // Get the merged commit SHA
+            const { data: mergedPr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+            
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${nextVersion}`,
+              sha: mergedPr.merge_commit_sha
+            });
+            
+            console.log(`Created tag v${nextVersion}`);
+            
+            return mergedPr.merge_commit_sha;
 
       - name: Extract changelog for release
         if: steps.next_version.outputs.skip_release != 'true'
