@@ -14,23 +14,23 @@ import { mock } from "bun:test";
  * @returns Mock GraphQL hook
  */
 export function createMockGraphQLHook(
-	operationName: string,
-	mockData: unknown = null,
-	loading = false,
-	error: Error | null = null,
+  operationName: string,
+  mockData: unknown = null,
+  loading = false,
+  error: Error | null = null,
 ) {
-	const executeFn = mock(() => Promise.resolve({ data: mockData }));
-	const hookResult = {
-		loading,
-		error,
-		data: mockData,
-		refetch: mock(() => Promise.resolve({ data: mockData })),
-		fetchMore: mock(),
-		networkStatus: 7,
-		called: !loading,
-	};
+  const executeFn = mock(() => Promise.resolve({ data: mockData }));
+  const hookResult = {
+    loading,
+    error,
+    data: mockData,
+    refetch: mock(() => Promise.resolve({ data: mockData })),
+    fetchMore: mock(),
+    networkStatus: 7,
+    called: !loading,
+  };
 
-	// For lazy queries, return [executeFn, hookResult]
-	// For regular queries, return hookResult
-	return operationName.includes("Lazy") ? [executeFn, hookResult] : hookResult;
-} 
+  // For lazy queries, return [executeFn, hookResult]
+  // For regular queries, return hookResult
+  return operationName.includes("Lazy") ? [executeFn, hookResult] : hookResult;
+}

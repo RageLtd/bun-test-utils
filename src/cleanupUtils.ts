@@ -10,10 +10,10 @@ import { createModuleMocker } from "./moduleMocker";
  * This should be called once per test file
  */
 export function setupTestCleanup(): void {
-	afterEach(() => {
-		// Standard cleanup
-		mock.restore();
-	});
+  afterEach(() => {
+    // Standard cleanup
+    mock.restore();
+  });
 }
 
 /**
@@ -22,11 +22,11 @@ export function setupTestCleanup(): void {
  * @param testSuiteFn - Function that contains the test suite
  */
 export function withMockCleanup(testSuiteFn: () => void): void {
-	const mockModules = createModuleMocker();
+  const mockModules = createModuleMocker();
 
-	afterAll(() => {
-		mockModules.restoreAll();
-	});
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
 
-	testSuiteFn();
-} 
+  testSuiteFn();
+}

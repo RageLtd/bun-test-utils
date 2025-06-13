@@ -11,7 +11,7 @@ import { mock } from "bun:test";
  * @returns Mock function
  */
 export function createMock<T extends (...args: unknown[]) => unknown>(
-	implementation?: T,
+  implementation?: T,
 ): ReturnType<typeof mock> {
-	return implementation ? mock(implementation) : mock();
-} 
+  return implementation ? mock(implementation) : mock();
+}

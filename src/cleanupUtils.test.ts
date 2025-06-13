@@ -2,41 +2,41 @@ import { describe, it, expect, beforeEach, afterEach, mock } from "bun:test";
 import { setupTestCleanup, withMockCleanup } from "./cleanupUtils";
 
 describe("cleanupUtils", () => {
-	beforeEach(() => {
-		mock.restore();
-	});
+  beforeEach(() => {
+    mock.restore();
+  });
 
-	afterEach(() => {
-		mock.restore();
-	});
+  afterEach(() => {
+    mock.restore();
+  });
 
-	describe("setupTestCleanup", () => {
-		it("should setup cleanup without throwing", () => {
-			expect.assertions(1);
+  describe("setupTestCleanup", () => {
+    it("should setup cleanup without throwing", () => {
+      expect.assertions(1);
 
-			expect(() => setupTestCleanup()).not.toThrow();
-		});
-	});
+      expect(() => setupTestCleanup()).not.toThrow();
+    });
+  });
 
-	describe("withMockCleanup", () => {
-		it("should execute test suite function", () => {
-			expect.assertions(1);
+  describe("withMockCleanup", () => {
+    it("should execute test suite function", () => {
+      expect.assertions(1);
 
-			const testSuiteFn = mock(() => {});
+      const testSuiteFn = mock(() => {});
 
-			withMockCleanup(testSuiteFn);
+      withMockCleanup(testSuiteFn);
 
-			expect(testSuiteFn).toHaveBeenCalledTimes(1);
-		});
+      expect(testSuiteFn).toHaveBeenCalledTimes(1);
+    });
 
-		it("should handle test suite function that throws", () => {
-			expect.assertions(1);
+    it("should handle test suite function that throws", () => {
+      expect.assertions(1);
 
-			const testSuiteFn = () => {
-				throw new Error("Test error");
-			};
+      const testSuiteFn = () => {
+        throw new Error("Test error");
+      };
 
-			expect(() => withMockCleanup(testSuiteFn)).toThrow("Test error");
-		});
-	});
-}); 
+      expect(() => withMockCleanup(testSuiteFn)).toThrow("Test error");
+    });
+  });
+});

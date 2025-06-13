@@ -10,9 +10,9 @@
  * @returns Mock React component
  */
 export function createMockComponent(componentName: string) {
-	return function MockComponent(props: Record<string, unknown>) {
-		return `<${componentName} data-testid="mock-${componentName.toLowerCase()}" ${
-			props.children ? `>${props.children}</${componentName}>` : "/>"
-		}`;
-	};
-} 
+  return function MockComponent(props: Record<string, unknown>) {
+    return `<${componentName} data-testid="mock-${componentName.toLowerCase()}" ${
+      props.children ? `>${props.children}</${componentName}>` : "/>"
+    }`;
+  };
+}

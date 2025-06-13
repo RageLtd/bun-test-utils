@@ -1,93 +1,107 @@
-import { describe, it, expect, beforeEach, afterEach, mock, spyOn } from "bun:test";
-import { createModuleMocker, restoreModules, clearMockRegistry } from "./moduleMocker";
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
+  createModuleMocker,
+  restoreModules,
+  clearMockRegistry,
+} from "./moduleMocker";
 
 describe("moduleMocker", () => {
-	beforeEach(() => {
-		mock.restore();
-		clearMockRegistry();
-	});
+  beforeEach(() => {
+    mock.restore();
+    clearMockRegistry();
+  });
 
-	afterEach(() => {
-		mock.restore();
-		clearMockRegistry();
-	});
+  afterEach(() => {
+    mock.restore();
+    clearMockRegistry();
+  });
 
-	describe("createModuleMocker", () => {
-		it("should create a module mocker with mock, restore, and restoreAll methods", () => {
-			expect.assertions(3);
+  describe("createModuleMocker", () => {
+    it("should create a module mocker with mock, restore, and restoreAll methods", () => {
+      expect.assertions(3);
 
-			const moduleMocker = createModuleMocker();
+      const moduleMocker = createModuleMocker();
 
-			expect(typeof moduleMocker.mock).toBe("function");
-			expect(typeof moduleMocker.restore).toBe("function");
-			expect(typeof moduleMocker.restoreAll).toBe("function");
-		});
+      expect(typeof moduleMocker.mock).toBe("function");
+      expect(typeof moduleMocker.restore).toBe("function");
+      expect(typeof moduleMocker.restoreAll).toBe("function");
+    });
 
-		it("should handle module mocking", async () => {
-			expect.assertions(1);
+    it("should handle module mocking", async () => {
+      expect.assertions(1);
 
-			// Mock console.warn to suppress expected error for non-existent module
-			const consoleWarnSpy = spyOn(console, "warn").mockImplementation(() => {});
+      // Mock console.warn to suppress expected error for non-existent module
+      const consoleWarnSpy = spyOn(console, "warn").mockImplementation(
+        () => {},
+      );
 
-			const moduleMocker = createModuleMocker();
-			const mockImplementation = () => ({ mockValue: "test" });
+      const moduleMocker = createModuleMocker();
+      const mockImplementation = () => ({ mockValue: "test" });
 
-			// This should not throw
-			await expect(
-				moduleMocker.mock("non-existent-module", mockImplementation)
-			).resolves.toBeUndefined();
+      // This should not throw
+      await expect(
+        moduleMocker.mock("non-existent-module", mockImplementation),
+      ).resolves.toBeUndefined();
 
-			// Restore console.warn
-			consoleWarnSpy.mockRestore();
-		});
+      // Restore console.warn
+      consoleWarnSpy.mockRestore();
+    });
 
-		it("should clean up all mocks when restoreAll is called", () => {
-			expect.assertions(1);
+    it("should clean up all mocks when restoreAll is called", () => {
+      expect.assertions(1);
 
-			const moduleMocker = createModuleMocker();
-			
-			// This should not throw
-			expect(() => moduleMocker.restoreAll()).not.toThrow();
-		});
-	});
+      const moduleMocker = createModuleMocker();
 
-	describe("restoreModules", () => {
-		it("should restore modules from a modules map", () => {
-			expect.assertions(1);
+      // This should not throw
+      expect(() => moduleMocker.restoreAll()).not.toThrow();
+    });
+  });
 
-			const modulesMap = {
-				"test-module": { original: true },
-				"another-module": { value: 42 },
-			};
+  describe("restoreModules", () => {
+    it("should restore modules from a modules map", () => {
+      expect.assertions(1);
 
-			// This should not throw
-			expect(() => restoreModules(modulesMap)).not.toThrow();
-		});
+      const modulesMap = {
+        "test-module": { original: true },
+        "another-module": { value: 42 },
+      };
 
-		it("should handle empty modules map", () => {
-			expect.assertions(1);
+      // This should not throw
+      expect(() => restoreModules(modulesMap)).not.toThrow();
+    });
 
-			expect(() => restoreModules({})).not.toThrow();
-		});
+    it("should handle empty modules map", () => {
+      expect.assertions(1);
 
-		it("should handle null/undefined values in modules map", () => {
-			expect.assertions(1);
+      expect(() => restoreModules({})).not.toThrow();
+    });
 
-			const modulesMap = {
-				"valid-module": { test: true },
-				"null-module": null,
-				"undefined-module": undefined,
-			};
+    it("should handle null/undefined values in modules map", () => {
+      expect.assertions(1);
 
-			expect(() => restoreModules(modulesMap)).not.toThrow();
-		});
-	});
+      const modulesMap = {
+        "valid-module": { test: true },
+        "null-module": null,
+        "undefined-module": undefined,
+      };
 
-	describe("clearMockRegistry", () => {
-		it("should clear the mock registry without throwing", () => {
-			expect.assertions(1);
+      expect(() => restoreModules(modulesMap)).not.toThrow();
+    });
+  });
 
-			expect(() => clearMockRegistry()).not.toThrow();
-		});
-	});
-}); 
+  describe("clearMockRegistry", () => {
+    it("should clear the mock registry without throwing", () => {
+      expect.assertions(1);
+
+      expect(() => clearMockRegistry()).not.toThrow();
+    });
+  });
+});
