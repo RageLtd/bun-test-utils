@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, mock } from "bun:test";
+import { describe, it, expect, beforeEach, afterEach, mock, spyOn } from "bun:test";
 import { createModuleMocker, restoreModules, clearMockRegistry } from "./moduleMocker";
 
 describe("moduleMocker", () => {
@@ -26,6 +26,9 @@ describe("moduleMocker", () => {
 		it("should handle module mocking", async () => {
 			expect.assertions(1);
 
+			// Mock console.warn to suppress expected error for non-existent module
+			const consoleWarnSpy = spyOn(console, "warn").mockImplementation(() => {});
+
 			const moduleMocker = createModuleMocker();
 			const mockImplementation = () => ({ mockValue: "test" });
 
@@ -33,6 +36,9 @@ describe("moduleMocker", () => {
 			await expect(
 				moduleMocker.mock("non-existent-module", mockImplementation)
 			).resolves.toBeUndefined();
+
+			// Restore console.warn
+			consoleWarnSpy.mockRestore();
 		});
 
 		it("should clean up all mocks when restoreAll is called", () => {
