@@ -3,6 +3,9 @@ name: Pull Request Tests
 on:
   pull_request:
     branches: [main]
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize]
 
 permissions:
   contents: read
@@ -15,9 +18,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # For pull_request_target, checkout the PR head
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
@@ -62,9 +68,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # For pull_request_target, checkout the PR head
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: Setup Bun ${{ matrix.bun-version }}
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ matrix.bun-version }}
 
