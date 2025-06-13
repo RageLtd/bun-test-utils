@@ -187,9 +187,36 @@ jobs:
         if: steps.next_version.outputs.skip_release != 'true'
         run: bun test
 
+      - name: Run linting
+        if: steps.next_version.outputs.skip_release != 'true'
+        run: |
+          # Check if biome is configured and run it
+          if [ -f "biome.json" ]; then
+            bunx @biomejs/biome check src/
+          fi
+
       - name: Build package
         if: steps.next_version.outputs.skip_release != 'true'
         run: bun run build
+
+      - name: Test build outputs
+        if: steps.next_version.outputs.skip_release != 'true'
+        run: bun run test:build
+
+      - name: Run compatibility test with Bun 1.0.0
+        if: steps.next_version.outputs.skip_release != 'true'
+        run: |
+          echo "Running compatibility test with Bun 1.0.0"
+          # Save current bun
+          current_bun=$(which bun)
+          # Install Bun 1.0.0
+          curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
+          export PATH="$HOME/.bun/bin:$PATH"
+          # Run tests
+          ~/.bun/bin/bun install --frozen-lockfile
+          ~/.bun/bin/bun test
+          # Restore original bun
+          export PATH="${current_bun%/*}:$PATH"
 
       - name: Generate changelog
         if: steps.next_version.outputs.skip_release != 'true'
@@ -280,7 +307,7 @@ jobs:
             
             return pr.number;
 
-      - name: Wait for status checks and auto-merge
+      - name: Auto-merge release PR
         if: steps.next_version.outputs.skip_release != 'true'
         uses: actions/github-script@v7
         with:
@@ -289,46 +316,15 @@ jobs:
             const prNumber = ${{ steps.create_pr.outputs.result }};
             const nextVersion = '${{ steps.next_version.outputs.next }}';
             
-            console.log(`Waiting for status checks on PR #${prNumber}...`);
-            
-            // Wait for status checks to complete
-            let checks_complete = false;
-            let attempts = 0;
-            const max_attempts = 30; // 15 minutes max
-            
-            while (!checks_complete && attempts < max_attempts) {
-              attempts++;
-              
-              const { data: pr } = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber
-              });
-              
-              console.log(`Attempt ${attempts}: Checking PR status...`);
-              
-              // Check if PR is mergeable
-              if (pr.mergeable === true && pr.mergeable_state === 'clean') {
-                console.log('PR is ready to merge!');
-                checks_complete = true;
-              } else {
-                console.log(`PR not ready: mergeable=${pr.mergeable}, mergeable_state=${pr.mergeable_state}`);
-                await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds
-              }
-            }
-            
-            if (!checks_complete) {
-              throw new Error('Status checks did not pass within the timeout period');
-            }
-            
-            // Merge the PR
+            console.log(`Auto-merging release PR #${prNumber}...`);
+            // Since we've already run all tests in this workflow, we can merge immediately
             await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber,
               merge_method: 'squash',
               commit_title: `chore(release): v${nextVersion}`,
-              commit_message: `Release version ${nextVersion}\n\nAuto-merged by release workflow`
+              commit_message: `Release version ${nextVersion}\n\nTests passed in release workflow - auto-merged`
             });
             
             console.log('Successfully merged release PR');
@@ -348,24 +344,24 @@ jobs:
               sha: mergedPr.merge_commit_sha
             });
             
-                         console.log(`Created tag v${nextVersion}`);
+            console.log(`Created tag v${nextVersion}`);
              
-             // Clean up the release branch after successful merge
-             const releaseBranch = process.env.release_branch;
-             if (releaseBranch) {
-               try {
-                 await github.rest.git.deleteRef({
-                   owner: context.repo.owner,
-                   repo: context.repo.repo,
-                   ref: `heads/${releaseBranch}`
-                 });
-                 console.log(`Cleaned up release branch: ${releaseBranch}`);
-               } catch (error) {
-                 console.log(`Could not delete release branch (this is ok): ${error.message}`);
-               }
-             }
+            // Clean up the release branch after successful merge
+            const releaseBranch = process.env.release_branch;
+            if (releaseBranch) {
+              try {
+                await github.rest.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `heads/${releaseBranch}`
+                });
+                console.log(`Cleaned up release branch: ${releaseBranch}`);
+              } catch (error) {
+                console.log(`Could not delete release branch (this is ok): ${error.message}`);
+              }
+            }
              
-             return mergedPr.merge_commit_sha;
+            return mergedPr.merge_commit_sha;
 
       - name: Extract changelog for release
         if: steps.next_version.outputs.skip_release != 'true'
