@@ -1,16 +1,16 @@
 import {
-  describe,
-  it,
-  expect,
-  beforeEach,
   afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
   mock,
   spyOn,
 } from "bun:test";
 import {
+  clearMockRegistry,
   createModuleMocker,
   restoreModules,
-  clearMockRegistry,
 } from "./moduleMocker";
 
 describe("moduleMocker", () => {
