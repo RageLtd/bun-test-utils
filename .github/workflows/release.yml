@@ -291,6 +291,10 @@ jobs:
             
             console.log(`Waiting for status checks on PR #${prNumber}...`);
             
+            // Give PR workflows time to be triggered
+            console.log('Waiting 60 seconds for PR workflows to start...');
+            await new Promise(resolve => setTimeout(resolve, 60000));
+            
             // Wait for status checks to complete
             let checks_complete = false;
             let attempts = 0;
