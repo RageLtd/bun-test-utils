@@ -1,11 +1,27 @@
-# bun-test-utils
+# @rageltd/bun-test-utils
+
+![Tests](https://github.com/rageltd/bun-test-utils/workflows/Pull%20Request%20Tests/badge.svg)
+![Publish](https://github.com/rageltd/bun-test-utils/workflows/Test%20and%20Publish/badge.svg)
+![npm](https://img.shields.io/npm/v/@rageltd/bun-test-utils)
 
 A collection of test utilities for Bun projects, designed to work around common issues with `bun:test` mocking and provide helpful testing patterns.
 
 ## Installation
 
+### From npm
+
 ```bash
-bun install bun-test-utils
+bun install @rageltd/bun-test-utils
+```
+
+### From GitHub Package Registry
+
+```bash
+# Configure npm to use GitHub Package Registry for this scope
+echo "@rageltd:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
+# Install the package
+bun install @rageltd/bun-test-utils
 ```
 
 ## Usage
@@ -13,7 +29,7 @@ bun install bun-test-utils
 ### In TypeScript Projects
 
 ```typescript
-import { createMockHook, createModuleMocker, waitFor } from 'bun-test-utils';
+import { createMockHook, createModuleMocker, waitFor } from '@rageltd/bun-test-utils';
 
 // Create mock hooks
 const mockUserHook = createMockHook('useUser', { id: 1, name: 'Test User' });
@@ -28,11 +44,40 @@ This package is built to work with both TypeScript and JavaScript projects:
 
 ```javascript
 // ESM import
-import { createMockHook, createMock, waitFor } from 'bun-test-utils';
+import { createMockHook, createMock, waitFor } from '@rageltd/bun-test-utils';
 
 // CommonJS require (if needed)
-const { createMockHook, createMock } = require('bun-test-utils');
+const { createMockHook, createMock } = require('@rageltd/bun-test-utils');
 ```
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+### 🔄 Pull Request Workflow
+- **Triggers**: On pull requests to `main` branch
+- **Actions**: 
+  - Runs tests on multiple Bun versions (1.0.0, latest)
+  - Performs linting with Biome
+  - Builds the package
+  - Tests build outputs
+  - Comments on PR when tests pass
+
+### 🚀 Publish Workflow  
+- **Triggers**: On push to `main` branch or published releases
+- **Actions**:
+  - Runs all tests
+  - Builds the package
+  - Publishes to GitHub Package Registry
+  - Publishes to npm (on releases)
+
+### 🤖 Dependabot Auto-Merge
+- **NPM packages**: Weekly updates on Mondays
+- **GitHub Actions**: Weekly updates on Mondays
+- **Auto-merge behavior**:
+  - ✅ **Auto-merged**: Patch and minor updates, all dev dependencies
+  - ⚠️ **Auto-approved only**: Major production dependency updates (requires manual merge)
+  - ❌ **No action**: PRs where tests fail (requires manual review)
 
 ## Development
 
@@ -60,6 +105,19 @@ bun run build:clean
 
 # Watch mode for development
 bun run dev
+```
+
+### Testing
+
+```bash
+# Run all tests
+bun test
+
+# Run linting
+bun run lint
+
+# Fix linting issues
+bun run lint:fix
 ```
 
 ### Build Output
@@ -99,5 +157,54 @@ This ensures compatibility with:
 - 🔧 Full TypeScript support with generated declarations
 - 🧪 Comprehensive test utilities for Bun projects
 - 📖 Well-documented API with examples
+- ⚡ Automated CI/CD with GitHub Actions
+- 🔍 Code quality checks with Biome
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Install dependencies: `bun install` (this automatically sets up git hooks)
+4. Make your changes and add tests
+5. Run tests: `bun test`
+6. Run linting: `bun run lint`
+7. Commit your changes using conventional commits format or use: `bun run commit`
+8. Push to the branch: `git push origin feature/amazing-feature`
+9. Open a Pull Request
+
+### Git Hooks (Lefthook)
+
+This project uses [Lefthook](https://github.com/evilmartians/lefthook) for managing git hooks:
+
+- **Pre-commit**: Runs linting and tests before commits
+- **Commit-msg**: Enforces conventional commit message format
+- **Pre-push**: Runs tests and build before pushing
+
+**Auto-installation**: Git hooks are automatically installed when you run `bun install`. No manual setup required!
+
+The auto-install system:
+- ✅ Detects if you're in a git repository
+- ✅ Checks if hooks are already installed
+- ✅ Automatically installs missing hooks
+- ✅ Skips installation in non-git environments
+- ✅ Runs seamlessly during `bun install`
+
+### Conventional Commits
+
+This project enforces [Conventional Commits](https://www.conventionalcommits.org/). Use the interactive commit tool:
+```bash
+bun run commit
+```
+
+Or format commits manually:
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+The CI will automatically run tests and provide feedback on your PR!
 
 This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

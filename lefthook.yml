@@ -1,0 +1,30 @@
+# Lefthook configuration
+# https://github.com/evilmartians/lefthook
+
+# Skip hooks in CI environments
+skip_output:
+  - ci
+
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: "src/**/*.{ts,tsx,js,jsx}"
+      run: bunx @biomejs/biome check {staged_files}
+      stage_fixed: true
+    
+    test:
+      run: bun test
+      
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}
+
+pre-push:
+  commands:
+    test:
+      run: bun test
+    
+    build:
+      run: bun run build 

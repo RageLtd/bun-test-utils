@@ -1,0 +1,190 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0, patch, minor, major)'
+        required: true
+        default: 'patch'
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Get current version
+        id: current_version
+        run: |
+          current_version=$(node -p "require('./package.json').version")
+          echo "current=$current_version" >> $GITHUB_OUTPUT
+
+      - name: Determine next version
+        id: next_version
+        run: |
+          input_version="${{ github.event.inputs.version }}"
+          current_version="${{ steps.current_version.outputs.current }}"
+          
+          if [[ "$input_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            # Explicit version provided
+            next_version="$input_version"
+          elif [[ "$input_version" == "patch" ]]; then
+            # Calculate patch version
+            IFS='.' read -ra VERSION_PARTS <<< "$current_version"
+            major=${VERSION_PARTS[0]}
+            minor=${VERSION_PARTS[1]}
+            patch=${VERSION_PARTS[2]}
+            next_version="$major.$minor.$((patch + 1))"
+          elif [[ "$input_version" == "minor" ]]; then
+            # Calculate minor version
+            IFS='.' read -ra VERSION_PARTS <<< "$current_version"
+            major=${VERSION_PARTS[0]}
+            minor=${VERSION_PARTS[1]}
+            next_version="$major.$((minor + 1)).0"
+          elif [[ "$input_version" == "major" ]]; then
+            # Calculate major version
+            IFS='.' read -ra VERSION_PARTS <<< "$current_version"
+            major=${VERSION_PARTS[0]}
+            next_version="$((major + 1)).0.0"
+          else
+            echo "Invalid version input: $input_version"
+            exit 1
+          fi
+          
+          echo "next=$next_version" >> $GITHUB_OUTPUT
+          echo "Next version will be: $next_version"
+
+      - name: Run tests
+        run: bun test
+
+      - name: Build package
+        run: bun run build
+
+      - name: Generate changelog
+        run: |
+          # Initialize changelog if it doesn't exist
+          if [ ! -f CHANGELOG.md ]; then
+            bun run changelog:init
+          else
+            bun run changelog
+          fi
+
+      - name: Update package version
+        run: |
+          next_version="${{ steps.next_version.outputs.next }}"
+          # Update package.json version
+          node -e "
+            const pkg = require('./package.json');
+            pkg.version = '$next_version';
+            require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          
+          # Stage the changes
+          git add package.json CHANGELOG.md
+
+      - name: Create release commit
+        run: |
+          next_version="${{ steps.next_version.outputs.next }}"
+          git commit -m "chore(release): v$next_version"
+          git tag "v$next_version"
+
+      - name: Push changes
+        run: |
+          git push origin main
+          git push origin --tags
+
+      - name: Extract changelog for release
+        id: changelog
+        run: |
+          next_version="${{ steps.next_version.outputs.next }}"
+          
+          # Extract the changelog section for this version
+          if [ -f CHANGELOG.md ]; then
+            # Get content between the first two version headers
+            changelog_content=$(awk -v version="$next_version" '
+              /^##/ { 
+                if (found && !version_found) {
+                  version_found = 1;
+                  next;
+                }
+                if ($0 ~ version) {
+                  found = 1;
+                  next;
+                }
+                if (found && version_found) {
+                  exit;
+                }
+              }
+              found && !version_found { print }
+            ' CHANGELOG.md)
+            
+            if [ -z "$changelog_content" ]; then
+              changelog_content="Changes for version $next_version"
+            fi
+          else
+            changelog_content="Initial release"
+          fi
+          
+          # Save changelog content to output
+          {
+            echo 'content<<EOF'
+            echo "$changelog_content"
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.next_version.outputs.next }}
+          release_name: Release v${{ steps.next_version.outputs.next }}
+          body: |
+            ## What's Changed
+            
+            ${{ steps.changelog.outputs.content }}
+            
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.current_version.outputs.current }}...v${{ steps.next_version.outputs.next }}
+          draft: false
+          prerelease: false
+
+      - name: Publish to GitHub Package Registry
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+          echo "@rageltd:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          bun publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm
+        if: env.NPM_TOKEN != ''
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          bun publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 

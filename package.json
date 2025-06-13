@@ -1,5 +1,5 @@
 {
-  "name": "bun-test-utils",
+  "name": "@rageltd/bun-test-utils",
   "version": "1.0.0",
   "description": "A collection of test utilities for Bun projects",
   "main": "dist/index.js",
@@ -14,7 +14,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "bun run build:clean && bun run build:esm && bun run build:cjs && bun run build:types",
@@ -24,18 +25,55 @@
     "build:types": "tsc --project tsconfig.build.json",
     "build:watch": "bun run build:types --watch",
     "dev": "bun run build:watch",
+    "test": "bun test",
     "test:build": "bun run build && echo 'Testing CJS:' && node -e \"console.log(Object.keys(require('./dist/index.cjs')))\" && echo 'Testing ESM:' && node --input-type=module -e \"import('./dist/index.js').then(m => console.log(Object.keys(m)))\"",
+    "lint": "bunx @biomejs/biome check src/",
+    "lint:fix": "bunx @biomejs/biome check --apply src/",
+    "prepare": "bun scripts/setup-hooks.js",
+    "commit": "cz",
+    "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
+    "changelog:init": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0",
+    "version": "bun run changelog && git add CHANGELOG.md",
     "prepublishOnly": "bun run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rageltd/bun-test-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rageltd/bun-test-utils/issues"
+  },
+  "homepage": "https://github.com/rageltd/bun-test-utils#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "commitizen": "^4.3.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "lefthook": "^1.5.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "keywords": [
     "bun",
     "testing",
     "test-utils",
-    "typescript"
+    "typescript",
+    "mocking",
+    "mock",
+    "spy",
+    "react",
+    "hooks",
+    "graphql"
   ],
   "author": "",
   "license": "MIT"
