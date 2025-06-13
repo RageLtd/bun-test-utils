@@ -1,5 +1,6 @@
 name: Dependabot Auto-Merge
 
+# This workflow only runs for Dependabot PRs and will be skipped for all other PRs
 on:
   pull_request_target:
     types: [labeled, unlabeled, synchronize, opened, edited, ready_for_review, reopened]
@@ -9,9 +10,21 @@ permissions:
   pull-requests: write
 
 jobs:
+  check-actor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if Dependabot PR
+        run: |
+          if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
+            echo "This is a Dependabot PR - proceeding with auto-merge workflow"
+          else
+            echo "This is not a Dependabot PR - workflow will be skipped"
+          fi
+  
   dependabot:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
+    needs: check-actor
     steps:
       - name: Dependabot metadata
         id: metadata
