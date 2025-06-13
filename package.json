@@ -26,7 +26,7 @@
     "build:watch": "bun run build:types --watch",
     "dev": "bun run build:watch",
     "test": "bun test",
-    "test:build": "bun run build && echo 'Testing CJS:' && node -e \"console.log(Object.keys(require('./dist/index.cjs')))\" && echo 'Testing ESM:' && node --input-type=module -e \"import('./dist/index.js').then(m => console.log(Object.keys(m)))\"",
+    "test:build": "bun run build && echo 'Testing CJS:' && bun -e \"console.log(Object.keys(require('./dist/index.cjs')))\" && echo 'Testing ESM:' && bun -e \"import('./dist/index.js').then(m => console.log(Object.keys(m)))\"",
     "lint": "bunx @biomejs/biome check src/",
     "lint:fix": "bunx @biomejs/biome check --apply src/",
     "prepare": "bun scripts/setup-hooks.js",
