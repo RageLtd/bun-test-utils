@@ -1,7 +1,7 @@
 # @rageltd/bun-test-utils
 
 ![Tests](https://github.com/rageltd/bun-test-utils/workflows/Pull%20Request%20Tests/badge.svg)
-![Publish](https://github.com/rageltd/bun-test-utils/workflows/Test%20and%20Publish/badge.svg)
+![Release](https://github.com/rageltd/bun-test-utils/workflows/Release/badge.svg)
 ![npm](https://img.shields.io/npm/v/@rageltd/bun-test-utils)
 
 A collection of test utilities for Bun projects, designed to work around common issues with `bun:test` mocking and provide helpful testing patterns.
@@ -63,13 +63,22 @@ This project uses GitHub Actions for continuous integration and deployment:
   - Tests build outputs
   - Comments on PR when tests pass
 
-### 🚀 Publish Workflow  
-- **Triggers**: On push to `main` branch or published releases
+### 🚀 Release Workflow (Semantic Release)
+- **Triggers**: On push to `main` branch or manual dispatch
 - **Actions**:
-  - Runs all tests
-  - Builds the package
-  - Publishes to GitHub Package Registry
-  - Publishes to npm (on releases)
+  - Runs all quality checks (tests, linting, build validation)
+  - Uses semantic-release to automatically:
+    - Analyze commit messages to determine version bump
+    - Generate changelog from conventional commits
+    - Update package.json version
+    - Create Git tags
+    - Create GitHub releases with release notes
+    - Publish to npm registry (if NPM_TOKEN is configured)
+
+**Version Management**: This project uses [semantic-release](https://semantic-release.gitbook.io/) with conventional commits to automate versioning:
+- `fix:` commits trigger patch releases (1.0.1)
+- `feat:` commits trigger minor releases (1.1.0) 
+- `BREAKING CHANGE` or `!` commits trigger major releases (2.0.0)
 
 ### 🤖 Dependabot Auto-Merge
 - **NPM packages**: Weekly updates on Mondays
@@ -119,6 +128,20 @@ bun run lint
 # Fix linting issues
 bun run lint:fix
 ```
+
+### Release Management
+
+This project uses semantic-release for automated versioning and publishing:
+
+```bash
+# Test semantic-release without publishing (dry run)
+bun run release:dry
+
+# Manual release (generally not needed - automated via CI)
+bun run release
+```
+
+**Note**: Releases are automatically handled by GitHub Actions when changes are pushed to the `main` branch. The manual release commands are primarily for testing and development purposes.
 
 ### Build Output
 
@@ -191,7 +214,7 @@ The auto-install system:
 
 ### Conventional Commits
 
-This project enforces [Conventional Commits](https://www.conventionalcommits.org/). Use the interactive commit tool:
+This project enforces [Conventional Commits](https://www.conventionalcommits.org/) and uses them for automated versioning via semantic-release. Use the interactive commit tool:
 ```bash
 bun run commit
 ```
@@ -205,6 +228,12 @@ Or format commits manually:
 [optional footer(s)]
 ```
 
-The CI will automatically run tests and provide feedback on your PR!
+**Important for Releases**: 
+- Use `fix:` for bug fixes (patch release)
+- Use `feat:` for new features (minor release)  
+- Use `BREAKING CHANGE` footer or `!` after type for breaking changes (major release)
+- Other types (`docs:`, `style:`, `refactor:`, `test:`, `chore:`) don't trigger releases
+
+The CI will automatically run tests and provide feedback on your PR. When merged to main, semantic-release will automatically create releases based on your commit messages!
 
 This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
