@@ -1,62 +1,725 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cleanup Utilities - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Cleanup Utilities documentation for @rageltd/bun-test-utils">
-    <link rel="stylesheet" href="css/gitbook.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <meta
+      name="description"
+      content="Cleanup Utilities documentation for @rageltd/bun-test-utils"
+    />
+    <link rel="stylesheet" href="css/gitbook.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <button class="mobile-toggle">☰</button>
 
     <div class="gitbook-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
-                <p class="sidebar-subtitle">Test utilities for Bun projects</p>
-            </div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
+          <p class="sidebar-subtitle">Test utilities for Bun projects</p>
+        </div>
 
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search documentation...">
-            </div>
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link active">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
-        </aside>
+        <nav class="nav-menu">
+          <div class="nav-section">
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Introduction</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Getting Started</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="installation.html" class="nav-link">Installation</a>
+              </li>
+              <li class="nav-item">
+                <a href="quick-start.html" class="nav-link">Quick Start</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">API Reference</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="async-utilities.html" class="nav-link"
+                  >Async Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="mock-utilities.html" class="nav-link"
+                  >Mock Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+              </li>
+              <li class="nav-item">
+                <a href="component-mocking.html" class="nav-link"
+                  >Component Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-mocking.html" class="nav-link"
+                  >GraphQL Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking.html" class="nav-link"
+                  >Module Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+              </li>
+              <li class="nav-item">
+                <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+              </li>
+              <li class="nav-item">
+                <a href="cleanup-utilities.html" class="nav-link active"
+                  >Cleanup Utilities</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Guides</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="testing-patterns.html" class="nav-link"
+                  >Testing Patterns</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="working-with-bun.html" class="nav-link"
+                  >Working with Bun</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="common-issues.html" class="nav-link">Common Issues</a>
+              </li>
+              <li class="nav-item">
+                <a href="migration-guide.html" class="nav-link"
+                  >Migration Guide</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Examples</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+              </li>
+              <li class="nav-item">
+                <a href="react-components.html" class="nav-link"
+                  >React Components</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-testing.html" class="nav-link"
+                  >GraphQL Testing</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking-examples.html" class="nav-link"
+                  >Module Mocking</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Contributing</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="development-setup.html" class="nav-link"
+                  >Development Setup</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="semantic-commits.html" class="nav-link"
+                  >Semantic Commits</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="release-process.html" class="nav-link"
+                  >Release Process</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
-        <main class="main-content">
-            <div class="content-wrapper">
-                
-<h1>Cleanup Utilities</h1>
+      <main class="main-content">
+        <div class="content-wrapper">
+          <h1>Cleanup Utilities</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on cleanup utilities.</p>
-</div>
+          <p>
+            The cleanup utilities module provides functions for properly
+            managing test cleanup and isolation. These utilities ensure that
+            tests don't interfere with each other by automatically restoring
+            mocks and cleaning up test state.
+          </p>
 
-<p>In the meantime, you can:</p>
+          <div class="callout callout-warning">
+            <p>
+              <strong>Important:</strong> Proper test cleanup is critical for
+              reliable test suites. Without cleanup, test pollution can cause
+              flaky tests and hard-to-debug failures.
+            </p>
+          </div>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+          <h2 id="setuptestcleanup">setupTestCleanup</h2>
 
-<h2>Contributing</h2>
+          <h3 id="signature">Signature</h3>
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
-            </div>
-        </main>
+          <pre><code class="language-typescript">function setupTestCleanup(): void</code></pre>
+
+          <h3 id="description">Description</h3>
+
+          <p>
+            Sets up automatic cleanup for tests by registering an
+            <code>afterEach</code> hook that calls <code>mock.restore()</code>.
+            This should be called once per test file to ensure all mocks are
+            properly restored between tests.
+          </p>
+
+          <h3 id="examples">Examples</h3>
+
+          <h4 id="basic-setup">Basic Setup</h4>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+import { test, expect } from 'bun:test';
+
+// Call once at the top of your test file
+setupTestCleanup();
+
+describe('User service tests', () => {
+  test('first test', () => {
+    const mockFn = createMock();
+    // Test implementation
+    // Mock will be automatically restored after this test
+  });
+
+  test('second test', () => {
+    // This test starts with a clean state
+    // No interference from the previous test's mocks
+  });
+});</code></pre>
+
+          <h4 id="with-module-mocking">With Module Mocking</h4>
+
+          <pre><code class="language-typescript">import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
+
+// Setup automatic cleanup
+setupTestCleanup();
+
+const mockModules = createModuleMocker();
+
+describe('Component tests', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks', () => ({
+      useUser: createMockHook('useUser', defaultUser)
+    }));
+  });
+
+  afterAll(() => {
+    // Clean up module mocks (setupTestCleanup handles function mocks)
+    mockModules.restoreAll();
+  });
+
+  test('renders user component', () => {
+    // Test implementation
+  });
+});</code></pre>
+
+          <h2 id="withmockcleanup">withMockCleanup</h2>
+
+          <h3 id="signature-withmockcleanup">Signature</h3>
+
+          <pre><code class="language-typescript">function withMockCleanup(testSuiteFn: () => void): void</code></pre>
+
+          <h3 id="description-withmockcleanup">Description</h3>
+
+          <p>
+            A higher-order function that wraps a test suite with proper mock
+            cleanup. It creates a module mocker instance and automatically
+            restores all mocks after the test suite completes.
+          </p>
+
+          <h3 id="parameters">Parameters</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>testSuiteFn</code></td>
+                <td><code>() => void</code></td>
+                <td>Function that contains the test suite</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 id="examples-withmockcleanup">Examples</h3>
+
+          <h4 id="wrapping-test-suite">Wrapping a Test Suite</h4>
+
+          <pre><code class="language-typescript">import { withMockCleanup } from '@rageltd/bun-test-utils';
+
+withMockCleanup(() => {
+  describe('User management', () => {
+    test('creates user', () => {
+      // Test implementation
+      // All mocks will be automatically cleaned up
+    });
+
+    test('updates user', () => {
+      // Clean slate for this test
+    });
+  });
+});</code></pre>
+
+          <h4 id="nested-test-suites">Nested Test Suites</h4>
+
+          <pre><code class="language-typescript">import { withMockCleanup } from '@rageltd/bun-test-utils';
+
+withMockCleanup(() => {
+  describe('Authentication', () => {
+    describe('login', () => {
+      test('successful login', () => {
+        // Test implementation
+      });
+
+      test('failed login', () => {
+        // Test implementation
+      });
+    });
+
+    describe('logout', () => {
+      test('successful logout', () => {
+        // Test implementation
+      });
+    });
+
+    // All mocks from all nested tests will be cleaned up
+  });
+});</code></pre>
+
+          <h2 id="advanced-cleanup-patterns">Advanced Cleanup Patterns</h2>
+
+          <h3 id="custom-cleanup-functions">Custom Cleanup Functions</h3>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+import { afterEach } from 'bun:test';
+
+// Setup standard cleanup
+setupTestCleanup();
+
+// Add custom cleanup
+const customCleanupTasks: (() => void)[] = [];
+
+afterEach(() => {
+  // Run custom cleanup tasks
+  customCleanupTasks.forEach(task => task());
+  customCleanupTasks.length = 0; // Clear the array
+});
+
+// Helper to register cleanup tasks
+function addCleanupTask(task: () => void) {
+  customCleanupTasks.push(task);
+}
+
+describe('Database tests', () => {
+  test('creates and cleans up test data', () => {
+    const testData = createTestData();
+
+    // Register cleanup for this specific test
+    addCleanupTask(() => {
+      deleteTestData(testData.id);
+    });
+
+    // Test implementation
+    // testData will be cleaned up automatically
+  });
+});</code></pre>
+
+          <h3 id="conditional-cleanup">Conditional Cleanup</h3>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+// Only setup cleanup in test environment
+if (process.env.NODE_ENV === 'test') {
+  setupTestCleanup();
+}
+
+describe('Environment-aware tests', () => {
+  test('runs with appropriate cleanup', () => {
+    // Cleanup behavior depends on environment
+  });
+});</code></pre>
+
+          <h3 id="scoped-cleanup">Scoped Cleanup</h3>
+
+          <pre><code class="language-typescript">import { createModuleMocker } from '@rageltd/bun-test-utils';
+
+describe('Feature A tests', () => {
+  const mockModules = createModuleMocker();
+
+  beforeEach(async () => {
+    await mockModules.mock('@/services/featureA', () => featureAMocks);
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  test('feature A works', () => {
+    // Test implementation
+  });
+});
+
+describe('Feature B tests', () => {
+  const mockModules = createModuleMocker();
+
+  beforeEach(async () => {
+    await mockModules.mock('@/services/featureB', () => featureBMocks);
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  test('feature B works', () => {
+    // Test implementation
+  });
+});</code></pre>
+
+          <h2 id="cleanup-best-practices">Best Practices</h2>
+
+          <h3 id="always-use-cleanup">1. Always Use Cleanup</h3>
+
+          <p>Every test file should have some form of cleanup:</p>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Good - automatic cleanup
+import { setupTestCleanup } from '@rageltd/bun-test-utils';
+setupTestCleanup();</code></pre>
+          </div>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ Bad - no cleanup, tests can interfere with each other
+describe('Tests without cleanup', () => {
+  test('test 1', () => {
+    const mock = createMock();
+    // Mock persists to next test
+  });
+});</code></pre>
+          </div>
+
+          <h3 id="layer-cleanup-strategies">2. Layer Cleanup Strategies</h3>
+
+          <p>Use different cleanup strategies for different types of resources:</p>
+
+          <pre><code class="language-typescript">import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
+
+// Layer 1: Function mocks (automatic)
+setupTestCleanup();
+
+// Layer 2: Module mocks (manual)
+const mockModules = createModuleMocker();
+
+// Layer 3: External resources (custom)
+const cleanupTasks: (() => Promise<void>)[] = [];
+
+beforeEach(() => {
+  // Setup for each test
+});
+
+afterEach(async () => {
+  // Custom cleanup tasks
+  await Promise.all(cleanupTasks.map(task => task()));
+  cleanupTasks.length = 0;
+});
+
+afterAll(() => {
+  // Module cleanup
+  mockModules.restoreAll();
+});</code></pre>
+
+          <h3 id="test-isolation">3. Ensure Test Isolation</h3>
+
+          <p>Each test should start with a clean slate:</p>
+
+          <pre><code class="language-typescript">describe('Isolated tests', () => {
+  let service: UserService;
+
+  beforeEach(() => {
+    // Create fresh instance for each test
+    service = new UserService();
+  });
+
+  test('test 1', () => {
+    service.addUser(user1);
+    expect(service.getUsers()).toHaveLength(1);
+  });
+
+  test('test 2', () => {
+    // Fresh service instance, no users from previous test
+    expect(service.getUsers()).toHaveLength(0);
+  });
+});</code></pre>
+
+          <h3 id="cleanup-async-resources">4. Clean Up Async Resources</h3>
+
+          <p>Don't forget to clean up promises, timers, and other async resources:</p>
+
+          <pre><code class="language-typescript">describe('Async cleanup', () => {
+  const activeTimers: NodeJS.Timeout[] = [];
+  const activePromises: Promise<any>[] = [];
+
+  afterEach(() => {
+    // Clear timers
+    activeTimers.forEach(clearTimeout);
+    activeTimers.length = 0;
+
+    // Cancel promises if possible
+    activePromises.length = 0;
+  });
+
+  test('handles timers', async () => {
+    const timer = setTimeout(() => {
+      // Timer logic
+    }, 1000);
+
+    activeTimers.push(timer);
+
+    // Test implementation
+  });
+});</code></pre>
+
+          <h2 id="common-cleanup-scenarios">Common Cleanup Scenarios</h2>
+
+          <h3 id="react-component-cleanup">React Component Cleanup</h3>
+
+          <pre><code class="language-typescript">import { render, cleanup } from '@testing-library/react';
+import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+setupTestCleanup();
+
+describe('React component tests', () => {
+  afterEach(() => {
+    // Clean up rendered components
+    cleanup();
+  });
+
+  test('renders component', () => {
+    render(<MyComponent />);
+    // Component will be cleaned up automatically
+  });
+});</code></pre>
+
+          <h3 id="dom-cleanup">DOM Cleanup</h3>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+setupTestCleanup();
+
+describe('DOM manipulation tests', () => {
+  const createdElements: HTMLElement[] = [];
+
+  afterEach(() => {
+    // Remove any elements created during tests
+    createdElements.forEach(element => {
+      element.remove();
+    });
+    createdElements.length = 0;
+  });
+
+  test('creates DOM elements', () => {
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+    createdElements.push(div);
+
+    // Test implementation
+    // div will be removed after test
+  });
+});</code></pre>
+
+          <h3 id="api-cleanup">API Cleanup</h3>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+setupTestCleanup();
+
+describe('API integration tests', () => {
+  const createdResources: string[] = [];
+
+  afterEach(async () => {
+    // Clean up any resources created during tests
+    for (const resourceId of createdResources) {
+      await deleteResource(resourceId);
+    }
+    createdResources.length = 0;
+  });
+
+  test('creates and uses API resource', async () => {
+    const resource = await createResource({ name: 'test' });
+    createdResources.push(resource.id);
+
+    // Test implementation
+    // resource will be deleted after test
+  });
+});</code></pre>
+
+          <h2 id="troubleshooting-cleanup">Troubleshooting Cleanup</h2>
+
+          <h3 id="cleanup-not-running">Cleanup Not Running</h3>
+
+          <p>Ensure cleanup functions are properly registered:</p>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ Cleanup function not registered
+function myCleanup() {
+  // This won't run automatically
+}</code></pre>
+          </div>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Properly registered cleanup
+afterEach(() => {
+  myCleanup();
+});</code></pre>
+          </div>
+
+          <h3 id="cleanup-order-issues">Cleanup Order Issues</h3>
+
+          <p>Be careful about the order of cleanup operations:</p>
+
+          <pre><code class="language-typescript">// Cleanup runs in reverse order of registration
+afterEach(() => {
+  console.log('Third'); // Runs first
+});
+
+afterEach(() => {
+  console.log('Second'); // Runs second
+});
+
+afterEach(() => {
+  console.log('First'); // Runs last
+});
+
+// Output: Third, Second, First</code></pre>
+
+          <h3 id="async-cleanup-issues">Async Cleanup Issues</h3>
+
+          <p>Make sure async cleanup operations complete:</p>
+
+          <pre><code class="language-typescript">// ✅ Proper async cleanup
+afterEach(async () => {
+  await cleanupAsyncResource();
+  await anotherAsyncCleanup();
+});
+
+// ❌ Incorrect - cleanup may not complete
+afterEach(() => {
+  cleanupAsyncResource(); // Promise not awaited
+});</code></pre>
+
+          <h2 id="cleanup-debugging">Debugging Cleanup Issues</h2>
+
+          <h3 id="verbose-cleanup">Verbose Cleanup</h3>
+
+          <pre><code class="language-typescript">import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+// Enable verbose cleanup logging
+const originalRestore = mock.restore;
+mock.restore = function() {
+  console.log('Cleaning up mocks...');
+  return originalRestore.call(this);
+};
+
+setupTestCleanup();
+
+// Add logging to custom cleanup
+afterEach(() => {
+  console.log('Running custom cleanup...');
+  // Custom cleanup code
+});</code></pre>
+
+          <h3 id="cleanup-verification">Cleanup Verification</h3>
+
+          <pre><code class="language-typescript">describe('Cleanup verification', () => {
+  test('verifies cleanup works', () => {
+    const mockFn = createMock();
+
+    // Use the mock
+    mockFn('test');
+    expect(mockFn).toHaveBeenCalledWith('test');
+  });
+
+  test('verifies clean state', () => {
+    // This test should pass if cleanup worked
+    expect(createMock()).not.toHaveBeenCalled();
+  });
+});</code></pre>
+
+          <div class="page-navigation">
+            <a href="spy-utilities.html" class="nav-prev">Spy Utilities</a>
+            <a href="installation.html" class="nav-next">Installation</a>
+          </div>
+
+          <h2 id="see-also">See Also</h2>
+
+          <ul>
+            <li>
+              <a href="module-mocking.html">Module Mocking</a> - For module
+              cleanup patterns
+            </li>
+            <li>
+              <a href="testing-patterns.html">Testing Patterns</a> - Best
+              practices for test organization
+            </li>
+            <li>
+              <a href="common-issues.html">Common Issues</a> - Troubleshooting
+              test problems
+            </li>
+            <li>
+              <a href="working-with-bun.html">Working with Bun</a> - Bun-specific
+              considerations
+            </li>
+          </ul>
+        </div>
+      </main>
     </div>
 
     <script src="js/gitbook.js"></script>
     <script>
-        hljs.highlightAll();
+      hljs.highlightAll();
     </script>
-</body>
+  </body>
 </html>

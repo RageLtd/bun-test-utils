@@ -1,62 +1,762 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Module Mocking - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Module Mocking documentation for @rageltd/bun-test-utils">
-    <link rel="stylesheet" href="css/gitbook.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <meta
+      name="description"
+      content="Module Mocking documentation for @rageltd/bun-test-utils"
+    />
+    <link rel="stylesheet" href="css/gitbook.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <button class="mobile-toggle">☰</button>
 
     <div class="gitbook-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
-                <p class="sidebar-subtitle">Test utilities for Bun projects</p>
-            </div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
+          <p class="sidebar-subtitle">Test utilities for Bun projects</p>
+        </div>
 
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search documentation...">
-            </div>
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link active">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
-        </aside>
+        <nav class="nav-menu">
+          <div class="nav-section">
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Introduction</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Getting Started</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="installation.html" class="nav-link">Installation</a>
+              </li>
+              <li class="nav-item">
+                <a href="quick-start.html" class="nav-link">Quick Start</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">API Reference</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="async-utilities.html" class="nav-link"
+                  >Async Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="mock-utilities.html" class="nav-link"
+                  >Mock Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+              </li>
+              <li class="nav-item">
+                <a href="component-mocking.html" class="nav-link"
+                  >Component Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-mocking.html" class="nav-link"
+                  >GraphQL Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking.html" class="nav-link active"
+                  >Module Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+              </li>
+              <li class="nav-item">
+                <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+              </li>
+              <li class="nav-item">
+                <a href="cleanup-utilities.html" class="nav-link"
+                  >Cleanup Utilities</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Guides</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="testing-patterns.html" class="nav-link"
+                  >Testing Patterns</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="working-with-bun.html" class="nav-link"
+                  >Working with Bun</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="common-issues.html" class="nav-link">Common Issues</a>
+              </li>
+              <li class="nav-item">
+                <a href="migration-guide.html" class="nav-link"
+                  >Migration Guide</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Examples</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+              </li>
+              <li class="nav-item">
+                <a href="react-components.html" class="nav-link"
+                  >React Components</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-testing.html" class="nav-link"
+                  >GraphQL Testing</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking-examples.html" class="nav-link"
+                  >Module Mocking</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Contributing</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="development-setup.html" class="nav-link"
+                  >Development Setup</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="semantic-commits.html" class="nav-link"
+                  >Semantic Commits</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="release-process.html" class="nav-link"
+                  >Release Process</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
-        <main class="main-content">
-            <div class="content-wrapper">
-                
-<h1>Module Mocking</h1>
+      <main class="main-content">
+        <div class="content-wrapper">
+          <h1>Module Mocking</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on module mocking.</p>
-</div>
+          <p>
+            The</p> module mocking utilities provide a robust solution for mocking
+            entire modules in Bun tests. These utilities work around known
+            issues in <code>bun:test</code> where <code>mock.restore()</code>
+            doesn't properly restore modules that were mocked with
+            <code>mock.module()</code>.
+          </p>
 
-<p>In the meantime, you can:</p>
+          <div class="callout callout-warning">
+            <p>
+              <strong>Important:</strong> Bun has a known issue (<a
+                href="https://github.com/oven-sh/bun/issues/7823"
+                >#7823</a
+              >) where module mocks aren't properly restored. This library
+              provides utilities to work around this limitation.
+            </p>
+          </div>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+          <h2 id="createmodulemocker">createModuleMocker</h2>
 
-<h2>Contributing</h2>
+          <h3 id="signature">Signature</h3>
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
-            </div>
-        </main>
+          <pre><code class="language-typescript">function createModuleMocker(): {
+  mock: (modulePath: string, mockImplementation: () => MockedModule) => Promise&lt;void&gt;;
+  restore: (modulePath: string) => void;
+  restoreAll: () => void;
+}</code></pre>
+
+          <h3 id="description">Description</h3>
+
+          <p>
+            Creates a module mocker instance that properly handles module
+            mocking and restoration. This is the primary utility for managing
+            module mocks in your test suites.
+          </p>
+
+          <h3 id="methods">Methods</h3>
+
+          <h4 id="mock">mock(modulePath, mockImplementation)</h4>
+
+          <p>
+            Mocks a module with the provided implementation while storing the
+            original for later restoration.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>modulePath</code></td>
+                <td><code>string</code></td>
+                <td>Path to the module to mock</td>
+              </tr>
+              <tr>
+                <td><code>mockImplementation</code></td>
+                <td><code>() => MockedModule</code></td>
+                <td>Function that returns the mock implementation</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 id="restore">restore(modulePath)</h4>
+
+          <p>Restores a specific module to its original implementation.</p>
+
+          <h4 id="restoreall">restoreAll()</h4>
+
+          <p>Restores all mocked modules to their original implementations.</p>
+
+          <h3 id="examples">Examples</h3>
+
+          <h4 id="basic-module-mocking">Basic Module Mocking</h4>
+
+          <pre><code class="language-typescript">import { createModuleMocker, createMockHook } from '@rageltd/bun-test-utils';
+import { test, expect, beforeEach, afterAll } from 'bun:test';
+
+const mockModules = createModuleMocker();
+
+describe('UserProfile component', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks/useUser', () => ({
+      useUser: createMockHook('useUser', {
+        id: 1,
+        name: 'Test User',
+        email: 'test@example.com'
+      })
+    }));
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  test('renders user information', async () => {
+    const { UserProfile } = await import('@/components/UserProfile');
+    // Test implementation
+  });
+});</code></pre>
+
+          <h4 id="mocking-multiple-modules">Mocking Multiple Modules</h4>
+
+          <pre><code class="language-typescript">import { createModuleMocker, createMockComponent, createMockHook } from '@rageltd/bun-test-utils';
+
+const mockModules = createModuleMocker();
+
+describe('Dashboard component', () => {
+  beforeEach(async () => {
+    // Mock hooks
+    await mockModules.mock('@/hooks', () => ({
+      useAuth: createMockHook('useAuth', {
+        user: { id: 1, name: 'John' },
+        isAuthenticated: true
+      }),
+      useSettings: createMockHook('useSettings', {
+        theme: 'dark',
+        language: 'en'
+      })
+    }));
+
+    // Mock components
+    await mockModules.mock('@/components/widgets', () => ({
+      Chart: createMockComponent('Chart'),
+      DataTable: createMockComponent('DataTable'),
+      NotificationPanel: createMockComponent('NotificationPanel')
+    }));
+
+    // Mock API service
+    await mockModules.mock('@/services/api', () => ({
+      fetchDashboardData: createMock(() =>
+        Promise.resolve({ stats: { users: 100, sales: 5000 } })
+      ),
+      updateUserPreferences: createMock(() => Promise.resolve())
+    }));
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  test('renders dashboard with all components', async () => {
+    const { Dashboard } = await import('@/components/Dashboard');
+    // Test implementation
+  });
+});</code></pre>
+
+          <h4 id="conditional-mocking">Conditional Mocking</h4>
+
+          <pre><code class="language-typescript">import { createModuleMocker } from '@rageltd/bun-test-utils';
+
+const mockModules = createModuleMocker();
+
+describe('PaymentForm', () => {
+  beforeEach(async () => {
+    // Mock payment providers based on test environment
+    if (process.env.MOCK_STRIPE !== 'false') {
+      await mockModules.mock('@stripe/stripe-js', () => ({
+        loadStripe: createMock(() => Promise.resolve({
+          elements: createMock(),
+          createPaymentMethod: createMock()
+        }))
+      }));
+    }
+
+    // Always mock internal APIs
+    await mockModules.mock('@/services/payment', () => ({
+      processPayment: createMock(() =>
+        Promise.resolve({ success: true, transactionId: 'tx_123' })
+      ),
+      validateCard: createMock(() => Promise.resolve(true))
+    }));
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+});</code></pre>
+
+          <h4 id="testing-with-real-modules">Testing with Real Modules</h4>
+
+          <pre><code class="language-typescript">describe('Integration tests', () => {
+  beforeEach(async () => {
+    // Mock only external dependencies
+    await mockModules.mock('axios', () => ({
+      default: {
+        get: createMock(() => Promise.resolve({ data: mockApiResponse })),
+        post: createMock(() => Promise.resolve({ data: { success: true } }))
+      }
+    }));
+
+    // Keep internal modules real for integration testing
+    // Don't mock @/utils, @/components, etc.
+  });
+
+  test('full workflow with real internal modules', async () => {
+    // This will use real internal modules but mocked external ones
+    const { CompleteWorkflow } = await import('@/workflows/CompleteWorkflow');
+    // Test implementation
+  });
+});</code></pre>
+
+          <h2 id="restoremodules">restoreModules</h2>
+
+          <h3 id="signature-restore">Signature</h3>
+
+          <pre><code class="language-typescript">function restoreModules(modulesMap: Record&lt;string, unknown&gt;): void</code></pre>
+
+          <h3 id="description-restore">Description</h3>
+
+          <p>
+            A utility function for restoring modules when you've stored their
+            original implementations manually. This is useful for advanced use
+            cases where you need more control over the restoration process.
+          </p>
+
+          <h3 id="parameters-restore">Parameters</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>modulesMap</code></td>
+                <td><code>Record&lt;string, unknown&gt;</code></td>
+                <td>
+                  Map of module paths to their original implementations
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 id="example-restore">Example</h3>
+
+          <pre><code class="language-typescript">import { restoreModules } from '@rageltd/bun-test-utils';
+
+// Store originals at the top of the test file
+const originals = {
+  hooks: await import('@/hooks'),
+  utils: await import('@/utils'),
+  api: await import('@/services/api')
+};
+
+describe('Advanced module mocking', () => {
+  beforeEach(() => {
+    mock.module('@/hooks', () => ({
+      useUser: createMockHook('useUser', mockUserData)
+    }));
+
+    mock.module('@/utils', () => ({
+      formatDate: createMock(() => '2023-01-01'),
+      calculateTotal: createMock(() => 100)
+    }));
+  });
+
+  afterAll(() => {
+    restoreModules({
+      '@/hooks': originals.hooks,
+      '@/utils': originals.utils,
+      '@/services/api': originals.api
+    });
+  });
+});</code></pre>
+
+          <h2 id="best-practices">Best Practices</h2>
+
+          <h3 id="use-createmodulemocker">1. Use createModuleMocker</h3>
+
+          <p>
+            Prefer <code>createModuleMocker</code> over manual module mocking:
+          </p>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Recommended approach
+const mockModules = createModuleMocker();
+
+beforeEach(async () => {
+  await mockModules.mock('@/hooks', () => ({ /* mocks */ }));
+});
+
+afterAll(() => {
+  mockModules.restoreAll();
+});</code></pre>
+          </div>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ Avoid manual mocking without proper cleanup
+beforeEach(() => {
+  mock.module('@/hooks', () => ({ /* mocks */ }));
+});
+
+afterEach(() => {
+  mock.restore(); // This doesn't work properly in Bun
+});</code></pre>
+          </div>
+
+          <h3 id="mock-before-import">2. Mock Before Import</h3>
+
+          <p>Always mock modules before importing the code under test:</p>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ Import before mocking
+import { UserService } from '@/services/UserService';
+
+beforeEach(async () => {
+  await mockModules.mock('@/api/users', () => ({ /* mocks */ }));
+});</code></pre>
+          </div>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Mock before importing
+beforeEach(async () => {
+  await mockModules.mock('@/api/users', () => ({ /* mocks */ }));
+});
+
+test('user service works', async () => {
+  const { UserService } = await import('@/services/UserService');
+  // Test implementation
+});</code></pre>
+          </div>
+
+          <h3 id="organize-by-scope">3. Organize by Scope</h3>
+
+          <p>Group related mocks together and use descriptive names:</p>
+
+          <pre><code class="language-typescript">describe('E-commerce checkout flow', () => {
+  beforeEach(async () => {
+    // Authentication mocks
+    await mockModules.mock('@/auth', () => ({
+      useAuth: createMockHook('useAuth', authenticatedUser),
+      checkPermissions: createMock(() => true)
+    }));
+
+    // Payment mocks
+    await mockModules.mock('@/payment', () => ({
+      usePayment: createMockHook('usePayment', {
+        methods: mockPaymentMethods,
+        process: createMock(() => Promise.resolve(successResponse))
+      })
+    }));
+
+    // Inventory mocks
+    await mockModules.mock('@/inventory', () => ({
+      checkStock: createMock(() => Promise.resolve(true)),
+      reserveItems: createMock(() => Promise.resolve(reservation))
+    }));
+  });
+});</code></pre>
+
+          <h3 id="test-isolation">4. Ensure Test Isolation</h3>
+
+          <p>Use proper cleanup to prevent test pollution:</p>
+
+          <pre><code class="language-typescript">describe('Component tests', () => {
+  const mockModules = createModuleMocker();
+
+  // Clean setup for each test
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks', () => defaultMocks);
+  });
+
+  // Clean teardown for the suite
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  test('test 1', () => {
+    // This test gets fresh mocks
+  });
+
+  test('test 2', () => {
+    // This test also gets fresh mocks
+  });
+});</code></pre>
+
+          <h2 id="advanced-patterns">Advanced Patterns</h2>
+
+          <h3 id="factory-pattern">Factory Pattern for Mocks</h3>
+
+          <pre><code class="language-typescript">// Create reusable mock factories
+function createUserMocks(userData = {}) {
+  return {
+    useUser: createMockHook('useUser', {
+      id: 1,
+      name: 'Default User',
+      ...userData
+    }),
+    useUserPreferences: createMockHook('useUserPreferences', {
+      theme: 'light',
+      language: 'en'
+    })
+  };
+}
+
+function createApiMocks(responses = {}) {
+  return {
+    get: createMock(() => Promise.resolve(responses.get || {})),
+    post: createMock(() => Promise.resolve(responses.post || {})),
+    put: createMock(() => Promise.resolve(responses.put || {})),
+    delete: createMock(() => Promise.resolve(responses.delete || {}))
+  };
+}
+
+// Use in tests
+describe('User management', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks/user', () =>
+      createUserMocks({ name: 'Test User', role: 'admin' })
+    );
+
+    await mockModules.mock('@/api', () =>
+      createApiMocks({
+        get: { users: [{ id: 1, name: 'Test User' }] }
+      })
+    );
+  });
+});</code></pre>
+
+          <h3 id="conditional-mocking-advanced">Conditional Mocking</h3>
+
+          <pre><code class="language-typescript">// Environment-based mocking
+function setupEnvironmentMocks(env = 'test') {
+  const configs = {
+    test: {
+      api: () => createApiMocks(testResponses),
+      auth: () => ({ useAuth: createMockHook('useAuth', testUser) })
+    },
+    development: {
+      api: () => createApiMocks(devResponses),
+      auth: () => ({ useAuth: createMockHook('useAuth', devUser) })
+    },
+    staging: {
+      // Use real APIs but mock external services
+      stripe: () => ({ loadStripe: createMock() }),
+      analytics: () => ({ track: createMock() })
+    }
+  };
+
+  return configs[env] || configs.test;
+}
+
+describe('Environment-aware tests', () => {
+  beforeEach(async () => {
+    const mocks = setupEnvironmentMocks(process.env.NODE_ENV);
+
+    for (const [modulePath, mockFactory] of Object.entries(mocks)) {
+      await mockModules.mock(`@/${modulePath}`, mockFactory);
+    }
+  });
+});</code></pre>
+
+          <h3 id="partial-module-mocking">Partial Module Mocking</h3>
+
+          <pre><code class="language-typescript">// Mock only specific exports from a module
+describe('Partial module mocking', () => {
+  beforeEach(async () => {
+    // Get the original module
+    const originalUtils = await import('@/utils');
+
+    // Mock only specific functions
+    await mockModules.mock('@/utils', () => ({
+      ...originalUtils,
+      // Keep real implementations for most functions
+      formatDate: originalUtils.formatDate,
+      calculateTotal: originalUtils.calculateTotal,
+
+      // Mock only the problematic ones
+      makeApiCall: createMock(() => Promise.resolve(mockData)),
+      sendEmail: createMock(() => Promise.resolve(true))
+    }));
+  });
+});</code></pre>
+
+          <h2 id="troubleshooting">Troubleshooting</h2>
+
+          <h3 id="module-not-being-mocked">Module Not Being Mocked</h3>
+
+          <p>
+            Ensure modules are mocked before any imports that depend on them:
+          </p>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ The component is already imported with real dependencies
+import { MyComponent } from '@/components/MyComponent';
+
+beforeEach(async () => {
+  await mockModules.mock('@/hooks', () => mockHooks);
+});</code></pre>
+          </div>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Mock first, then import
+beforeEach(async () => {
+  await mockModules.mock('@/hooks', () => mockHooks);
+});
+
+test('component test', async () => {
+  const { MyComponent } = await import('@/components/MyComponent');
+  // Now MyComponent uses the mocked hooks
+});</code></pre>
+          </div>
+
+          <h3 id="mock-pollution">Mock Pollution Between Tests</h3>
+
+          <p>
+            Use proper cleanup to prevent mocks from affecting other tests:
+          </p>
+
+          <pre><code class="language-typescript">// Each test file should have its own mock instance
+const mockModules = createModuleMocker();
+
+// Clean up after all tests in this file
+afterAll(() => {
+  mockModules.restoreAll();
+});
+
+// Reset mocks between tests if needed
+beforeEach(async () => {
+  // Re-establish fresh mocks for each test
+  await mockModules.mock('@/hooks', () => freshMocks);
+});</code></pre>
+
+          <h3 id="typescript-errors">TypeScript Errors</h3>
+
+          <p>Ensure your mocks match the original module's interface:</p>
+
+          <pre><code class="language-typescript">// Define interfaces for better type safety
+interface ApiModule {
+  get: (url: string) => Promise&lt;any&gt;;
+  post: (url: string, data: any) => Promise&lt;any&gt;;
+}
+
+beforeEach(async () => {
+  await mockModules.mock('@/api', (): ApiModule => ({
+    get: createMock(() => Promise.resolve(mockResponse)),
+    post: createMock(() => Promise.resolve(mockResponse))
+  }));
+});</code></pre>
+
+          <div class="page-navigation">
+            <a href="graphql-mocking.html" class="nav-prev">GraphQL Mocking</a>
+            <a href="partial-mocks.html" class="nav-next">Partial Mocks</a>
+          </div>
+
+          <h2 id="see-also">See Also</h2>
+
+          <ul>
+            <li>
+              <a href="module-mocking-examples.html">Module Mocking Examples</a>
+              - Comprehensive examples and patterns
+            </li>
+            <li>
+              <a href="hook-mocking.html">Hook Mocking</a> - For mocking React
+              hooks specifically
+            </li>
+            <li>
+              <a href="component-mocking.html">Component Mocking</a> - For
+              mocking React components
+            </li>
+            <li>
+              <a href="cleanup-utilities.html">Cleanup Utilities</a> - For
+              managing test cleanup
+            </li>
+            <li>
+              <a href="working-with-bun.html">Working with Bun</a> - Bun-specific
+              testing considerations
+            </li>
+          </ul>
+        </div>
+      </main>
     </div>
 
     <script src="js/gitbook.js"></script>
     <script>
-        hljs.highlightAll();
+      hljs.highlightAll();
     </script>
-</body>
+  </body>
 </html>
