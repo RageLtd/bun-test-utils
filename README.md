@@ -8,213 +8,251 @@ A collection of test utilities for Bun projects, designed to work around common 
 
 ## Installation
 
-### From npm
-
 ```bash
 bun install @rageltd/bun-test-utils
 ```
 
-### From GitHub Package Registry
+## API Reference
 
-```bash
-# Configure npm to use GitHub Package Registry for this scope
-echo "@rageltd:registry=https://npm.pkg.github.com" >> ~/.npmrc
+### Async Utilities
 
-# Install the package
-bun install @rageltd/bun-test-utils
-```
-
-## Usage
-
-### In TypeScript Projects
+#### `waitFor(ms?: number): Promise<void>`
+Utility to wait for async operations in tests.
 
 ```typescript
-import { createMockHook, createModuleMocker, waitFor } from '@rageltd/bun-test-utils';
+import { waitFor } from '@rageltd/bun-test-utils';
 
-// Create mock hooks
-const mockUserHook = createMockHook('useUser', { id: 1, name: 'Test User' });
+// Wait for async operations to complete
+await waitFor(100);
 
-// Create module mockers
+// Wait for next tick (default 0ms)
+await waitFor();
+```
+
+### Mock Utilities
+
+#### `createMock<T>(implementation?: T): Mock`
+Create a mock function with proper typing.
+
+```typescript
+import { createMock } from '@rageltd/bun-test-utils';
+
+// Simple mock
+const mockFn = createMock();
+
+// Mock with implementation
+const mockWithImpl = createMock((x: number) => x * 2);
+```
+
+### Hook Mocking
+
+#### `createMockHook<T>(hookName: string, returnValue: T): Mock`
+Create mock React hooks with return values.
+
+```typescript
+import { createMockHook } from '@rageltd/bun-test-utils';
+
+const mockUserHook = createMockHook('useUser', { 
+  id: 1, 
+  name: 'Test User' 
+});
+```
+
+### Component Mocking
+
+#### `createMockComponent(componentName: string): Component`
+Create mock React components for testing.
+
+```typescript
+import { createMockComponent } from '@rageltd/bun-test-utils';
+
+const MockButton = createMockComponent('Button');
+// Renders: <Button data-testid="mock-button" />
+```
+
+### GraphQL Mocking
+
+#### `createMockGraphQLHook(operationName: string, mockData?: unknown, loading?: boolean, error?: Error | null): GraphQLHook`
+Mock GraphQL operations with loading states and error handling.
+
+```typescript
+import { createMockGraphQLHook } from '@rageltd/bun-test-utils';
+
+// Regular query
+const mockQuery = createMockGraphQLHook('useGetUser', 
+  { user: { id: 1, name: 'John' } }
+);
+
+// Lazy query (returns [execute, result])
+const [executeQuery, queryResult] = createMockGraphQLHook('useLazyGetUser',
+  { user: { id: 1, name: 'John' } }
+);
+
+// With loading state
+const loadingQuery = createMockGraphQLHook('useGetUser', null, true);
+
+// With error
+const errorQuery = createMockGraphQLHook('useGetUser', 
+  null, false, new Error('Failed to fetch')
+);
+```
+
+### Module Mocking
+
+#### `createModuleMocker(): ModuleMocker`
+Create a module mocker with proper cleanup for handling bun:test mocking issues.
+
+```typescript
+import { createModuleMocker, createMockHook } from '@rageltd/bun-test-utils';
+
 const mockModules = createModuleMocker();
+
+// Mock a module
+await mockModules.mock('@/hooks', () => ({
+  useUser: createMockHook('useUser', { id: 1, name: 'Test' })
+}));
+
+// Restore specific module
+mockModules.restore('@/hooks');
+
+// Restore all modules
+mockModules.restoreAll();
 ```
 
-### In JavaScript Projects
+#### `restoreModules(modulesMap: Record<string, unknown>): void`
+Pattern for manually restoring modules to their original state.
 
-This package is built to work with both TypeScript and JavaScript projects:
+```typescript
+import { restoreModules } from '@rageltd/bun-test-utils';
 
-```javascript
-// ESM import
-import { createMockHook, createMock, waitFor } from '@rageltd/bun-test-utils';
+// Store originals
+const originals = {
+  hooks: await import('@/hooks'),
+  utils: await import('@/utils'),
+};
 
-// CommonJS require (if needed)
-const { createMockHook, createMock } = require('@rageltd/bun-test-utils');
+// Restore after tests
+restoreModules({
+  '@/hooks': originals.hooks,
+  '@/utils': originals.utils,
+});
 ```
 
-## CI/CD
+### Partial Mocks
 
-This project uses GitHub Actions for continuous integration and deployment:
+#### `createPartialMock<T>(original?: Partial<T>, overrides?: Partial<T>): T`
+Create type-safe partial mocks of objects.
 
-### 🔄 Pull Request Workflow
-- **Triggers**: On pull requests to `main` branch
-- **Actions**: 
-  - Runs tests on multiple Bun versions (1.0.0, latest)
-  - Performs linting with Biome
-  - Builds the package
-  - Tests build outputs
-  - Comments on PR when tests pass
+```typescript
+import { createPartialMock } from '@rageltd/bun-test-utils';
 
-### 🚀 Release Workflow (Semantic Release)
-- **Triggers**: On push to `main` branch or manual dispatch
-- **Actions**:
-  - Runs all quality checks (tests, linting, build validation)
-  - Uses semantic-release to automatically:
-    - Analyze commit messages to determine version bump
-    - Generate changelog from conventional commits
-    - Update package.json version
-    - Create Git tags
-    - Create GitHub releases with release notes
-    - Publish to npm registry (if NPM_TOKEN is configured)
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
-**Version Management**: This project uses [semantic-release](https://semantic-release.gitbook.io/) with conventional commits to automate versioning:
-- `fix:` commits trigger patch releases (1.0.1)
-- `feat:` commits trigger minor releases (1.1.0) 
-- `BREAKING CHANGE` or `!` commits trigger major releases (2.0.0)
+const mockUser = createPartialMock<User>({ id: 1 }, { name: 'Test User' });
+// Result: { id: 1, name: 'Test User' }
+```
 
-### 🤖 Dependabot Auto-Merge
-- **NPM packages**: Weekly updates on Mondays
-- **GitHub Actions**: Weekly updates on Mondays
-- **Auto-merge behavior**:
-  - ✅ **Auto-merged**: Patch and minor updates, all dev dependencies
-  - ⚠️ **Auto-approved only**: Major production dependency updates (requires manual merge)
-  - ❌ **No action**: PRs where tests fail (requires manual review)
+### Spy Utilities
+
+#### `createSpy<T, K>(object: T, methodName: K): Spy`
+Create a spy on an object method with automatic cleanup.
+
+```typescript
+import { createSpy } from '@rageltd/bun-test-utils';
+
+const userService = {
+  getUser: (id: number) => ({ id, name: 'User' })
+};
+
+const getUserSpy = createSpy(userService, 'getUser');
+```
+
+### Cleanup Utilities
+
+#### `setupTestCleanup(): void`
+Setup automatic cleanup for tests (call once per test file).
+
+```typescript
+import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+setupTestCleanup(); // Call at top of test file
+```
+
+#### `withMockCleanup(testSuiteFn: () => void): void`
+Higher-order function to create test suites with proper mock cleanup.
+
+```typescript
+import { withMockCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
+
+withMockCleanup(() => {
+  describe('My Test Suite', () => {
+    // Your tests here - cleanup is handled automatically
+  });
+});
+```
+
+## Usage Examples
+
+### Basic Testing Pattern
+
+```typescript
+import { 
+  createMockHook, 
+  createModuleMocker, 
+  setupTestCleanup,
+  waitFor 
+} from '@rageltd/bun-test-utils';
+
+// Setup cleanup once per file
+setupTestCleanup();
+
+const mockModules = createModuleMocker();
+
+describe('Component Tests', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks', () => ({
+      useUser: createMockHook('useUser', { id: 1, name: 'Test User' })
+    }));
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  it('should render user data', async () => {
+    // Your test here
+    await waitFor(100); // Wait for async operations
+  });
+});
+```
 
 ## Development
 
-### Installing Dependencies
-
 ```bash
+# Install dependencies
 bun install
-```
 
-### Building the Package
-
-The package includes a comprehensive build system that generates both CommonJS and ESM outputs:
-
-```bash
-# Build everything (ESM, CJS, and type declarations)
+# Build
 bun run build
 
-# Build individual formats
-bun run build:esm    # ESM output
-bun run build:cjs    # CommonJS output  
-bun run build:types  # TypeScript declarations
-
-# Clean build output
-bun run build:clean
-
-# Watch mode for development
-bun run dev
-```
-
-### Testing
-
-```bash
-# Run all tests
+# Test
 bun test
 
-# Run linting
+# Lint
 bun run lint
-
-# Fix linting issues
-bun run lint:fix
 ```
-
-### Release Management
-
-This project uses semantic-release for automated versioning and publishing:
-
-```bash
-# Test semantic-release without publishing (dry run)
-bun run release:dry
-
-# Manual release (generally not needed - automated via CI)
-bun run release
-```
-
-**Note**: Releases are automatically handled by GitHub Actions when changes are pushed to the `main` branch. The manual release commands are primarily for testing and development purposes.
-
-### Build Output
-
-The build process creates the following files in the `dist/` directory:
-
-- `index.js` - ESM bundle
-- `index.cjs` - CommonJS bundle  
-- `index.d.ts` - TypeScript declarations
-- `src/` - Individual type declaration files
-
-### Testing the Build
-
-```bash
-# Test both CommonJS and ESM builds
-bun run test:build
-```
-
-## Package Configuration
-
-The package is configured with proper entry points for different module systems:
-
-- **Main**: `dist/index.js` (ESM)
-- **Types**: `dist/index.d.ts`
-- **Exports**: Supports both `import` and `require`
-
-This ensures compatibility with:
-- Modern TypeScript/JavaScript projects using ESM
-- Legacy projects using CommonJS
-- Bundlers like Webpack, Rollup, Vite
-- Node.js projects
-
-## Features
-
-- 🚀 Built with Bun for maximum performance
-- 📦 Dual package (ESM + CommonJS) for maximum compatibility
-- 🔧 Full TypeScript support with generated declarations
-- 🧪 Comprehensive test utilities for Bun projects
-- 📖 Well-documented API with examples
-- ⚡ Automated CI/CD with GitHub Actions
-- 🔍 Code quality checks with Biome
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Install dependencies: `bun install` (this automatically sets up git hooks)
-4. Make your changes and add tests
-5. Run tests: `bun test`
-6. Run linting: `bun run lint`
-7. Commit your changes using conventional commits format or use: `bun run commit`
-8. Push to the branch: `git push origin feature/amazing-feature`
-9. Open a Pull Request
-
-### Git Hooks (Lefthook)
-
-This project uses [Lefthook](https://github.com/evilmartians/lefthook) for managing git hooks:
-
-- **Pre-commit**: Runs linting and tests before commits
-- **Commit-msg**: Enforces conventional commit message format
-- **Pre-push**: Runs tests and build before pushing
-
-**Auto-installation**: Git hooks are automatically installed when you run `bun install`. No manual setup required!
-
-The auto-install system:
-- ✅ Detects if you're in a git repository
-- ✅ Checks if hooks are already installed
-- ✅ Automatically installs missing hooks
-- ✅ Skips installation in non-git environments
-- ✅ Runs seamlessly during `bun install`
+This project uses semantic-release for automated versioning and publishing based on conventional commits.
 
 ### Conventional Commits
 
-This project enforces [Conventional Commits](https://www.conventionalcommits.org/) and uses them for automated versioning via semantic-release. Use the interactive commit tool:
+Use the interactive commit tool:
 ```bash
 bun run commit
 ```
@@ -228,12 +266,26 @@ Or format commits manually:
 [optional footer(s)]
 ```
 
-**Important for Releases**: 
-- Use `fix:` for bug fixes (patch release)
-- Use `feat:` for new features (minor release)  
-- Use `BREAKING CHANGE` footer or `!` after type for breaking changes (major release)
+**Commit Types for Releases**:
+- `fix:` - Bug fixes (patch release: 1.0.1)
+- `feat:` - New features (minor release: 1.1.0)
+- `BREAKING CHANGE` or `!` - Breaking changes (major release: 2.0.0)
 - Other types (`docs:`, `style:`, `refactor:`, `test:`, `chore:`) don't trigger releases
 
-The CI will automatically run tests and provide feedback on your PR. When merged to main, semantic-release will automatically create releases based on your commit messages!
+### Workflow
 
-This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+1. Fork and create a feature branch
+2. Install dependencies: `bun install`
+3. Make changes and add tests
+4. Commit using conventional format: `bun run commit`
+5. Push and open a Pull Request
+
+CI will automatically handle testing, building, and releasing when merged to main.
+
+## Features
+
+- 🚀 Built with Bun for performance
+- 📦 Dual package (ESM + CommonJS) support
+- 🔧 Full TypeScript support
+- 🧪 Comprehensive test utilities
+- ⚡ Automated CI/CD with semantic versioning
