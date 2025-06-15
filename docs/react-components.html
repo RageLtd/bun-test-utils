@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React Components - @rageltd/bun-test-utils</title>
-    <meta name="description" content="React Components documentation for @rageltd/bun-test-utils">
+    <meta name="description" content="React component testing examples using @rageltd/bun-test-utils">
     <link rel="stylesheet" href="css/gitbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/jsx.min.js"></script>
 </head>
 <body>
     <button class="mobile-toggle">☰</button>
@@ -27,29 +26,715 @@
                 <input type="text" class="search-input" placeholder="Search documentation...">
             </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link active">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Introduction</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Getting Started</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="installation.html" class="nav-link">Installation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="quick-start.html" class="nav-link">Quick Start</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">API Reference</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking.html" class="nav-link">Module Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Guides</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="testing-patterns.html" class="nav-link">Testing Patterns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="working-with-bun.html" class="nav-link">Working with Bun</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="common-issues.html" class="nav-link">Common Issues</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="migration-guide.html" class="nav-link">Migration Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Examples</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="react-components.html" class="nav-link active">React Components</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-testing.html" class="nav-link">GraphQL Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Contributing</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="development-setup.html" class="nav-link">Development Setup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="semantic-commits.html" class="nav-link">Semantic Commits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="release-process.html" class="nav-link">Release Process</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </aside>
 
         <main class="main-content">
             <div class="content-wrapper">
-                
-<h1>React Components</h1>
+                <h1 id="react-components">React Component Testing</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on react components.</p>
-</div>
+                <p>This guide demonstrates how to test React components using <code>@rageltd/bun-test-utils</code> with <code>@testing-library/react</code>. Learn how to mock hooks, components, and handle complex React testing scenarios.</p>
 
-<p>In the meantime, you can:</p>
+                <h2 id="setup">Test Setup</h2>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+                <p>Set up your React testing environment with proper cleanup and mocking utilities:</p>
 
-<h2>Contributing</h2>
+                <pre><code class="language-typescript">// test/components/UserProfile.test.tsx
+import { describe, it, expect, beforeEach, afterAll } from 'bun:test';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  setupTestCleanup,
+  createModuleMocker,
+  createMockHook,
+  createMockComponent
+} from '@rageltd/bun-test-utils';
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
+// Setup automatic cleanup
+setupTestCleanup();
+
+const mockModules = createModuleMocker();
+
+describe('UserProfile Component', () => {
+  beforeEach(async () => {
+    // Mock dependencies before each test
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  // Tests go here...
+});</code></pre>
+
+                <h2 id="component-mocking">Component Mocking</h2>
+
+                <p>Mock child components to isolate the component under test:</p>
+
+                <pre><code class="language-typescript">// Component to test
+const UserProfile = ({ userId }: { userId: string }) => {
+  const { user, loading } = useUser(userId);
+
+  if (loading) return <LoadingSpinner />;
+
+  return (
+    <div>
+      <Avatar src={user.avatar} alt={user.name} />
+      <h1>{user.name}</h1>
+      <ContactInfo user={user} />
+    </div>
+  );
+};
+
+describe('UserProfile Component Mocking', () => {
+  beforeEach(async () => {
+    // Mock child components
+    await mockModules.mock('@/components/LoadingSpinner', () => ({
+      default: createMockComponent('LoadingSpinner')
+    }));
+
+    await mockModules.mock('@/components/Avatar', () => ({
+      default: createMockComponent('Avatar')
+    }));
+
+    await mockModules.mock('@/components/ContactInfo', () => ({
+      default: createMockComponent('ContactInfo')
+    }));
+
+    // Mock the useUser hook
+    await mockModules.mock('@/hooks/useUser', () => ({
+      useUser: createMockHook('useUser', {
+        user: {
+          id: '1',
+          name: 'John Doe',
+          avatar: 'avatar.jpg',
+          email: 'john@example.com'
+        },
+        loading: false,
+        error: null
+      })
+    }));
+  });
+
+  it('should render user information', () => {
+    render(<UserProfile userId="1" />);
+
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByTestId('mock-avatar')).toBeInTheDocument();
+    expect(screen.getByTestId('mock-contactinfo')).toBeInTheDocument();
+  });
+
+  it('should show loading spinner when loading', async () => {
+    // Override the hook for this specific test
+    await mockModules.mock('@/hooks/useUser', () => ({
+      useUser: createMockHook('useUser', {
+        user: null,
+        loading: true,
+        error: null
+      })
+    }));
+
+    render(<UserProfile userId="1" />);
+
+    expect(screen.getByTestId('mock-loadingspinner')).toBeInTheDocument();
+    expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h2 id="hook-testing">React Hook Testing</h2>
+
+                <p>Test components that use custom hooks:</p>
+
+                <pre><code class="language-typescript">// Custom hook
+const useCounter = (initialValue = 0) => {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = useCallback(() => setCount(c => c + 1), []);
+  const decrement = useCallback(() => setCount(c => c - 1), []);
+  const reset = useCallback(() => setCount(initialValue), []);
+
+  return { count, increment, decrement, reset };
+};
+
+// Component using the hook
+const Counter = ({ initialValue }: { initialValue?: number }) => {
+  const { count, increment, decrement, reset } = useCounter(initialValue);
+
+  return (
+    <div>
+      <span data-testid="count">{count}</span>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+};
+
+describe('Hook Testing', () => {
+  it('should test component with real hook', async () => {
+    const user = userEvent.setup();
+    render(<Counter initialValue={5} />);
+
+    expect(screen.getByTestId('count')).toHaveTextContent('5');
+
+    await user.click(screen.getByText('+'));
+    expect(screen.getByTestId('count')).toHaveTextContent('6');
+
+    await user.click(screen.getByText('Reset'));
+    expect(screen.getByTestId('count')).toHaveTextContent('5');
+  });
+
+  it('should test component with mocked hook', async () => {
+    const mockIncrement = jest.fn();
+    const mockReset = jest.fn();
+
+    await mockModules.mock('@/hooks/useCounter', () => ({
+      useCounter: createMockHook('useCounter', {
+        count: 10,
+        increment: mockIncrement,
+        decrement: jest.fn(),
+        reset: mockReset
+      })
+    }));
+
+    const user = userEvent.setup();
+    render(<Counter />);
+
+    expect(screen.getByTestId('count')).toHaveTextContent('10');
+
+    await user.click(screen.getByText('+'));
+    expect(mockIncrement).toHaveBeenCalled();
+
+    await user.click(screen.getByText('Reset'));
+    expect(mockReset).toHaveBeenCalled();
+  });
+});</code></pre>
+
+                <h2 id="async-components">Async Component Testing</h2>
+
+                <p>Handle components with async operations and loading states:</p>
+
+                <pre><code class="language-typescript">const UserList = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchUsers()
+      .then(setUsers)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div>Loading users...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <ul>
+      {users.map(user => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+};
+
+describe('Async Component Testing', () => {
+  beforeEach(async () => {
+    // Mock the API function
+    await mockModules.mock('@/api/users', () => ({
+      fetchUsers: createMock(async () => [
+        { id: '1', name: 'Alice' },
+        { id: '2', name: 'Bob' }
+      ])
+    }));
+  });
+
+  it('should show loading state initially', () => {
+    render(<UserList />);
+    expect(screen.getByText('Loading users...')).toBeInTheDocument();
+  });
+
+  it('should display users after loading', async () => {
+    render(<UserList />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+      expect(screen.getByText('Bob')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText('Loading users...')).not.toBeInTheDocument();
+  });
+
+  it('should handle API errors', async () => {
+    // Override mock to simulate error
+    await mockModules.mock('@/api/users', () => ({
+      fetchUsers: createMock(async () => {
+        throw new Error('API Error');
+      })
+    }));
+
+    render(<UserList />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Error: API Error')).toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h2 id="form-testing">Form Component Testing</h2>
+
+                <p>Test forms with validation and submission:</p>
+
+                <pre><code class="language-typescript">const ContactForm = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.includes('@')) newErrors.email = 'Invalid email';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      onSubmit(formData);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        name="name"
+        value={formData.name}
+        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+        placeholder="Name"
+      />
+      {errors.name && <span role="alert">{errors.name}</span>}
+
+      <input
+        name="email"
+        value={formData.email}
+        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+        placeholder="Email"
+      />
+      {errors.email && <span role="alert">{errors.email}</span>}
+
+      <textarea
+        name="message"
+        value={formData.message}
+        onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+        placeholder="Message"
+      />
+      {errors.message && <span role="alert">{errors.message}</span>}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+describe('Form Testing', () => {
+  it('should validate required fields', async () => {
+    const mockSubmit = jest.fn();
+    const user = userEvent.setup();
+
+    render(<ContactForm onSubmit={mockSubmit} />);
+
+    await user.click(screen.getByText('Submit'));
+
+    expect(screen.getByText('Name is required')).toBeInTheDocument();
+    expect(screen.getByText('Invalid email')).toBeInTheDocument();
+    expect(screen.getByText('Message is required')).toBeInTheDocument();
+    expect(mockSubmit).not.toHaveBeenCalled();
+  });
+
+  it('should submit valid form data', async () => {
+    const mockSubmit = jest.fn();
+    const user = userEvent.setup();
+
+    render(<ContactForm onSubmit={mockSubmit} />);
+
+    await user.type(screen.getByPlaceholderText('Name'), 'John Doe');
+    await user.type(screen.getByPlaceholderText('Email'), 'john@example.com');
+    await user.type(screen.getByPlaceholderText('Message'), 'Hello world');
+
+    await user.click(screen.getByText('Submit'));
+
+    expect(mockSubmit).toHaveBeenCalledWith({
+      name: 'John Doe',
+      email: 'john@example.com',
+      message: 'Hello world'
+    });
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h2 id="context-testing">Context and Provider Testing</h2>
+
+                <p>Test components that use React Context:</p>
+
+                <pre><code class="language-typescript">// Context setup
+const ThemeContext = createContext();
+
+const ThemeProvider = ({ children, theme = 'light' }) => {
+  const [currentTheme, setCurrentTheme] = useState(theme);
+
+  const toggleTheme = () => {
+    setCurrentTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+const ThemedButton = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className={`btn-${theme}`}
+      data-testid="themed-button"
+    >
+      Current theme: {theme}
+    </button>
+  );
+};
+
+describe('Context Testing', () => {
+  const renderWithTheme = (ui, { theme = 'light' } = {}) => {
+    return render(
+      <ThemeProvider theme={theme}>
+        {ui}
+      </ThemeProvider>
+    );
+  };
+
+  it('should render with light theme by default', () => {
+    renderWithTheme(<ThemedButton />);
+
+    const button = screen.getByTestId('themed-button');
+    expect(button).toHaveTextContent('Current theme: light');
+    expect(button).toHaveClass('btn-light');
+  });
+
+  it('should toggle theme on click', async () => {
+    const user = userEvent.setup();
+    renderWithTheme(<ThemedButton />);
+
+    const button = screen.getByTestId('themed-button');
+    expect(button).toHaveTextContent('Current theme: light');
+
+    await user.click(button);
+    expect(button).toHaveTextContent('Current theme: dark');
+    expect(button).toHaveClass('btn-dark');
+  });
+
+  it('should start with dark theme when specified', () => {
+    renderWithTheme(<ThemedButton />, { theme: 'dark' });
+
+    const button = screen.getByTestId('themed-button');
+    expect(button).toHaveTextContent('Current theme: dark');
+  });
+});</code></pre>
+
+                <h2 id="advanced-patterns">Advanced Testing Patterns</h2>
+
+                <p>Complex scenarios and testing patterns:</p>
+
+                <pre><code class="language-typescript">describe('Advanced Component Testing', () => {
+  it('should test component with multiple hooks and side effects', async () => {
+    // Mock multiple dependencies
+    await mockModules.mock('@/hooks/useUser', () => ({
+      useUser: createMockHook('useUser', {
+        user: { id: '1', name: 'Test User' },
+        loading: false
+      })
+    }));
+
+    await mockModules.mock('@/hooks/useNotifications', () => ({
+      useNotifications: createMockHook('useNotifications', {
+        notifications: [],
+        addNotification: jest.fn(),
+        clearNotifications: jest.fn()
+      })
+    }));
+
+    await mockModules.mock('@/services/analytics', () => ({
+      trackEvent: jest.fn(),
+      trackPageView: jest.fn()
+    }));
+
+    render(<ComplexComponent />);
+
+    // Test initial render
+    expect(screen.getByText('Test User')).toBeInTheDocument();
+
+    // Test interactions
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Perform Action'));
+
+    // Verify side effects
+    const { trackEvent } = await import('@/services/analytics');
+    expect(trackEvent).toHaveBeenCalledWith('action_performed');
+  });
+
+  it('should test error boundaries', () => {
+    const ThrowError = () => {
+      throw new Error('Test error');
+    };
+
+    const ErrorBoundary = ({ children }) => {
+      const [hasError, setHasError] = useState(false);
+
+      if (hasError) {
+        return <div>Something went wrong</div>;
+      }
+
+      return children;
+    };
+
+    // Suppress error console output for this test
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    render(
+      <ErrorBoundary>
+        <ThrowError />
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+
+    consoleSpy.mockRestore();
+  });
+
+  it('should test component lifecycle and cleanup', () => {
+    const cleanup = jest.fn();
+
+    const ComponentWithCleanup = () => {
+      useEffect(() => {
+        return cleanup;
+      }, []);
+
+      return <div>Component with cleanup</div>;
+    };
+
+    const { unmount } = render(<ComponentWithCleanup />);
+
+    expect(screen.getByText('Component with cleanup')).toBeInTheDocument();
+    expect(cleanup).not.toHaveBeenCalled();
+
+    unmount();
+    expect(cleanup).toHaveBeenCalled();
+  });
+});</code></pre>
+
+                <h2 id="testing-custom-hooks">Testing Custom Hooks</h2>
+
+                <p>Test custom hooks in isolation:</p>
+
+                <pre><code class="language-typescript">import { renderHook, act } from '@testing-library/react';
+
+describe('Custom Hook Testing', () => {
+  it('should test useLocalStorage hook', () => {
+    const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
+
+    // Initial value
+    expect(result.current[0]).toBe('default');
+
+    // Update value
+    act(() => {
+      result.current[1]('new value');
+    });
+
+    expect(result.current[0]).toBe('new value');
+    expect(localStorage.getItem('test-key')).toBe('"new value"');
+  });
+
+  it('should test async hook with mock', async () => {
+    const mockApi = jest.fn().mockResolvedValue({ data: 'test data' });
+
+    await mockModules.mock('@/api/data', () => ({
+      fetchData: mockApi
+    }));
+
+    const { result, waitForNextUpdate } = renderHook(() => useApiData('endpoint'));
+
+    expect(result.current.loading).toBe(true);
+    expect(result.current.data).toBe(null);
+
+    await waitForNextUpdate();
+
+    expect(result.current.loading).toBe(false);
+    expect(result.current.data).toBe('test data');
+    expect(mockApi).toHaveBeenCalledWith('endpoint');
+  });
+});</code></pre>
+
+                <h2 id="best-practices">React Testing Best Practices</h2>
+
+                <div class="callout callout-success">
+                    <h3>✅ Do These Things</h3>
+                    <ul>
+                        <li>Use <code>setupTestCleanup()</code> for automatic cleanup</li>
+                        <li>Mock child components to isolate the component under test</li>
+                        <li>Test user interactions with <code>@testing-library/user-event</code></li>
+                        <li>Use <code>waitFor</code> for async operations</li>
+                        <li>Test error states and edge cases</li>
+                        <li>Create custom render helpers for providers</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-warning">
+                    <h3>❌</h3> Avoid These Pitfalls</h3>
+                    <ul>
+                        <li>Don't test implementation details</li>
+                        <li>Don't forget to restore module mocks</li>
+                        <li>Don't use shallow rendering</li>
+                        <li>Don't test third-party library internals</li>
+                        <li>Don't mock everything - test real behavior when possible</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-info">
+                    <h3>💡 Pro Tips</h3>
+                    <ul</h3>>
+                        <li>Use <code>screen.debug()</code> to see rendered output</li>
+                        <li>Use <code>data-testid</code> for complex queries</li>
+                        <li>Group related tests in <code>describe</code> blocks</li>
+                        <li>Use <code>beforeEach</code> for common setup</li>
+                        <li>Test accessibility with <code>toBeAccessible()</code></li>
+                    </ul>
+                </div>
+
+                <h2 id="next-steps">Next Steps</h2>
+
+                <p>Continue learning with more specialized examples:</p>
+
+                <ul></ul>
+                    <li><a href="graphql-testing.html">GraphQL Testing</a> - Test GraphQL operations and Apollo components</li>
+                    <li><a href="module-mocking-examples.html">Module Mocking</a> - Advanced module mocking patterns</li>
+                    <li><a href="testing-patterns.html">Testing Patterns</a> - Best practices and advanced patterns</li>
+                    <li><a href="common-issues.html">Common Issues</a> - Troubleshooting React testing problems</li>
+                </ul>
+
+                <div class="page-navigation">
+                    <a href="basic-testing.html" class="nav-prev">Basic Testing</a>
+                    <a href="graphql-testing.html" class="nav-next">GraphQL Testing</a>
+                </div>
             </div>
         </main>
     </div>

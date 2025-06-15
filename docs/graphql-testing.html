@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphql Testing - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Graphql Testing documentation for @rageltd/bun-test-utils">
+    <title>GraphQL Testing - @rageltd/bun-test-utils</title>
+    <meta name="description" content="GraphQL testing examples and patterns using @rageltd/bun-test-utils">
     <link rel="stylesheet" href="css/gitbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/graphql.min.js"></script>
 </head>
 <body>
     <button class="mobile-toggle">☰</button>
@@ -27,29 +26,1026 @@
                 <input type="text" class="search-input" placeholder="Search documentation...">
             </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link active">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Introduction</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Getting Started</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="installation.html" class="nav-link">Installation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="quick-start.html" class="nav-link">Quick Start</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">API Reference</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking.html" class="nav-link">Module Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Guides</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="testing-patterns.html" class="nav-link">Testing Patterns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="working-with-bun.html" class="nav-link">Working with Bun</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="common-issues.html" class="nav-link">Common Issues</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="migration-guide.html" class="nav-link">Migration Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Examples</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="react-components.html" class="nav-link">React Components</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-testing.html" class="nav-link active">GraphQL Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Contributing</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="development-setup.html" class="nav-link">Development Setup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="semantic-commits.html" class="nav-link">Semantic Commits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="release-process.html" class="nav-link">Release Process</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </aside>
 
         <main class="main-content">
             <div class="content-wrapper">
-                
-<h1>Graphql Testing</h1>
+                <h1 id="graphql-testing">GraphQL Testing Examples</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on graphql testing.</p>
-</div>
+                <p>Learn how to test GraphQL operations, Apollo Client components, and GraphQL-powered React components using <code>@rageltd/bun-test-utils</code>. This guide covers mocking queries, mutations, subscriptions, and handling complex GraphQL scenarios.</p>
 
-<p>In the meantime, you can:</p>
+                <h2 id="test-setup">GraphQL Test Setup</h2>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+                <p>Set up your testing environment for GraphQL components:</p>
 
-<h2>Contributing</h2>
+                <pre><code class="language-typescript">// test/graphql/UserQuery.test.tsx
+import { describe, it, expect, beforeEach, afterAll } from 'bun:test';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  setupTestCleanup,
+  createModuleMocker,
+  createMockGraphQLHook,
+  waitFor as bunWaitFor
+} from '@rageltd/bun-test-utils';
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
+// Import components under test
+import UserProfile from '@/components/UserProfile';
+
+// Setup test utilities
+setupTestCleanup();
+const mockModules = createModuleMocker();
+
+// Mock GraphQL schema types
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  posts: Post[];
+}
+
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+}
+
+describe('GraphQL Testing Examples', () => {
+  beforeEach(async () => {
+    // Setup will be done in individual tests
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  // Tests go here...
+});</code></pre>
+
+                <h2 id="query-testing">Testing GraphQL Queries</h2>
+
+                <h3 id="basic-query-mocking">Basic Query Mocking</h3>
+
+                <p>Mock GraphQL queries with different data scenarios:</p>
+
+                <pre><code class="language-typescript">// GraphQL Query
+const GET_USER = gql`
+  query GetUser($id: ID!) {
+    user(id: $id) {
+      id
+      name
+      email
+      avatar
+      posts {
+        id
+        title
+        createdAt
+      }
+    }
+  }
+`;
+
+// Component using the query
+const UserProfile = ({ userId }: { userId: string }) => {
+  const { data, loading, error } = useQuery(GET_USER, {
+    variables: { id: userId }
+  });
+
+  if (loading) return <div>Loading user...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      <h1>{data.user.name}</h1>
+      <p>{data.user.email}</p>
+      <div>
+        {data.user.posts.map(post => (
+          <article key={post.id}>
+            <h3>{post.title}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+describe('Query Testing', () => {
+  it('should display user data when query succeeds', async () => {
+    const mockUserData = {
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      avatar: 'avatar.jpg',
+      posts: [
+        { id: '1', title: 'First Post', createdAt: '2023-01-01' },
+        { id: '2', title: 'Second Post', createdAt: '2023-01-02' }
+      ]
+    };
+
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook('GetUser', {
+        user: mockUserData
+      }),
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.getByText('john@example.com')).toBeInTheDocument();
+      expect(screen.getByText('First Post')).toBeInTheDocument();
+      expect(screen.getByText('Second Post')).toBeInTheDocument();
+    });
+  });
+
+  it('should show loading state while fetching', () => {
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook('GetUser', null, true), // loading = true
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="1" />);
+
+    expect(screen.getByText('Loading user...')).toBeInTheDocument();
+  });
+
+  it('should handle query errors', async () => {
+    const errorMessage = 'User not found';
+
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook(
+        'GetUser',
+        null,
+        false,
+        new Error(errorMessage)
+      ),
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="999" />);
+
+    await waitFor(() => {
+      expect(screen.getByText(`Error: ${errorMessage}`)).toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h3 id="dynamic-query-mocking">Dynamic Query Response Mocking</h3>
+
+                <p>Mock queries with dynamic responses based on variables:</p>
+
+                <pre><code class="language-typescript">describe('Dynamic Query Testing', () => {
+  it('should handle different user IDs', async () => {
+    const createMockUser = (id: string) => ({
+      id,
+      name: `User ${id}`,
+      email: `user${id}@example.com`,
+      posts: []
+    });
+
+    // Mock that responds based on variables
+    const mockUseQuery = jest.fn((query, { variables }) => {
+      if (variables.id === '1') {
+        return createMockGraphQLHook('GetUser', {
+          user: createMockUser('1')
+        });
+      } else if (variables.id === '2') {
+        return createMockGraphQLHook('GetUser', {
+          user: createMockUser('2')
+        });
+      }
+
+      return createMockGraphQLHook(
+        'GetUser',
+        null,
+        false,
+        new Error('User not found')
+      );
+    });
+
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: mockUseQuery,
+      gql: (template: any) => template
+    }));
+
+    // Test different scenarios
+    const { rerender } = render(<UserProfile userId="1" />);
+    expect(screen.getByText('User 1')).toBeInTheDocument();
+
+    rerender(<UserProfile userId="2" />);
+    expect(screen.getByText('User 2')).toBeInTheDocument();
+
+    rerender(<UserProfile userId="999" />);
+    expect(screen.getByText('Error: User not found')).toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h2 id="mutation-testing">Testing GraphQL Mutations</h2>
+
+                <h3 id="basic-mutation-testing">Basic Mutation Testing</h3>
+
+                <p>Test components that perform GraphQL mutations:</p>
+
+                <pre><code class="language-typescript">// GraphQL Mutation
+const UPDATE_USER = gql`
+  mutation UpdateUser($id: ID!, $input: UserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      name
+      email
+      updatedAt
+    }
+  }
+`;
+
+// Component with mutation
+const EditUserForm = ({ user, onSave }: { user: User; onSave: () => void }) => {
+  const [updateUser, { loading }] = useMutation(UPDATE_USER);
+  const [formData, setFormData] = useState({
+    name: user.name,
+    email: user.email
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateUser({
+        variables: {
+          id: user.id,
+          input: formData
+        }
+      });
+      onSave();
+    } catch (error) {
+      console.error('Failed to update user:', error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={formData.name}
+        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+        placeholder="Name"
+      />
+      <input
+        value={formData.email}
+        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+        placeholder="Email"
+      />
+      <button type="submit" disabled={loading}>
+        {loading ? 'Saving...' : 'Save'}
+      </button>
+    </form>
+  );
+};
+
+describe('Mutation Testing', () => {
+  const mockUser = {
+    id: '1',
+    name: 'John Doe',
+    email: 'john@example.com'
+  };
+
+  it('should update user successfully', async () => {
+    const mockUpdateUser = jest.fn().mockResolvedValue({
+      data: {
+        updateUser: {
+          ...mockUser,
+          name: 'Jane Doe',
+          updatedAt: new Date().toISOString()
+        }
+      }
+    });
+
+    const mockOnSave = jest.fn();
+
+    await mockModules.mock('@apollo/client', () => ({
+      useMutation: jest.fn(() => [mockUpdateUser, { loading: false }]),
+      gql: (template: any) => template
+    }));
+
+    const user = userEvent.setup();
+    render(<EditUserForm user={mockUser} onSave={mockOnSave} />);
+
+    // Update the name
+    const nameInput = screen.getByDisplayValue('John Doe');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'Jane Doe');
+
+    // Submit the form
+    await user.click(screen.getByText('Save'));
+
+    expect(mockUpdateUser).toHaveBeenCalledWith({
+      variables: {
+        id: '1',
+        input: {
+          name: 'Jane Doe',
+          email: 'john@example.com'
+        }
+      }
+    });
+
+    expect(mockOnSave).toHaveBeenCalled();
+  });
+
+  it('should show loading state during mutation', async () => {
+    const mockUpdateUser = jest.fn().mockImplementation(() =>
+      new Promise(resolve => setTimeout(resolve, 1000))
+    );
+
+    await mockModules.mock('@apollo/client', () => ({
+      useMutation: jest.fn(() => [mockUpdateUser, { loading: true }]),
+      gql: (template: any) => template
+    }));
+
+    render(<EditUserForm user={mockUser} onSave={jest.fn()} />);
+
+    expect(screen.getByText('Saving...')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+
+  it('should handle mutation errors', async () => {
+    const mockUpdateUser = jest.fn().mockRejectedValue(
+      new Error('Validation failed')
+    );
+
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    await mockModules.mock('@apollo/client', () => ({
+      useMutation: jest.fn(() => [mockUpdateUser, { loading: false }]),
+      gql: (template: any) => template
+    }));
+
+    const user = userEvent.setup();
+    render(<EditUserForm user={mockUser} onSave={jest.fn()} />);
+
+    await user.click(screen.getByText('Save'));
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Failed to update user:',
+      expect.any(Error)
+    );
+
+    consoleSpy.mockRestore();
+  });
+});</code></pre>
+
+                <h2 id="lazy-query-testing">Testing Lazy Queries</h2>
+
+                <p>Test components using lazy queries that are triggered by user actions:</p>
+
+                <pre><code class="language-typescript">// Component with lazy query
+const UserSearch = () => {
+  const [searchUsers, { data, loading, error }] = useLazyQuery(SEARCH_USERS);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      searchUsers({
+        variables: { query: searchTerm }
+      });
+    }
+  };
+
+  return (
+    <div>
+      <input
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search users..."
+      />
+      <button onClick={handleSearch}>Search</button>
+
+      {loading && <div>Searching...</div>}
+      {error && <div>Error: {error.message}</div>}
+      {data && (
+        <ul>
+          {data.searchUsers.map(user => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+describe('Lazy Query Testing', () => {
+  it('should perform search when button clicked', async () => {
+    const mockSearchResults = [
+      { id: '1', name: 'Alice Johnson' },
+      { id: '2', name: 'Bob Smith' }
+    ];
+
+    const mockSearchUsers = jest.fn().mockResolvedValue({
+      data: { searchUsers: mockSearchResults }
+    });
+
+    await mockModules.mock('@apollo/client', () => ({
+      useLazyQuery: createMockGraphQLHook('SearchUsersLazy', {
+        searchUsers: mockSearchResults
+      }),
+      gql: (template: any) => template
+    }));
+
+    const user = userEvent.setup();
+    render(<UserSearch />);
+
+    // Type search term
+    await user.type(screen.getByPlaceholderText('Search users...'), 'Alice');
+
+    // Trigger search
+    await user.click(screen.getByText('Search'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice Johnson')).toBeInTheDocument();
+      expect(screen.getByText('Bob Smith')).toBeInTheDocument();
+    });
+  });
+
+  it('should not search with empty term', async () => {
+    const mockSearchUsers = jest.fn();
+
+    await mockModules.mock('@apollo/client', () => ({
+      useLazyQuery: jest.fn(() => [mockSearchUsers, { loading: false }]),
+      gql: (template: any) => template
+    }));
+
+    const user = userEvent.setup();
+    render(<UserSearch />);
+
+    await user.click(screen.getByText('Search'));
+
+    expect(mockSearchUsers).not.toHaveBeenCalled();
+  });
+});</code></pre>
+
+                <h2 id="subscription-testing">Testing GraphQL Subscriptions</h2>
+
+                <p>Test real-time components using GraphQL subscriptions:</p>
+
+                <pre><code class="language-typescript">// Component with subscription
+const LiveNotifications = ({ userId }: { userId: string }) => {
+  const { data, loading } = useSubscription(NOTIFICATION_SUBSCRIPTION, {
+    variables: { userId }
+  });
+
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    if (data?.notificationAdded) {
+      setNotifications(prev => [data.notificationAdded, ...prev]);
+    }
+  }, [data]);
+
+  return (
+    <div>
+      <h3>Live Notifications</h3>
+      {loading && <div>Connecting...</div>}
+      <ul>
+        {notifications.map(notification => (
+          <li key={notification.id}>
+            {notification.message}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+describe('Subscription Testing', () => {
+  it('should display new notifications in real-time', async () => {
+    const mockNotifications = [
+      { id: '1', message: 'New message received', createdAt: '2023-01-01' },
+      { id: '2', message: 'Friend request accepted', createdAt: '2023-01-02' }
+    ];
+
+    // Mock subscription that emits data over time
+    let subscriptionCallback: (data: any) => void;
+    const mockSubscription = {
+      data: null,
+      loading: false,
+      subscribe: (callback: (data: any) => void) => {
+        subscriptionCallback = callback;
+      }
+    };
+
+    await mockModules.mock('@apollo/client', () => ({
+      useSubscription: jest.fn(() => mockSubscription),
+      gql: (template: any) => template
+    }));
+
+    render(<LiveNotifications userId="1" />);
+
+    expect(screen.getByText('Live Notifications')).toBeInTheDocument();
+
+    // Simulate receiving notifications
+    mockSubscription.data = { notificationAdded: mockNotifications[0] };
+    if (subscriptionCallback) subscriptionCallback(mockSubscription.data);
+
+    await waitFor(() => {
+      expect(screen.getByText('New message received')).toBeInTheDocument();
+    });
+
+    // Simulate another notification
+    mockSubscription.data = { notificationAdded: mockNotifications[1] };
+    if (subscriptionCallback) subscriptionCallback(mockSubscription.data);
+
+    await waitFor(() => {
+      expect(screen.getByText('Friend request accepted')).toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h2 id="apollo-provider-testing">Testing with Apollo Provider</h2>
+
+                <p>Test components within an Apollo Provider context:</p>
+
+                <pre><code class="language-typescript">// Test helper for Apollo Provider
+const createMockApolloProvider = (mocks: any[] = []) => {
+  const client = new ApolloClient({
+    link: new MockLink(mocks),
+    cache: new InMemoryCache()
+  });
+
+  return ({ children }: { children: React.ReactNode }) => (
+    <ApolloProvider client={client}>
+      {children}
+    </ApolloProvider>
+  );
+};
+
+describe('Apollo Provider Testing', () => {
+  it('should work with Apollo MockLink', async () => {
+    const mocks = [
+      {
+        request: {
+          query: GET_USER,
+          variables: { id: '1' }
+        },
+        result: {
+          data: {
+            user: {
+              id: '1',
+              name: 'Test User',
+              email: 'test@example.com',
+              posts: []
+            }
+          }
+        }
+      }
+    ];
+
+    const MockProvider = createMockApolloProvider(mocks);
+
+    render(
+      <MockProvider>
+        <UserProfile userId="1" />
+      </MockProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Test User')).toBeInTheDocument();
+    });
+  });
+
+  it('should handle network errors with MockLink', async () => {
+    const mocks = [
+      {
+        request: {
+          query: GET_USER,
+          variables: { id: '1' }
+        },
+        error: new Error('Network error occurred')
+      }
+    ];
+
+    const MockProvider = createMockApolloProvider(mocks);
+
+    render(
+      <MockProvider>
+        <UserProfile userId="1" />
+      </MockProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Error: Network error occurred')).toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h2 id="cache-testing">Testing Apollo Cache Interactions</h2>
+
+                <p>Test components that interact with Apollo Client cache:</p>
+
+                <pre><code class="language-typescript">describe('Cache Testing', () => {
+  it('should update cache after mutation', async () => {
+    const mockUpdateUser = jest.fn().mockResolvedValue({
+      data: {
+        updateUser: {
+          id: '1',
+          name: 'Updated Name',
+          email: 'updated@example.com',
+          __typename: 'User'
+        }
+      }
+    });
+
+    const mockCache = {
+      writeQuery: jest.fn(),
+      readQuery: jest.fn(),
+      modify: jest.fn()
+    };
+
+    await mockModules.mock('@apollo/client', () => ({
+      useMutation: jest.fn(() => [
+        mockUpdateUser,
+        { loading: false }
+      ]),
+      useApolloClient: jest.fn(() => ({
+        cache: mockCache
+      })),
+      gql: (template: any) => template
+    }));
+
+    const UserEditor = () => {
+      const [updateUser] = useMutation(UPDATE_USER);
+      const client = useApolloClient();
+
+      const handleUpdate = async () => {
+        const result = await updateUser({
+          variables: { id: '1', input: { name: 'Updated Name' } }
+        });
+
+        // Update cache manually
+        client.cache.writeQuery({
+          query: GET_USER,
+          variables: { id: '1' },
+          data: { user: result.data.updateUser }
+        });
+      };
+
+      return <button onClick={handleUpdate}>Update User</button>;
+    };
+
+    const user = userEvent.setup();
+    render(<UserEditor />);
+
+    await user.click(screen.getByText('Update User'));
+
+    expect(mockUpdateUser).toHaveBeenCalled();
+    expect(mockCache.writeQuery).toHaveBeenCalledWith({
+      query: GET_USER,
+      variables: { id: '1' },
+      data: {
+        user: {
+          id: '1',
+          name: 'Updated Name',
+          email: 'updated@example.com',
+          __typename: 'User'
+        }
+      }
+    });
+  });
+});</code></pre>
+
+                <h2 id="error-handling">GraphQL Error Handling</h2>
+
+                <p>Test various GraphQL error scenarios:</p>
+
+                <pre><code class="language-typescript">describe('GraphQL Error Handling', () => {
+  it('should handle GraphQL errors', async () => {
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook(
+        'GetUser',
+        null,
+        false,
+        {
+          graphQLErrors: [
+            {
+              message: 'User not found',
+              extensions: { code: 'USER_NOT_FOUND' }
+            }
+          ],
+          networkError: null
+        }
+      ),
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="999" />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/User not found/)).toBeInTheDocument();
+    });
+  });
+
+  it('should handle network errors', async () => {
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook(
+        'GetUser',
+        null,
+        false,
+        {
+          networkError: {
+            message: 'Failed to connect to server'
+          },
+          graphQLErrors: []
+        }
+      ),
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to connect/)).toBeInTheDocument();
+    });
+  });
+
+  it('should handle partial data with errors', async () => {
+    const partialData = {
+      user: {
+        id: '1',
+        name: 'John Doe',
+        email: null, // This field failed
+        posts: []
+      }
+    };
+
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: createMockGraphQLHook(
+        'GetUser',
+        partialData,
+        false,
+        {
+          graphQLErrors: [
+            {
+              message: 'Cannot access user email',
+              path: ['user', 'email']
+            }
+          ]
+        }
+      ),
+      gql: (template: any) => template
+    }));
+
+    render(<UserProfile userId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.queryByText('@')).not.toBeInTheDocument(); // Email not shown
+    });
+  });
+});</code></pre>
+
+                <h2 id="pagination-testing">Testing GraphQL Pagination</h2>
+
+                <p>Test components with paginated GraphQL queries:</p>
+
+                <pre><code class="language-typescript">const UserList = () => {
+  const { data, loading, error, fetchMore } = useQuery(GET_USERS_PAGINATED, {
+    variables: { first: 10, after: null }
+  });
+
+  const loadMore = () => {
+    if (data?.users.pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          after: data.users.pageInfo.endCursor
+        }
+      });
+    }
+  };
+
+  return (
+    <div>
+      {data?.users.edges.map(({ node: user }) => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+      {data?.users.pageInfo.hasNextPage && (
+        <button onClick={loadMore} disabled={loading}>
+          Load More
+        </button>
+      )}
+    </div>
+  );
+};
+
+describe('Pagination Testing', () => {
+  it('should load more users when requested', async () => {
+    const firstPageData = {
+      users: {
+        edges: [
+          { node: { id: '1', name: 'User 1' } },
+          { node: { id: '2', name: 'User 2' } }
+        ],
+        pageInfo: {
+          hasNextPage: true,
+          endCursor: 'cursor_2'
+        }
+      }
+    };
+
+    const mockFetchMore = jest.fn().mockResolvedValue({
+      data: {
+        users: {
+          edges: [
+            { node: { id: '3', name: 'User 3' } },
+            { node: { id: '4', name: 'User 4' } }
+          ],
+          pageInfo: {
+            hasNextPage: false,
+            endCursor: 'cursor_4'
+          }
+        }
+      }
+    });
+
+    await mockModules.mock('@apollo/client', () => ({
+      useQuery: jest.fn(() => ({
+        data: firstPageData,
+        loading: false,
+        error: null,
+        fetchMore: mockFetchMore
+      })),
+      gql: (template: any) => template
+    }));
+
+    const user = userEvent.setup();
+    render(<UserList />);
+
+    expect(screen.getByText('User 1')).toBeInTheDocument();
+    expect(screen.getByText('User 2')).toBeInTheDocument();
+    expect(screen.getByText('Load More')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Load More'));
+
+    expect(mockFetchMore).toHaveBeenCalledWith({
+      variables: { after: 'cursor_2' }
+    });
+  });
+});</code></pre>
+
+                <h2 id="best-practices">GraphQL Testing Best Practices</h2>
+
+                <div class="callout callout-success">
+                    <h3></h3>✅ Best Practices</h3>
+                    <ul>
+                        <li>Mock at the hook level (<code>useQuery</code>, <code>useMutation</code>) rather than the network level</li>
+                        <li>Use <code>createMockGraphQLHook</code> for consistent mock structure</li>
+                        <li>Test loading, success, and error states for all operations</li>
+                        <li>Mock with realistic data that matches your GraphQL schema</li>
+                        <li>Test optimistic updates and cache interactions</li>
+                        <li>Use factories for generating test data</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-warning">
+                    <h3>❌ Common Pitfalls</h3>
+                    <ul>
+                        <li>Don't test Apollo Client internals - focus on component behavior</li>
+                        <li>Don't mock the entire Apollo Client - mock specific hooks</li>
+                        <li>Don't forget to test error scenarios</li>
+                        <li>Don't ignore loading states in tests</li>
+                        <li>Don't mock with unrealistic data structures</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-info">
+                    <h3></h3>💡 Pro Tips</h3>
+                    <ul></ul>
+                        <li>Use TypeScript interfaces for your GraphQL types</li>
+                        <li>Create test data factories that match your schema</li>
+                        <li>Test both optimistic and actual responses for mutations</li>
+                        <li>Use <code>waitFor</code> for async GraphQL operations</li>
+                        <li>Mock subscriptions with controllable data emission</li>
+                    </ul>
+                </div>
+
+                <h2 id="next-steps">Next Steps</h2>
+
+                <p>Continue exploring advanced testing patterns:</p>
+
+                <ul>
+                    <li><a href="module-mocking-examples.html">Module Mocking Examples</a> - Advanced module mocking patterns</li>
+                    <li><a href="testing-patterns.html">Testing Patterns</a> - Best practices and patterns</li>
+                    <li><a href="common-issues.html">Common Issues</a> - Troubleshoot GraphQL testing problems</li>
+                    <li><a href="react-components.html">React Components</a> - General React testing patterns</li>
+                </ul>
+
+                <div class="page-navigation">
+                    <a href="react-components.html" class="nav-prev">React Components</a>
+                    <a href="module-mocking-examples.html" class="nav-next">Module Mocking Examples</a>
+                </div>
             </div>
         </main>
     </div>

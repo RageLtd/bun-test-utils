@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Patterns - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Testing Patterns documentation for @rageltd/bun-test-utils">
+    <meta name="description" content="Best practices and testing patterns using @rageltd/bun-test-utils">
     <link rel="stylesheet" href="css/gitbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
 </head>
 <body>
     <button class="mobile-toggle">☰</button>
@@ -27,29 +25,836 @@
                 <input type="text" class="search-input" placeholder="Search documentation...">
             </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link active">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Introduction</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Getting Started</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="installation.html" class="nav-link">Installation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="quick-start.html" class="nav-link">Quick Start</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">API Reference</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking.html" class="nav-link">Module Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Guides</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="testing-patterns.html" class="nav-link active">Testing Patterns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="working-with-bun.html" class="nav-link">Working with Bun</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="common-issues.html" class="nav-link">Common Issues</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="migration-guide.html" class="nav-link">Migration Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Examples</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="react-components.html" class="nav-link">React Components</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-testing.html" class="nav-link">GraphQL Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Contributing</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="development-setup.html" class="nav-link">Development Setup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="semantic-commits.html" class="nav-link">Semantic Commits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="release-process.html" class="nav-link">Release Process</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </aside>
 
         <main class="main-content">
             <div class="content-wrapper">
-                
-<h1>Testing Patterns</h1>
+                <h1 id="testing-patterns">Testing Patterns & Best Practices</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on testing patterns.</p>
-</div>
+                <p>This guide covers proven testing patterns and best practices when using <code>@rageltd/bun-test-utils</code>. Learn how to write maintainable, reliable tests that scale with your project.</p>
 
-<p>In the meantime, you can:</p>
+                <h2 id="test-structure">Test File Structure</h2>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+                <p>Organize your tests with a consistent structure that promotes clarity and maintainability:</p>
 
-<h2>Contributing</h2>
+                <pre><code class="language-typescript">// test/components/UserProfile.test.tsx
+import { describe, it, expect, beforeEach, afterAll } from 'bun:test';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  setupTestCleanup,
+  createModuleMocker,
+  createMockHook,
+  waitFor
+} from '@rageltd/bun-test-utils';
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
+// 1. Import the component under test
+import UserProfile from '@/components/UserProfile';
+
+// 2. Setup global test utilities
+setupTestCleanup();
+const mockModules = createModuleMocker();
+
+// 3. Test data factories
+const createMockUser = (overrides = {}) => ({
+  id: '1',
+  name: 'Test User',
+  email: 'test@example.com',
+  avatar: 'avatar.jpg',
+  ...overrides
+});
+
+// 4. Main describe block
+describe('UserProfile Component', () => {
+  // 5. Setup and teardown
+  beforeEach(async () => {
+    // Reset mocks for each test
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  // 6. Grouped test suites
+  describe('Rendering', () => {
+    // Tests for rendering behavior
+  });
+
+  describe('User Interactions', () => {
+    // Tests for user interactions
+  });
+
+  describe('Error States', () => {
+    // Tests for error handling
+  });
+});</code></pre>
+
+                <h2 id="mock-strategies">Mocking Strategies</h2>
+
+                <h3 id="minimal-mocking">The Minimal Mocking Principle</h3>
+
+                <p>Mock only what you need to isolate the unit under test. Prefer real implementations when possible:</p>
+
+                <pre><code class="language-typescript">describe('UserService', () => {
+  beforeEach(async () => {
+    // ✅ Mock external dependencies only
+    await mockModules.mock('@/api/http', () => ({
+      get: createMock(),
+      post: createMock(),
+      put: createMock(),
+      delete: createMock()
+    }));
+
+    // ❌ Don't mock internal utilities that don't have side effects
+    // await mockModules.mock('@/utils/formatters', () => ({ ... }));
+  });
+
+  it('should fetch user data', async () => {
+    const { get } = await import('@/api/http');
+    get.mockResolvedValue({ data: createMockUser() });
+
+    const userService = new UserService();
+    const user = await userService.getUser('1');
+
+    expect(get).toHaveBeenCalledWith('/users/1');
+    expect(user.name).toBe('Test User');
+  });
+});</code></pre>
+
+                <h3 id="mock-boundaries">Establishing Mock Boundaries</h3>
+
+                <p>Define clear boundaries between what to mock and what to test:</p>
+
+                <pre><code class="language-typescript">// Good: Mock at API boundaries
+describe('UserProfile Integration', () => {
+  beforeEach(async () => {
+    // Mock the API layer
+    await mockModules.mock('@/api/users', () => ({
+      fetchUser: createMock(async (id) => createMockUser({ id })),
+      updateUser: createMock(async (user) => ({ ...user, updated: true }))
+    }));
+
+    // Mock external services
+    await mockModules.mock('@/services/analytics', () => ({
+      track: createMock()
+    }));
+  });
+
+  // Test the real component behavior with mocked dependencies
+});</code></pre>
+
+                <h2 id="test-data-patterns">Test Data Patterns</h2>
+
+                <h3 id="data-factories">Data Factory Pattern</h3>
+
+                <p>Create reusable factories for generating test data:</p>
+
+                <pre><code class="language-typescript">// test/factories/userFactory.ts
+export const createMockUser = (overrides = {}) => createPartialMock({
+  id: '1',
+  name: 'Test User',
+  email: 'test@example.com',
+  role: 'user',
+  active: true,
+  createdAt: '2023-01-01T00:00:00Z'
+}, overrides);
+
+export const createMockAdminUser = (overrides = {}) => createMockUser({
+  role: 'admin',
+  permissions: ['read', 'write', 'delete'],
+  ...overrides
+});
+
+export const createMockApiResponse = (data, overrides = {}) => createPartialMock({
+  success: true,
+  data,
+  message: 'Success',
+  timestamp: new Date().toISOString()
+}, overrides);
+
+// Usage in tests
+describe('User Management', () => {
+  it('should handle admin users differently', () => {
+    const adminUser = createMockAdminUser({ name: 'Admin Smith' });
+    const regularUser = createMockUser({ name: 'Regular Joe' });
+
+    expect(adminUser.permissions).toContain('delete');
+    expect(regularUser.permissions).toBeUndefined();
+  });
+});</code></pre>
+
+                <h3 id="test-scenarios">Scenario-Based Testing</h3>
+
+                <p>Organize tests around user scenarios and business workflows:</p>
+
+                <pre><code class="language-typescript">describe('User Registration Flow', () => {
+  describe('Happy Path', () => {
+    it('should register a new user successfully', async () => {
+      // Test successful registration
+    });
+
+    it('should send welcome email after registration', async () => {
+      // Test side effects
+    });
+
+    it('should redirect to dashboard after registration', async () => {
+      // Test navigation
+    });
+  });
+
+  describe('Validation Errors', () => {
+    it('should show error for invalid email', async () => {
+      // Test validation
+    });
+
+    it('should show error for weak password', async () => {
+      // Test password requirements
+    });
+
+    it('should show error for existing email', async () => {
+      // Test uniqueness validation
+    });
+  });
+
+  describe('Network Errors', () => {
+    it('should handle server errors gracefully', async () => {
+      // Test error handling
+    });
+
+    it('should retry on network timeout', async () => {
+      // Test retry logic
+    });
+  });
+});</code></pre>
+
+                <h2 id="async-patterns">Async Testing Patterns</h2>
+
+                <h3 id="async-best-practices">Async Testing Best Practices</h3>
+
+                <p>Handle asynchronous operations correctly in your tests:</p>
+
+                <pre><code class="language-typescript">describe('Async Operations', () => {
+  it('should wait for async operations to complete', async () => {
+    const mockAsyncFn = createMock(async (data) => {
+      await waitFor(100); // Simulate network delay
+      return `Processed: ${data}`;
+    });
+
+    // ✅ Await the async operation
+    const result = await mockAsyncFn('test');
+    expect(result).toBe('Processed: test');
+  });
+
+  it('should use waitFor for React updates', async () => {
+    const user = userEvent.setup();
+    render(<AsyncComponent />);
+
+    await user.click(screen.getByText('Load Data'));
+
+    // ✅ Wait for React to update
+    await waitFor(() => {
+      expect(screen.getByText('Data loaded')).toBeInTheDocument();
+    });
+  });
+
+  it('should test loading states', async () => {
+    render(<AsyncComponent />);
+
+    // ✅ Check initial loading state
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    // ✅ Wait for loading to complete
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Content loaded')).toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h3 id="timing-control">Controlling Timing in Tests</h3>
+
+                <p>Use <code>waitFor</code> utilities to control timing and avoid flaky tests:</p>
+
+                <pre><code class="language-typescript">describe('Timing Control', () => {
+  it('should test debounced operations', async () => {
+    const mockSearch = createMock();
+    const user = userEvent.setup();
+
+    render(<SearchInput onSearch={mockSearch} debounceMs={300} />);
+
+    const input = screen.getByRole('textbox');
+
+    // Type multiple characters quickly
+    await user.type(input, 'test query');
+
+    // Should not have called search yet (debounced)
+    expect(mockSearch).not.toHaveBeenCalled();
+
+    // Wait for debounce to complete
+    await waitFor(350);
+
+    // Now search should be called
+    expect(mockSearch).toHaveBeenCalledWith('test query');
+  });
+
+  it('should test timeout behavior', async () => {
+    const mockTimeout = createMock();
+
+    // Start timeout
+    setTimeout(mockTimeout, 1000);
+
+    // Verify it hasn't been called yet
+    expect(mockTimeout).not.toHaveBeenCalled();
+
+    // Wait for timeout to complete
+    await waitFor(1100);
+
+    expect(mockTimeout).toHaveBeenCalled();
+  });
+});</code></pre>
+
+                <h2 id="error-testing-patterns">Error Testing Patterns</h2>
+
+                <h3 id="comprehensive-error-testing">Comprehensive Error Testing</h3>
+
+                <p>Test all error scenarios to ensure robust error handling:</p>
+
+                <pre><code class="language-typescript">describe('Error Handling', () => {
+  describe('API Errors', () => {
+    it('should handle 404 errors', async () => {
+      await mockModules.mock('@/api/users', () => ({
+        fetchUser: createMock(async () => {
+          throw new Error('User not found', { cause: { status: 404 } });
+        })
+      }));
+
+      render(<UserProfile userId="999" />);
+
+      await waitFor(() => {
+        expect(screen.getByText('User not found')).toBeInTheDocument();
+      });
+    });
+
+    it('should handle network errors', async () => {
+      await mockModules.mock('@/api/users', () => ({
+        fetchUser: createMock(async () => {
+          throw new Error('Network error');
+        })
+      }));
+
+      render(<UserProfile userId="1" />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/network error/i)).toBeInTheDocument();
+      });
+    });
+
+    it('should handle server errors with retry', async () => {
+      const mockFetch = createMock()
+        .mockRejectedValueOnce(new Error('Server error'))
+        .mockRejectedValueOnce(new Error('Server error'))
+        .mockResolvedValueOnce(createMockUser());
+
+      await mockModules.mock('@/api/users', () => ({
+        fetchUser: mockFetch
+      }));
+
+      render(<UserProfileWithRetry userId="1" maxRetries={3} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Test User')).toBeInTheDocument();
+      });
+
+      expect(mockFetch).toHaveBeenCalledTimes(3);
+    });
+  });
+
+  describe('Validation Errors', () => {
+    it('should show field-specific validation errors', async () => {
+      const user = userEvent.setup();
+      render(<UserForm />);
+
+      await user.click(screen.getByText('Submit'));
+
+      expect(screen.getByText('Name is required')).toBeInTheDocument();
+      expect(screen.getByText('Email is required')).toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h2 id="performance-testing">Performance Testing Patterns</h2>
+
+                <h3 id="testing-performance">Testing Performance Characteristics</h3>
+
+                <p>Test performance-related behavior in your components:</p>
+
+                <pre><code class="language-typescript">describe('Performance Testing', () => {
+  it('should not re-render unnecessarily', () => {
+    let renderCount = 0;
+
+    const CountingComponent = ({ data }) => {
+      renderCount++;
+      return <div>{data.name}</div>;
+    };
+
+    const { rerender } = render(<CountingComponent data={createMockUser()} />);
+
+    expect(renderCount).toBe(1);
+
+    // Re-render with same props
+    rerender(<CountingComponent data={createMockUser()} />);
+
+    // Should still be 1 if properly memoized
+    expect(renderCount).toBe(1);
+  });
+
+  it('should handle large lists efficiently', async () => {
+    const largeUserList = Array.from({ length: 1000 }, (_, i) =>
+      createMockUser({ id: i.toString(), name: `User ${i}` })
+    );
+
+    const startTime = performance.now();
+    render(<UserList users={largeUserList} />);
+    const endTime = performance.now();
+
+    // Rendering should complete quickly
+    expect(endTime - startTime).toBeLessThan(100);
+
+    // Only visible items should be rendered (virtual scrolling)
+    const renderedItems = screen.getAllByTestId(/user-item/);
+    expect(renderedItems.length).toBeLessThan(50);
+  });
+});</code></pre>
+
+                <h2 id="integration-patterns">Integration Testing Patterns</h2>
+
+                <h3 id="feature-integration">Feature-Level Integration Testing</h3>
+
+                <p>Test how components work together in realistic scenarios:</p>
+
+                <pre><code class="language-typescript">describe('User Management Feature', () => {
+  beforeEach(async () => {
+    // Mock only external boundaries
+    await mockModules.mock('@/api/users', () => ({
+      fetchUsers: createMock(async () => [
+        createMockUser({ id: '1', name: 'Alice' }),
+        createMockUser({ id: '2', name: 'Bob' })
+      ]),
+      createUser: createMock(async (userData) => ({
+        ...userData,
+        id: '3',
+        createdAt: new Date().toISOString()
+      })),
+      updateUser: createMock(async (id, updates) => ({
+        ...createMockUser({ id }),
+        ...updates,
+        updatedAt: new Date().toISOString()
+      })),
+      deleteUser: createMock(async (id) => ({ success: true }))
+    }));
+  });
+
+  it('should complete full user management workflow', async () => {
+    const user = userEvent.setup();
+    render(<UserManagementPage />);
+
+    // 1. Load users
+    await waitFor(() => {
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+      expect(screen.getByText('Bob')).toBeInTheDocument();
+    });
+
+    // 2. Create new user
+    await user.click(screen.getByText('Add User'));
+    await user.type(screen.getByLabelText('Name'), 'Charlie');
+    await user.type(screen.getByLabelText('Email'), 'charlie@example.com');
+    await user.click(screen.getByText('Save'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Charlie')).toBeInTheDocument();
+    });
+
+    // 3. Edit user
+    await user.click(screen.getByTestId('edit-user-1'));
+    await user.clear(screen.getByDisplayValue('Alice'));
+    await user.type(screen.getByDisplayValue(''), 'Alice Updated');
+    await user.click(screen.getByText('Save'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice Updated')).toBeInTheDocument();
+    });
+
+    // 4. Delete user
+    await user.click(screen.getByTestId('delete-user-2'));
+    await user.click(screen.getByText('Confirm'));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Bob')).not.toBeInTheDocument();
+    });
+  });
+});</code></pre>
+
+                <h2 id="test-organization">Test Organization Patterns</h2>
+
+                <h3 id="test-grouping">Logical Test Grouping</h3>
+
+                <p></p>Organize tests in logical groups that reflect your application structure:</p>
+
+                <pre><code class="language-typescript">describe('UserProfile Component', () => {
+  // Group by feature area
+  describe('User Information Display', () => {
+    it('should display user name');
+    it('should display user email');
+    it('should display user avatar');
+    it('should handle missing user data');
+  });
+
+  describe('Edit Mode', () => {
+    it('should enable edit mode when button clicked');
+    it('should save changes');
+    it('should cancel changes');
+    it('should validate form data');
+  });
+
+  describe('Permissions', () => {
+    it('should show edit button for own profile');
+    it('should hide edit button for other profiles');
+    it('should show admin controls for admin users');
+  });
+
+  describe('Loading States', () => {
+    it('should show loading spinner while fetching');
+    it('should show skeleton while loading');
+  });
+
+  describe('Error States', () => {
+    it('should handle user not found');
+    it('should handle network errors');
+    it('should handle permission errors');
+  });
+});</code></pre>
+
+                <h3 id="shared-setup">Shared Setup Patterns</h3>
+
+                <p>Use helper functions to reduce boilerplate and improve maintainability:</p>
+
+                <pre><code class="language-typescript">// test/helpers/renderWithProviders.tsx
+export const renderWithProviders = (
+  ui: React.ReactElement,
+  {
+    user = createMockUser(),
+    theme = 'light',
+    initialRoute = '/',
+    ...renderOptions
+  } = {}
+) => {
+  const TestWrapper = ({ children }) => (
+    <BrowserRouter initialEntries={[initialRoute]}>
+      <ThemeProvider theme={theme}>
+        <UserProvider user={user}>
+          {children}
+        </UserProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+
+  return render(ui, { wrapper: TestWrapper, ...renderOptions });
+};
+
+// Usage in tests
+describe('App Integration', () => {
+  it('should render dashboard for authenticated user', () => {
+    renderWithProviders(<Dashboard />, {
+      user: createMockAdminUser(),
+      initialRoute: '/dashboard'
+    });
+
+    expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h2 id="debugging-patterns">Debugging Test Patterns</h2>
+
+                <h3 id="debugging-techniques">Effective Debugging Techniques</h3>
+
+                <p>Use these patterns to debug failing tests efficiently:</p>
+
+                <pre><code class="language-typescript">describe('Debugging Example', () => {
+  it('should debug failing test', async () => {
+    render(<ComplexComponent />);
+
+    // 1. Use screen.debug() to see current DOM
+    screen.debug();
+
+    // 2. Use screen.logTestingPlaygroundURL() for interactive debugging
+    screen.logTestingPlaygroundURL();
+
+    // 3. Add temporary data-testid attributes for complex queries
+    expect(screen.getByTestId('debug-element')).toBeInTheDocument();
+
+    // 4. Log mock call information
+    const mockFn = createMock();
+    mockFn('test');
+    console.log('Mock calls:', mockFn.mock.calls);
+
+    // 5. Use custom error messages for better failures
+    expect(screen.queryByText('Expected text')).toBeInTheDocument(
+      'Expected to find "Expected text" but it was not rendered. Check if the component state is correct.'
+    );
+  });
+
+  it('should use custom queries for debugging', () => {
+    render(<UserList />);
+
+    // Custom query with better error messages
+    const getUserByName = (name: string) => {
+      const element = screen.queryByText(name);
+      if (!element) {
+        const allUsers = screen.getAllByTestId('user-item')
+          .map(el => el.textContent).join(', ');
+        throw new Error(
+          `User "${name}" not found. Available users: ${allUsers}`
+        );
+      }
+      return element;
+    };
+
+    expect(getUserByName('John Doe')).toBeInTheDocument();
+  });
+});</code></pre>
+
+                <h2 id="ci-patterns">CI/CD Testing Patterns</h2>
+
+                <h3 id="ci-optimizations">CI Optimization Strategies</h3>
+
+                <p>Optimize your tests for continuous integration environments:</p>
+
+                <pre><code class="language-typescript">// test/setup/ci.ts
+import { setupTestCleanup } from '@rageltd/bun-test-utils';
+
+// Global CI setup
+setupTestCleanup();
+
+// Increase timeout for CI environments
+if (process.env.CI) {
+  jest.setTimeout(10000);
+}
+
+// Mock expensive operations in CI
+if (process.env.CI) {
+  // Mock heavy computations
+  jest.mock('@/utils/heavyComputation', () => ({
+    compute: jest.fn(() => 'mocked-result')
+  }));
+}
+
+// Parallel test optimizations
+describe('Parallel Safe Tests', () => {
+  // Use unique identifiers to avoid conflicts
+  const testId = `test-${Date.now()}-${Math.random()}`;
+
+  it('should use unique test data', () => {
+    const uniqueUser = createMockUser({
+      id: testId,
+      email: `${testId}@example.com`
+    });
+
+    // Test with unique data
+  });
+});</code></pre>
+
+                <h2 id="anti-patterns">Common Anti-Patterns to Avoid</h2>
+
+                <div class="callout callout-warning">
+                    <h3>❌ Testing Implementation Details</h3>
+                    <pre><code class="language-typescript">// ❌ Bad: Testing internal state
+expect(component.state.isLoading).toBe(true);
+
+// ✅ Good: Testing user-visible behavior
+expect(screen.getByText('Loading...')).toBeInTheDocument();</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <h3>❌ Over-Mocking</h3>
+                    <pre><code class="language-typescript">// ❌ Bad: Mocking everything
+await mockModules.mock('@/utils/formatDate', () => ({
+  formatDate: createMock(() => '2023-01-01')
+}));
+
+// ✅ Good: Use real utilities when possible
+import { formatDate } from '@/utils/formatDate';
+expect(formatDate(new Date('2023-01-01'))).toBe('Jan 1, 2023');</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <h3>❌ Flaky Tests</h3>
+                    <pre><code class="language-typescript">// ❌ Bad: Race conditions
+setTimeout(() => {
+  expect(screen.getByText('Done')).toBeInTheDocument();
+}, 100);
+
+// ✅ Good: Use waitFor
+await waitFor(() => {
+  expect(screen.getByText('Done')).toBeInTheDocument();
+});</code></pre>
+                </div>
+
+                <h2 id="testing-checklist">Testing Checklist</h2>
+
+                <div class="callout callout-success">
+                    <h3>✅ Pre-Test Checklist</h3>
+                    <ul></ul>
+                        <li>Import <code>setupTestCleanup()</code> at the top of test files</li>
+                        <li>Create module mocker instance for the test file</li>
+                        <li>Set up test data factories</li>
+                        <li>Plan what to mock vs. what to test with real implementation</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-info">
+                    <h3>📝 During Testing</h3>
+                    <ul>
+                        <li>Test</ul> user behavior, not implementation details</li>
+                        <li>Use descriptive test names that explain the scenario</li>
+                        <li>Group related tests in describe blocks</li>
+                        <li>Test both happy path and error scenarios</li>
+                        <li>Use <code>waitFor</code> for async operations</li>
+                        <li>Mock at the appropriate boundaries</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-warning">
+                    <h3>🔧</h3> Post-Test Checklist</h3>
+                    <ul>
+                        <li>Restore all module mocks in <code>afterAll</code></li>
+                        <li>Verify tests pass in isolation and together</li>
+                        <li>Check for proper error handling coverage</li>
+                        <li>Ensure tests are deterministic (no flakiness)</li>
+                        <li>Review test performance and optimize if needed</li>
+                    </ul>
+                </div>
+
+                <h2 id="next-steps">Next Steps</h2>
+
+                <p>Apply these patterns in your projects:</p>
+
+                <ul>
+                    <li><a href="basic-testing.html">Basic Testing</a> - Start with fundamental examples</li>
+                    <li><a href="react-components.html">React Components</a> - Apply patterns to React testing</li>
+                    <li><a href="common-issues.html">Common Issues</a> - Troubleshoot testing problems</li>
+                    <li><a href="working-with-bun.html">Working with Bun</a> - Bun-specific considerations</li>
+                </ul>
+
+                <div class="page-navigation">
+                    <a href="cleanup-utilities.html" class="nav-prev">Cleanup Utilities</a>
+                    <a href="working-with-bun.html" class="nav-next">Working with Bun</a>
+                </div>
             </div>
         </main>
     </div>
