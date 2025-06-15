@@ -3,7 +3,16 @@ name: Dependabot Auto-Merge
 # This workflow only runs for Dependabot PRs and will be skipped for all other PRs
 on:
   pull_request_target:
-    types: [labeled, unlabeled, synchronize, opened, edited, ready_for_review, reopened]
+    types:
+      [
+        labeled,
+        unlabeled,
+        synchronize,
+        opened,
+        edited,
+        ready_for_review,
+        reopened,
+      ]
 
 permissions:
   contents: write
@@ -20,7 +29,7 @@ jobs:
           else
             echo "This is not a Dependabot PR - workflow will be skipped"
           fi
-  
+
   dependabot:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
@@ -42,16 +51,6 @@ jobs:
           timeoutSeconds: 600
           intervalSeconds: 10
 
-      - name: Wait for compatibility tests to complete
-        uses: fountainhead/action-wait-for-check@v1.2.0
-        id: wait-for-compatibility
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: compatibility-test
-          ref: ${{ github.event.pull_request.head.sha }}
-          timeoutSeconds: 600
-          intervalSeconds: 10
-
       - name: Auto-merge for patch and minor updates
         if: |
           steps.wait-for-tests.outputs.conclusion == 'success' &&
@@ -68,19 +67,6 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Auto-approve for major production updates (manual merge required)
-        if: |
-          steps.wait-for-tests.outputs.conclusion == 'success' &&
-          steps.wait-for-compatibility.outputs.conclusion == 'success' &&
-          steps.metadata.outputs.update-type == 'version-update:semver-major' &&
-          steps.metadata.outputs.dependency-type == 'direct:production'
-        run: |
-          gh pr review --approve "$PR_URL"
-          gh pr comment "$PR_URL" --body "✅ Tests passed! This is a major production dependency update. Please review and merge manually if the changes look good."
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Comment on failed tests
         if: |
           steps.wait-for-tests.outputs.conclusion == 'failure' ||
@@ -89,4 +75,4 @@ jobs:
           gh pr comment "$PR_URL" --body "❌ Tests failed for this dependabot update. Please review the failing tests before merging."
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
