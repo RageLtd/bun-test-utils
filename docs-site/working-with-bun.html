@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working with Bun - @rageltd/bun-test-utils</title>
+    <meta name="description" content="Working with Bun documentation for @rageltd/bun-test-utils">
+    <link rel="stylesheet" href="css/gitbook.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+</head>
+<body>
+    <button class="mobile-toggle">☰</button>
+
+    <div class="gitbook-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
+                <p class="sidebar-subtitle">Test utilities for Bun projects</p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+
+            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link active">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                
+<h1>Working with Bun</h1>
+
+<p>This guide covers Bun-specific considerations and best practices when using <code>@rageltd/bun-test-utils</code>.</p>
+
+<h2>Bun Testing Framework</h2>
+
+<p>Bun's built-in testing framework is fast and lightweight, but has some unique characteristics that this library helps address.</p>
+
+<h3>Known Issues</h3>
+
+<ul>
+<li><strong>Module Mocking</strong> - <code>mock.restore()</code> doesn't properly restore modules</li>
+<li><strong>Mock Pollution</strong> - Mocks can leak between test files</li>
+<li><strong>Async Timing</strong> - Different timing behavior compared to Node.js</li>
+</ul>
+
+<h3>Solutions Provided</h3>
+
+<ul>
+<li><code>createModuleMocker()</code> - Handles proper module restoration</li>
+<li><code>setupTestCleanup()</code> - Prevents mock pollution</li>
+<li><code>waitFor()</code> - Consistent async timing utilities</li>
+</ul>
+
+<h2>Performance Considerations</h2>
+
+<p>Bun is significantly faster than Node.js for most operations. This library is optimized to take advantage of Bun's performance while maintaining compatibility.</p>
+
+<h3>Test Execution Speed</h3>
+
+<pre><code class="language-bash"># Bun is typically 2-3x faster than Jest
+bun test  # ~500ms for 100 tests
+jest      # ~1500ms for 100 tests</code></pre>
+
+<h2>Configuration</h2>
+
+<h3>TypeScript Configuration</h3>
+
+<p>Ensure your <code>tsconfig.json</code> is optimized for Bun:</p>
+
+<pre><code class="language-json">{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "types": ["bun-types"]
+  }
+}</code></pre>
+
+<div class="page-navigation">
+    <a href="testing-patterns.html" class="nav-prev">Testing Patterns</a>
+    <a href="common-issues.html" class="nav-next">Common Issues</a>
+</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/gitbook.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
