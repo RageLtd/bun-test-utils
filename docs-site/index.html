@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@rageltd/bun-test-utils - Documentation</title>
+    <meta name="description" content="A collection of test utilities for Bun projects, designed to work around common issues with bun:test mocking and provide helpful testing patterns.">
+    <link rel="stylesheet" href="css/gitbook.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+</head>
+<body>
+    <button class="mobile-toggle">☰</button>
+
+    <div class="gitbook-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
+                <p class="sidebar-subtitle">Test utilities for Bun projects</p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link active">Introduction</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Getting Started</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="installation.html" class="nav-link">Installation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="quick-start.html" class="nav-link">Quick Start</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">API Reference</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking.html" class="nav-link">Module Mocking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Guides</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="testing-patterns.html" class="nav-link">Testing Patterns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="working-with-bun.html" class="nav-link">Working with Bun</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="common-issues.html" class="nav-link">Common Issues</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="migration-guide.html" class="nav-link">Migration Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Examples</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="react-components.html" class="nav-link">React Components</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="graphql-testing.html" class="nav-link">GraphQL Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Contributing</h3>
+                    <ul class="nav-subsection">
+                        <li class="nav-item">
+                            <a href="development-setup.html" class="nav-link">Development Setup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="semantic-commits.html" class="nav-link">Semantic Commits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="release-process.html" class="nav-link">Release Process</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 id="introduction">@rageltd/bun-test-utils</h1>
+
+                <div class="callout callout-info">
+                    <p><strong>Version:</strong> Latest | <strong>License:</strong> MIT | <strong>Runtime:</strong> Bun v1.0+</p>
+                </div>
+
+                <p>A comprehensive collection of test utilities designed specifically for Bun projects, providing solutions for common testing challenges and streamlined mocking patterns.</p>
+
+                <h2 id="overview">Overview</h2>
+
+                <p>This library addresses the unique testing needs of Bun applications by providing:</p>
+
+                <ul>
+                    <li><strong>Robust Mocking Utilities</strong> - Work around known issues in <code>bun:test</code> mocking</li>
+                    <li><strong>React Testing Helpers</strong> - Streamlined component and hook mocking</li>
+                    <li><strong>GraphQL Testing Support</strong> - Mock GraphQL operations with ease</li>
+                    <li><strong>Async Testing Tools</strong> - Handle asynchronous operations in tests</li>
+                    <li><strong>Cleanup Management</strong> - Automatic test isolation and cleanup</li>
+                </ul>
+
+                <h2 id="why-this-library">Why This Library?</h2>
+
+                <p>Bun's testing framework is powerful but has some rough edges, particularly around module mocking and cleanup. This library provides battle-tested utilities that:</p>
+
+                <ol>
+                    <li></ol><strong>Handle Bun-specific Issues</strong> - Works around known bugs in <code>bun:test</code></li>
+                    <li><strong>Reduce Boilerplate</strong> - Common testing patterns made simple</li>
+                    <li><strong>Ensure Test Isolation</strong> - Proper cleanup and mock restoration</li>
+                    <li><strong>Type Safety</strong> - Full TypeScript support with proper typing</li>
+                    <li><strong>Performance Focused</strong> - Built with Bun's performance in mind</li>
+                </ol>
+
+                <h2 id="key-features">Key Features</h2>
+
+                <div class="callout callout-success">
+                    <h3>🚀 Module Mocking</h3>
+                    <p>Properly handle module mocking with automatic cleanup and restoration, working around <code>bun:test</code> limitations.</p>
+                </div>
+
+                <div class="callout callout-success">
+                    <h3>🎯 React Testing</h3>
+                    <p>Streamlined utilities for mocking React components and hooks with minimal setup.</p>
+                </div>
+
+                <div class="callout callout-success">
+                    <h3>🔍 GraphQL Support</h3>
+                    <p></h3>Mock GraphQL operations including queries, mutations, lazy queries, and error states.</p>
+                </div>
+
+                <div class="callout callout-success">
+                    <h3>⚡ Async Utilities</h3>
+                    <p>Tools for handling asynchronous operations and timing in tests.</p>
+                </div>
+
+                <div class="callout callout-success">
+                    <h3>🧹 Cleanup Management</h3>
+                    <p>Automatic cleanup utilities to ensure proper test isolation.</p>
+                </div>
+
+                <h2 id="quick-example">Quick Example</h2>
+
+                <pre><code class="language-typescript">import {
+  createModuleMocker,
+  createMockHook,
+  setupTestCleanup
+} from '@rageltd/bun-test-utils';
+
+// Setup automatic cleanup
+setupTestCleanup();
+
+const mockModules = createModuleMocker();
+
+describe('User Component', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/hooks', () => ({
+      useUser: createMockHook('useUser', {
+        id: 1,
+        name: 'Test User'
+      })
+    }));
+  });
+
+  afterAll(() => {
+    mockModules.restoreAll();
+  });
+
+  it('should render user information', () => {
+    // Your test here - mocks are properly isolated
+  });
+});</code></pre>
+
+                <h2 id="installation">Installation</h2>
+
+                <pre><code class="language-bash">bun install @rageltd/bun-test-utils</code></pre>
+
+                <h2 id="browser-compatibility">Browser Compatibility</h2>
+
+                <p>This library is designed for:</p>
+                <ul>
+                    <li><strong>Bun runtime</strong> - Primary target</li>
+                    <li><strong>Node.js</strong> - Compatible for CI/CD environments</li>
+                    <li><strong>Modern TypeScript/JavaScript</strong> - ESM and CommonJS support</li>
+                </ul>
+
+                <h2 id="next-steps">Next Steps</h2>
+
+                <div class="page-navigation">
+                    <div></div>
+                    <a href="installation.html" class="nav-next">Installation</a>
+                </div>
+
+                <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 14px;">
+                    <p>Made with ❤️ for the Bun testing ecosystem</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/gitbook.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
