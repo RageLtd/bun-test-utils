@@ -1,62 +1,869 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spy Utilities - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Spy Utilities documentation for @rageltd/bun-test-utils">
-    <link rel="stylesheet" href="css/gitbook.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <meta
+      name="description"
+      content="Spy Utilities documentation for @rageltd/bun-test-utils"
+    />
+    <link rel="stylesheet" href="css/gitbook.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <button class="mobile-toggle">☰</button>
 
     <div class="gitbook-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
-                <p class="sidebar-subtitle">Test utilities for Bun projects</p>
-            </div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1 class="sidebar-title">@rageltd/bun-test-utils</h1>
+          <p class="sidebar-subtitle">Test utilities for Bun projects</p>
+        </div>
 
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search documentation...">
-            </div>
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
 
-            <nav class="nav-menu"><div class="nav-section"><ul class="nav-subsection"><li class="nav-item"><a href="index.html" class="nav-link">Introduction</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Getting Started</h3><ul class="nav-subsection"><li class="nav-item"><a href="installation.html" class="nav-link">Installation</a></li><li class="nav-item"><a href="quick-start.html" class="nav-link">Quick Start</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">API Reference</h3><ul class="nav-subsection"><li class="nav-item"><a href="async-utilities.html" class="nav-link">Async Utilities</a></li><li class="nav-item"><a href="mock-utilities.html" class="nav-link">Mock Utilities</a></li><li class="nav-item"><a href="hook-mocking.html" class="nav-link">Hook Mocking</a></li><li class="nav-item"><a href="component-mocking.html" class="nav-link">Component Mocking</a></li><li class="nav-item"><a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a></li><li class="nav-item"><a href="module-mocking.html" class="nav-link">Module Mocking</a></li><li class="nav-item"><a href="partial-mocks.html" class="nav-link">Partial Mocks</a></li><li class="nav-item"><a href="spy-utilities.html" class="nav-link active">Spy Utilities</a></li><li class="nav-item"><a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Guides</h3><ul class="nav-subsection"><li class="nav-item"><a href="testing-patterns.html" class="nav-link">Testing Patterns</a></li><li class="nav-item"><a href="working-with-bun.html" class="nav-link">Working with Bun</a></li><li class="nav-item"><a href="common-issues.html" class="nav-link">Common Issues</a></li><li class="nav-item"><a href="migration-guide.html" class="nav-link">Migration Guide</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Examples</h3><ul class="nav-subsection"><li class="nav-item"><a href="basic-testing.html" class="nav-link">Basic Testing</a></li><li class="nav-item"><a href="react-components.html" class="nav-link">React Components</a></li><li class="nav-item"><a href="graphql-testing.html" class="nav-link">GraphQL Testing</a></li><li class="nav-item"><a href="module-mocking-examples.html" class="nav-link">Module Mocking</a></li></ul></div><div class="nav-section"><h3 class="nav-section-title">Contributing</h3><ul class="nav-subsection"><li class="nav-item"><a href="development-setup.html" class="nav-link">Development Setup</a></li><li class="nav-item"><a href="semantic-commits.html" class="nav-link">Semantic Commits</a></li><li class="nav-item"><a href="release-process.html" class="nav-link">Release Process</a></li></ul></div></nav>
-        </aside>
+        <nav class="nav-menu">
+          <div class="nav-section">
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Introduction</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Getting Started</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="installation.html" class="nav-link">Installation</a>
+              </li>
+              <li class="nav-item">
+                <a href="quick-start.html" class="nav-link">Quick Start</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">API Reference</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="async-utilities.html" class="nav-link"
+                  >Async Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="mock-utilities.html" class="nav-link"
+                  >Mock Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
+              </li>
+              <li class="nav-item">
+                <a href="component-mocking.html" class="nav-link"
+                  >Component Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-mocking.html" class="nav-link"
+                  >GraphQL Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking.html" class="nav-link"
+                  >Module Mocking</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
+              </li>
+              <li class="nav-item">
+                <a href="spy-utilities.html" class="nav-link active"
+                  >Spy Utilities</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="cleanup-utilities.html" class="nav-link"
+                  >Cleanup Utilities</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Guides</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="testing-patterns.html" class="nav-link"
+                  >Testing Patterns</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="working-with-bun.html" class="nav-link"
+                  >Working with Bun</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="common-issues.html" class="nav-link">Common Issues</a>
+              </li>
+              <li class="nav-item">
+                <a href="migration-guide.html" class="nav-link"
+                  >Migration Guide</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Examples</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="basic-testing.html" class="nav-link">Basic Testing</a>
+              </li>
+              <li class="nav-item">
+                <a href="react-components.html" class="nav-link"
+                  >React Components</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="graphql-testing.html" class="nav-link"
+                  >GraphQL Testing</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="module-mocking-examples.html" class="nav-link"
+                  >Module Mocking</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="nav-section">
+            <h3 class="nav-section-title">Contributing</h3>
+            <ul class="nav-subsection">
+              <li class="nav-item">
+                <a href="development-setup.html" class="nav-link"
+                  >Development Setup</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="semantic-commits.html" class="nav-link"
+                  >Semantic Commits</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="release-process.html" class="nav-link"
+                  >Release Process</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
-        <main class="main-content">
-            <div class="content-wrapper">
-                
-<h1>Spy Utilities</h1>
+      <main class="main-content">
+        <div class="content-wrapper">
+          <h1>Spy Utilities</h1>
 
-<div class="callout callout-info">
-    <p><strong>Coming Soon!</strong> This page is under development. Check back soon for comprehensive documentation on spy utilities.</p>
-</div>
+          <p></p>
+            The spy utilities module provides convenient functions for creating
+            and managing spies on object methods. Spies allow you to monitor
+            function calls while preserving the original implementation,
+            making them ideal for integration testing and behavior verification.
+          </p>
 
-<p>In the meantime, you can:</p>
+          <h2 id="createspy">createSpy</h2>
 
-<ul>
-<li>Explore the <a href="index.html">Introduction</a> and <a href="installation.html">Installation</a> guides</li>
-<li>Review the existing <a href="async-utilities.html">API Reference</a> pages</li>
-<li>Check out the <a href="https://github.com/rageltd/bun-test-utils">GitHub repository</a> for source code</li>
-</ul>
+          <h3 id="signature">Signature</h3>
 
-<h2>Contributing</h2>
+          <pre><code class="language-typescript">function createSpy&lt;T extends Record&lt;string, unknown&gt;, K extends keyof T&gt;(
+  object: T,
+  methodName: K
+): ReturnType&lt;typeof spyOn&gt;</code></pre>
 
-<p>Help us complete this documentation! See our <a href="semantic-commits.html">Semantic Commits</a> guide to get started with contributing.</p>
-            </div>
-        </main>
+          <h3 id="description">Description</h3>
+
+          <p>
+            Creates a spy on an object method using Bun's <code>spyOn</code>
+            function. The spy intercepts calls to the method while maintaining
+            the original implementation, allowing you to verify how the method
+            was called.
+          </p>
+
+          <h3 id="parameters">Parameters</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>object</code></td>
+                <td><code>T</code></td>
+                <td>The object containing the method to spy on</td>
+              </tr>
+              <tr>
+                <td><code>methodName</code></td>
+                <td><code>K</code></td>
+                <td>The name of the method to spy on</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 id="returns">Returns</h3>
+
+          <p>
+            <code>ReturnType&lt;typeof spyOn&gt;</code> - A spy function that
+            can be used to verify calls and control behavior
+          </p>
+
+          <h3 id="examples">Examples</h3>
+
+          <h4 id="basic-method-spying">Basic Method Spying</h4>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+import { test, expect, beforeEach } from 'bun:test';
+
+class UserService {
+  users: User[] = [];
+
+  addUser(user: User): void {
+    this.users.push(user);
+  }
+
+  getUsers(): User[] {
+    return this.users;
+  }
+
+  clearUsers(): void {
+    this.users = [];
+  }
+}
+
+describe('UserService', () => {
+  let userService: UserService;
+
+  beforeEach(() => {
+    userService = new UserService();
+  });
+
+  test('spies on method calls', () => {
+    const addUserSpy = createSpy(userService, 'addUser');
+    const mockUser = { id: 1, name: 'John Doe' };
+
+    userService.addUser(mockUser);
+
+    expect(addUserSpy).toHaveBeenCalledTimes(1);
+    expect(addUserSpy).toHaveBeenCalledWith(mockUser);
+    expect(userService.users).toHaveLength(1); // Original implementation still works
+  });
+});</code></pre>
+
+          <h4 id="spying-on-external-apis">Spying on External APIs</h4>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+class ApiClient {
+  async get(url: string): Promise<any> {
+    const response = await fetch(url);
+    return response.json();
+  }
+
+  async post(url: string, data: any): Promise<any> {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+}
+
+describe('ApiClient integration', () => {
+  let apiClient: ApiClient;
+
+  beforeEach(() => {
+    apiClient = new ApiClient();
+  });
+
+  test('tracks API calls', async () => {
+    const getSpy = createSpy(apiClient, 'get');
+    const postSpy = createSpy(apiClient, 'post');
+
+    // Mock fetch to avoid real API calls
+    global.fetch = createMock(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ success: true })
+      })
+    );
+
+    await apiClient.get('/api/users');
+    await apiClient.post('/api/users', { name: 'John' });
+
+    expect(getSpy).toHaveBeenCalledWith('/api/users');
+    expect(postSpy).toHaveBeenCalledWith('/api/users', { name: 'John' });
+    expect(getSpy).toHaveBeenCalledTimes(1);
+    expect(postSpy).toHaveBeenCalledTimes(1);
+  });
+});</code></pre>
+
+          <h4 id="spying-with-implementation-override">
+            Spying with Implementation Override
+          </h4>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+class EmailService {
+  async sendEmail(to: string, subject: string, body: string): Promise<boolean> {
+    // Real implementation would send an actual email
+    console.log(`Sending email to ${to}: ${subject}`);
+    return true;
+  }
+}
+
+describe('EmailService', () => {
+  let emailService: EmailService;
+
+  beforeEach(() => {
+    emailService = new EmailService();
+  });
+
+  test('mocks email sending', async () => {
+    const sendEmailSpy = createSpy(emailService, 'sendEmail');
+
+    // Override the implementation for testing
+    sendEmailSpy.mockImplementation(async (to, subject, body) => {
+      console.log(`Mock: Would send email to ${to}`);
+      return false; // Simulate failure
+    });
+
+    const result = await emailService.sendEmail('test@example.com', 'Test', 'Hello');
+
+    expect(sendEmailSpy).toHaveBeenCalledWith('test@example.com', 'Test', 'Hello');
+    expect(result).toBe(false); // Uses our mock implementation
+  });
+
+  test('can restore original implementation', async () => {
+    const sendEmailSpy = createSpy(emailService, 'sendEmail');
+
+    // First, mock it
+    sendEmailSpy.mockImplementation(() => Promise.resolve(false));
+
+    let result = await emailService.sendEmail('test@example.com', 'Test', 'Hello');
+    expect(result).toBe(false);
+
+    // Restore original
+    sendEmailSpy.mockRestore();
+
+    result = await emailService.sendEmail('test@example.com', 'Test', 'Hello');
+    expect(result).toBe(true); // Back to original implementation
+  });
+});</code></pre>
+
+          <h4 id="spying-on-console-methods">Spying on Console Methods</h4>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+function debugLogger(message: string, level: 'info' | 'warn' | 'error' = 'info') {
+  switch (level) {
+    case 'info':
+      console.log(`[INFO] ${message}`);
+      break;
+    case 'warn':
+      console.warn(`[WARN] ${message}`);
+      break;
+    case 'error':
+      console.error(`[ERROR] ${message}`);
+      break;
+  }
+}
+
+describe('Logger function', () => {
+  test('logs to appropriate console methods', () => {
+    const logSpy = createSpy(console, 'log');
+    const warnSpy = createSpy(console, 'warn');
+    const errorSpy = createSpy(console, 'error');
+
+    debugLogger('This is info');
+    debugLogger('This is a warning', 'warn');
+    debugLogger('This is an error', 'error');
+
+    expect(logSpy).toHaveBeenCalledWith('[INFO] This is info');
+    expect(warnSpy).toHaveBeenCalledWith('[WARN] This is a warning');
+    expect(errorSpy).toHaveBeenCalledWith('[ERROR] This is an error');
+
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+  });
+});</code></pre>
+
+          <h4 id="spying-on-date-methods">Spying on Date Methods</h4>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+function getCurrentTimestamp(): string {
+  return new Date().toISOString();
+}
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+describe('Date utilities', () => {
+  test('tracks date method calls', () => {
+    const mockDate = new Date('2023-12-25T10:00:00Z');
+    const toISOStringSpy = createSpy(mockDate, 'toISOString');
+    const toLocaleDateStringSpy = createSpy(mockDate, 'toLocaleDateString');
+
+    // Mock Date constructor to return our controlled date
+    const originalDate = global.Date;
+    global.Date = class extends Date {
+      constructor() {
+        super();
+        return mockDate;
+      }
+    } as any;
+
+    const timestamp = getCurrentTimestamp();
+    const formatted = formatDate(mockDate);
+
+    expect(toISOStringSpy).toHaveBeenCalled();
+    expect(toLocaleDateStringSpy).toHaveBeenCalledWith('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    // Restore original Date
+    global.Date = originalDate;
+  });
+});</code></pre>
+
+          <h2 id="advanced-patterns">Advanced Patterns</h2>
+
+          <h3 id="multiple-method-spying">Multiple Method Spying</h3>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+class DataProcessor {
+  validate(data: any): boolean {
+    return data && typeof data === 'object';
+  }
+
+  transform(data: any): any {
+    return { ...data, processed: true };
+  }
+
+  save(data: any): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
+  async process(data: any): Promise<any> {
+    if (!this.validate(data)) {
+      throw new Error('Invalid data');
+    }
+
+    const transformed = this.transform(data);
+    await this.save(transformed);
+    return transformed;
+  }
+}
+
+describe('DataProcessor workflow', () => {
+  let processor: DataProcessor;
+  let validateSpy: any;
+  let transformSpy: any;
+  let saveSpy: any;
+
+  beforeEach(() => {
+    processor = new DataProcessor();
+    validateSpy = createSpy(processor, 'validate');
+    transformSpy = createSpy(processor, 'transform');
+    saveSpy = createSpy(processor, 'save');
+  });
+
+  test('tracks complete workflow', async () => {
+    const inputData = { name: 'test' };
+
+    const result = await processor.process(inputData);
+
+    // Verify call order and arguments
+    expect(validateSpy).toHaveBeenCalledWith(inputData);
+    expect(transformSpy).toHaveBeenCalledWith(inputData);
+    expect(saveSpy).toHaveBeenCalledWith({ name: 'test', processed: true });
+
+    // Verify each method was called exactly once
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(transformSpy).toHaveBeenCalledTimes(1);
+    expect(saveSpy).toHaveBeenCalledTimes(1);
+
+    expect(result).toEqual({ name: 'test', processed: true });
+  });
+
+  test('handles validation failure', async () => {
+    validateSpy.mockReturnValue(false);
+
+    await expect(processor.process(null)).rejects.toThrow('Invalid data');
+
+    expect(validateSpy).toHaveBeenCalledWith(null);
+    expect(transformSpy).not.toHaveBeenCalled();
+    expect(saveSpy).not.toHaveBeenCalled();
+  });
+});</code></pre>
+
+          <h3 id="conditional-spying">Conditional Spying</h3>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+class FeatureToggleService {
+  private features: Record<string, boolean> = {};
+
+  isEnabled(feature: string): boolean {
+    return this.features[feature] === true;
+  }
+
+  enable(feature: string): void {
+    this.features[feature] = true;
+  }
+
+  disable(feature: string): void {
+    this.features[feature] = false;
+  }
+}
+
+class AppService {
+  constructor(private featureToggle: FeatureToggleService) {}
+
+  executeAction(): string {
+    if (this.featureToggle.isEnabled('newFeature')) {
+      return 'new implementation';
+    }
+    return 'legacy implementation';
+  }
+}
+
+describe('Feature toggle integration', () => {
+  let featureToggle: FeatureToggleService;
+  let appService: AppService;
+  let isEnabledSpy: any;
+
+  beforeEach(() => {
+    featureToggle = new FeatureToggleService();
+    appService = new AppService(featureToggle);
+    isEnabledSpy = createSpy(featureToggle, 'isEnabled');
+  });
+
+  test('checks feature when enabled', () => {
+    featureToggle.enable('newFeature');
+
+    const result = appService.executeAction();
+
+    expect(isEnabledSpy).toHaveBeenCalledWith('newFeature');
+    expect(result).toBe('new implementation');
+  });
+
+  test('checks feature when disabled', () => {
+    // Feature is disabled by default
+
+    const result = appService.executeAction();
+
+    expect(isEnabledSpy).toHaveBeenCalledWith('newFeature');
+    expect(result).toBe('legacy implementation');
+  });
+
+  test('can mock feature toggle responses', () => {
+    // Mock the feature toggle to return true regardless of actual state
+    isEnabledSpy.mockReturnValue(true);
+
+    const result = appService.executeAction();
+
+    expect(isEnabledSpy).toHaveBeenCalledWith('newFeature');
+    expect(result).toBe('new implementation');
+  });
+});</code></pre>
+
+          <h3 id="spy-call-analysis">Spy Call Analysis</h3>
+
+          <pre><code class="language-typescript">import { createSpy } from '@rageltd/bun-test-utils';
+
+class CacheService {
+  private cache = new Map<string, any>();
+
+  get(key: string): any {
+    return this.cache.get(key);
+  }
+
+  set(key: string, value: any): void {
+    this.cache.set(key, value);
+  }
+
+  has(key: string): boolean {
+    return this.cache.has(key);
+  }
+
+  delete(key: string): boolean {
+    return this.cache.delete(key);
+  }
+}
+
+class DataService {
+  constructor(private cache: CacheService) {}
+
+  async getData(id: string): Promise<any> {
+    if (this.cache.has(id)) {
+      return this.cache.get(id);
+    }
+
+    // Simulate API call
+    const data = { id, data: `data-${id}`, timestamp: Date.now() };
+    this.cache.set(id, data);
+    return data;
+  }
+}
+
+describe('Cache usage analysis', () => {
+  let cache: CacheService;
+  let dataService: DataService;
+  let hasSpy: any;
+  let getSpy: any;
+  let setSpy: any;
+
+  beforeEach(() => {
+    cache = new CacheService();
+    dataService = new DataService(cache);
+    hasSpy = createSpy(cache, 'has');
+    getSpy = createSpy(cache, 'get');
+    setSpy = createSpy(cache, 'set');
+  });
+
+  test('analyzes cache miss scenario', async () => {
+    const result = await dataService.getData('user-1');
+
+    // Analyze the call sequence
+    expect(hasSpy).toHaveBeenCalledBefore(getSpy);
+    expect(hasSpy).toHaveBeenCalledBefore(setSpy);
+
+    // Verify specific calls
+    expect(hasSpy).toHaveBeenCalledWith('user-1');
+    expect(getSpy).not.toHaveBeenCalled(); // Cache miss, so get not called
+    expect(setSpy).toHaveBeenCalledWith('user-1', expect.objectContaining({
+      id: 'user-1',
+      data: 'data-user-1'
+    }));
+
+    expect(result.id).toBe('user-1');
+  });
+
+  test('analyzes cache hit scenario', async () => {
+    // Pre-populate cache
+    cache.set('user-2', { id: 'user-2', data: 'cached-data' });
+
+    const result = await dataService.getData('user-2');
+
+    // Verify cache hit behavior
+    expect(hasSpy).toHaveBeenCalledWith('user-2');
+    expect(getSpy).toHaveBeenCalledWith('user-2');
+    expect(setSpy).not.toHaveBeenCalled(); // No new cache entry
+
+    expect(result.data).toBe('cached-data');
+  });
+
+  test('tracks call frequencies', async () => {
+    // Make multiple calls
+    await dataService.getData('item-1');
+    await dataService.getData('item-1'); // Should hit cache
+    await dataService.getData('item-2');
+
+    // Analyze call patterns
+    expect(hasSpy).toHaveBeenCalledTimes(3);
+    expect(getSpy).toHaveBeenCalledTimes(1); // Only for the cache hit
+    expect(setSpy).toHaveBeenCalledTimes(2); // For item-1 and item-2
+
+    // Verify specific call arguments
+    expect(hasSpy.mock.calls).toEqual([
+      ['item-1'],
+      ['item-1'],
+      ['item-2']
+    ]);
+  });
+});</code></pre>
+
+          <h2 id="best-practices">Best Practices</h2>
+
+          <h3 id="use-spies-for-integration-testing">
+            1. Use Spies for Integration Testing
+          </h3>
+
+          <p></p>Spies are ideal when you want to test real implementations:</p>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Good use of spies - testing real behavior
+const loggerSpy = createSpy(logger, 'info');
+
+userService.createUser(userData); // Real implementation
+
+expect(loggerSpy).toHaveBeenCalledWith('User created: ', userData);</code></pre>
+          </div>
+
+          <div class="callout callout-warning">
+            <pre><code class="language-typescript">// ⚠️ Consider mocks instead if you don't want real side effects
+const emailSpy = createSpy(emailService, 'send');
+// This will actually send emails if not mocked!</code></pre>
+          </div>
+
+          <h3 id="clean-up-spies">2. Clean Up Spies</h3>
+
+          <p>Restore spies to prevent affecting other tests:</p>
+
+          <pre><code class="language-typescript">describe('User service', () => {
+  let consoleSpy: any;
+
+  beforeEach(() => {
+    consoleSpy = createSpy(console, 'log');
+  });
+
+  afterEach(() => {
+    consoleSpy.mockRestore();
+  });
+
+  // Or use automatic cleanup
+  afterAll(() => {
+    // Bun's mock.restore() will clean up all spies
+    mock.restore();
+  });
+});</code></pre>
+
+          <h3 id="verify-call-order">3. Verify Call Order</h3>
+
+          <p>Use spies to verify that methods are called in the correct sequence:</p>
+
+          <pre><code class="language-typescript">test('verifies method call order', async () => {
+  const validateSpy = createSpy(service, 'validate');
+  const processSpy = createSpy(service, 'process');
+  const saveSpy = createSpy(service, 'save');
+
+  await service.handleRequest(data);
+
+  expect(validateSpy).toHaveBeenCalledBefore(processSpy);
+  expect(processSpy).toHaveBeenCalledBefore(saveSpy);
+});</code></pre>
+
+          <h3 id="combine-with-partial-mocking">4. Combine with Partial Mocking</h3>
+
+          <p>Spy on some methods while mocking others:</p>
+
+          <pre><code class="language-typescript">test('partial spying and mocking', () => {
+  const realMethodSpy = createSpy(service, 'realMethod');
+  const mockMethod = createMock(() => 'mocked result');
+
+  service.mockMethod = mockMethod;
+
+  service.complexOperation();
+
+  expect(realMethodSpy).toHaveBeenCalled(); // Real implementation
+  expect(mockMethod).toHaveBeenCalled(); // Mocked implementation
+});</code></pre>
+
+          <h2 id="troubleshooting">Troubleshooting</h2>
+
+          <h3 id="spy-not-capturing-calls">Spy Not Capturing Calls</h3>
+
+          <p>Ensure the spy is created before the method is called:</p>
+
+          <div class="callout callout-error">
+            <pre><code class="language-typescript">// ❌ Spy created after method call
+service.doSomething();
+const spy = createSpy(service, 'doSomething');</code></pre>
+          </div>
+
+          <div class="callout callout-success">
+            <pre><code class="language-typescript">// ✅ Spy created before method call
+const spy = createSpy(service, 'doSomething');
+service.doSomething();</code></pre>
+          </div>
+
+          <h3 id="method-not-spyable">Method Not Spyable</h3>
+
+          <p>Some methods cannot be spied on (e.g., non-enumerable properties):</p>
+
+          <pre><code class="language-typescript">// If spying fails, you might need to mock the entire method
+if (typeof service.method === 'function') {
+  const spy = createSpy(service, 'method');
+} else {
+  // Fallback to manual mocking
+  const originalMethod = service.method;
+  service.method = createMock(originalMethod);
+}</code></pre>
+
+          <h3 id="typescript-errors-with-spies">TypeScript Errors with Spies</h3>
+
+          <p>Use proper typing for complex spy scenarios:</p>
+
+          <pre><code class="language-typescript">interface ServiceInterface {
+  method(arg: string): Promise<number>;
+}
+
+class Service implements ServiceInterface {
+  async method(arg: string): Promise<number> {
+    return arg.length;
+  }
+}
+
+// Type the spy properly
+const service = new Service();
+const spy: ReturnType<typeof spyOn> = createSpy(service, 'method');</code></pre>
+
+          <div class="page-navigation">
+            <a href="partial-mocks.html" class="nav-prev">Partial Mocks</a>
+            <a href="cleanup-utilities.html" class="nav-next">Cleanup Utilities</a>
+          </div>
+
+          <h2 id="see-also">See Also</h2>
+
+          <ul>
+            <li>
+              <a href="mock-utilities.html">Mock Utilities</a> - For creating
+              mock functions
+            </li>
+            <li>
+              <a href="module-mocking.html">Module Mocking</a> - For mocking
+              entire modules
+            </li>
+            <li>
+              <a href="testing-patterns.html">Testing Patterns</a> - Advanced
+              testing strategies
+            </li>
+            <li>
+              <a href="cleanup-utilities.html">Cleanup Utilities</a> - For
+              managing test cleanup
+            </li>
+          </ul>
+        </div>
+      </main>
     </div>
 
     <script src="js/gitbook.js"></script>
     <script>
-        hljs.highlightAll();
+      hljs.highlightAll();
     </script>
-</body>
+  </body>
 </html>

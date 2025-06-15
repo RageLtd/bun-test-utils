@@ -8,8 +8,10 @@
   --sidebar-bg: #fafafa;
   --sidebar-width: 300px;
   --content-max-width: 800px;
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --code-font: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  --code-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
   --line-height: 1.6;
 }
 
@@ -134,7 +136,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0 0 16px 0;
   font-weight: 600;
   line-height: 1.4;
@@ -182,7 +189,8 @@ a:hover {
 }
 
 /* Lists */
-ul, ol {
+ul,
+ol {
   margin: 0 0 16px 0;
   padding-left: 24px;
 }
@@ -258,7 +266,8 @@ table {
   border: 1px solid var(--border-color);
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
@@ -374,12 +383,12 @@ blockquote {
 }
 
 .nav-prev::before {
-  content: '←';
+  content: "←";
   margin-right: 8px;
 }
 
 .nav-next::after {
-  content: '→';
+  content: "→";
   margin-left: 8px;
 }
 
