@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basic Testing - @rageltd/bun-test-utils</title>
-    <meta name="description" content="Basic testing examples and patterns using @rageltd/bun-test-utils">
+    <meta name="description" content="Learn the basics of testing with @rageltd/bun-test-utils - module mocking and cleanup patterns.">
     <link rel="stylesheet" href="css/gitbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
 </head>
-<body></body>
+<body>
     <button class="mobile-toggle">☰</button>
 
     <div class="gitbook-container">
@@ -51,28 +50,7 @@
                     <h3 class="nav-section-title">API Reference</h3>
                     <ul class="nav-subsection">
                         <li class="nav-item">
-                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="module-mocking.html" class="nav-link">Module Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
                         </li>
                         <li class="nav-item">
                             <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
@@ -105,12 +83,6 @@
                             <a href="basic-testing.html" class="nav-link active">Basic Testing</a>
                         </li>
                         <li class="nav-item">
-                            <a href="react-components.html" class="nav-link">React Components</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="graphql-testing.html" class="nav-link">GraphQL Testing</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
                         </li>
                     </ul>
@@ -135,184 +107,74 @@
 
         <main class="main-content">
             <div class="content-wrapper">
-                <h1 id="basic-testing">Basic Testing Examples</h1>
+                <h1 id="basic-testing">Basic Testing</h1>
 
-                <p>This guide provides practical examples of using <code>@rageltd/bun-test-utils</code> for common testing scenarios. Each example builds on basic concepts to help you understand how to apply the utilities in real-world situations.</p>
+                <p>Learn the fundamentals of testing with <code>@rageltd/bun-test-utils</code>. This guide covers the core patterns and utilities for effective testing in Bun projects.</p>
 
-                <h2 id="test-setup">Test Setup and Structure</h2>
+                <div class="callout callout-info">
+                    <p></p><strong>Prerequisites:</strong> This guide assumes familiarity with <code>bun:test</code> and basic testing concepts.</p>
+                </div>
+
+                <h2 id="test-setup">Test Setup</h2>
 
                 <p>Start every test file with proper setup to ensure clean test isolation:</p>
 
-                <pre><code class="language-typescript">// test/example.test.ts
-import { describe, it, expect, beforeEach, afterAll } from 'bun:test';
-import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
+                <pre><code class="language-typescript">import { describe, it, expect, beforeEach, afterEach, afterAll } from 'bun:test';
+import {
+  setupTestCleanup,
+  createModuleMocker,
+  clearMockRegistry
+} from '@rageltd/bun-test-utils';
 
-// Enable automatic cleanup for all tests in this file
+// Setup automatic cleanup (call once per test file)
 setupTestCleanup();
 
-// Create a module mocker instance for this test file
 const mockModules = createModuleMocker();
 
-describe('My Component Tests', () => {
-  beforeEach(async () => {
-    // Setup mocks for each test
+describe('My Test Suite', () => {
+  beforeEach(() => {
+    // Setup test-specific mocks here
+  });
+
+  afterEach(() => {
+    // Additional cleanup if needed
+    clearMockRegistry();
   });
 
   afterAll(() => {
-    // Clean up all module mocks when tests complete
+    // Restore all module mocks
     mockModules.restoreAll();
   });
 
-  // Tests go here...
+  // Your tests here
 });</code></pre>
 
-                <h2 id="simple-function-mocking">Simple Function Mocking</h2>
+                <h2 id="module-mocking">Module Mocking</h2>
 
-                <p>Test basic function behavior with mock utilities:</p>
+                <p>Mock entire modules to isolate units under test:</p>
 
-                <pre><code class="language-typescript">import { createMock } from '@rageltd/bun-test-utils';
-
-describe('Function Mocking', () => {
-  it('should mock a simple function', () => {
-    // Create a mock function
-    const mockCalculate = createMock((a: number, b: number) => a + b);
-
-    // Use the mock
-    const result = mockCalculate(2, 3);
-
-    // Verify behavior
-    expect(mockCalculate).toHaveBeenCalledWith(2, 3);
-    expect(result).toBe(5);
-  });
-
-  it('should mock a function without implementation', () => {
-    // Create a mock without default implementation
-    const mockFn = createMock();
-
-    // Set return value for this test
-    mockFn.mockReturnValue('test result');
-
-    const result = mockFn('input');
-
-    expect(mockFn).toHaveBeenCalledWith('input');
-    expect(result).toBe('test result');
-  });
-});</code></pre>
-
-                <h2 id="async-testing">Async Function Testing</h2>
-
-                <p>Handle asynchronous operations in your tests:</p>
-
-                <pre><code class="language-typescript">import { waitFor, createMock } from '@rageltd/bun-test-utils';
-
-describe('Async Operations', () => {
-  it('should test async functions', async () => {
-    // Mock an async function
-    const mockAsyncFn = createMock(async (data: string) => {
-      await waitFor(10); // Simulate async work
-      return `Processed: ${data}`;
-    });
-
-    // Test the async operation
-    const result = await mockAsyncFn('test data');
-
-    expect(mockAsyncFn).toHaveBeenCalledWith('test data');
-    expect(result).toBe('Processed: test data');
-  });
-
-  it('should handle async errors', async () => {
-    // Mock an async function that throws
-    const mockErrorFn = createMock(async () => {
-      await waitFor(5);
-      throw new Error('Async error');
-    });
-
-    // Test error handling
-    await expect(mockErrorFn()).rejects.toThrow('Async error');
-  });
-
-  it('should test timing-dependent code', async () => {
-    let completed = false;
-
-    // Start async operation
-    setTimeout(() => {
-      completed = true;
-    }, 100);
-
-    // Wait for operation to complete
-    await waitFor(150);
-
-    expect(completed).toBe(true);
-  });
-});</code></pre>
-
-                <h2 id="object-mocking">Object and Method Mocking</h2>
-
-                <p>Mock object methods and properties:</p>
-
-                <pre><code class="language-typescript">import { createSpy, createPartialMock } from '@rageltd/bun-test-utils';
-
-// Example service class
-class UserService {
-  async getUser(id: string) {
-    return { id, name: 'Real User' };
-  }
-
-  async saveUser(user: { id: string; name: string }) {
-    return { ...user, saved: true };
-  }
-}
-
-describe('Object Mocking', () => {
-  let userService: UserService;
-
-  beforeEach(() => {
-    userService = new UserService();
-  });
-
-  it('should spy on object methods', async () => {
-    // Create a spy on the getUser method
-    const getUserSpy = createSpy(userService, 'getUser');
-    getUserSpy.mockResolvedValue({ id: '1', name: 'Mocked User' });
-
-    // Use the service
-    const user = await userService.getUser('1');
-
-    expect(getUserSpy).toHaveBeenCalledWith('1');
-    expect(user.name).toBe('Mocked User');
-  });
-
-  it('should create partial mocks', () => {
-    // Create a partial mock of a user object
-    const mockUser = createPartialMock<{ id: string; name: string; email: string }>(
-      { id: '1', name: 'Test User' }, // original partial data
-      { email: 'test@example.com' }    // overrides
-    );
-
-    expect(mockUser.id).toBe('1');
-    expect(mockUser.name).toBe('Test User');
-    expect(mockUser.email).toBe('test@example.com');
-  });
-});</code></pre>
-
-                <h2 id="module-mocking-basics">Basic Module Mocking</h2>
-
-                <p>Mock entire modules for unit testing:</p>
-
-                <pre><code class="language-typescript">import { createModuleMocker, createMock } from '@rageltd/bun-test-utils';
+                <pre><code class="language-typescript">import { createModuleMocker } from '@rageltd/bun-test-utils';
 
 const mockModules = createModuleMocker();
 
-describe('Module Mocking', () => {
+describe('Service Tests', () => {
   beforeEach(async () => {
-    // Mock a utility module
-    await mockModules.mock('@/utils/api', () => ({
-      fetchUser: createMock(async (id: string) => ({
-        id,
-        name: 'Mocked User',
-        email: 'mock@example.com'
-      })),
-      updateUser: createMock(async (user: any) => ({ ...user, updated: true }))
+    // Mock external dependencies
+    await mockModules.mock('@/services/api', () => ({
+      apiClient: {
+        get: () => Promise.resolve({ data: 'mocked data' }),
+        post: () => Promise.resolve({ success: true }),
+        delete: () => Promise.resolve({ deleted: true })
+      }
+    }));
+
+    // Mock utility modules
+    await mockModules.mock('@/utils/logger', () => ({
+      logger: {
+        info: () => {},
+        error: () => {},
+        warn: () => {}
+      }
     }));
   });
 
@@ -320,194 +182,196 @@ describe('Module Mocking', () => {
     mockModules.restoreAll();
   });
 
-  it('should use mocked module functions', async () => {
-    // Import the module - it will be mocked
-    const { fetchUser } = await import('@/utils/api');
-
-    const user = await fetchUser('123');
-
-    expect(fetchUser).toHaveBeenCalledWith('123');
-    expect(user.name).toBe('Mocked User');
+  it('should handle API calls with mocked services', async () => {
+    // Test code that uses the mocked modules
+    // The mocks are automatically available
+    expect(true).toBe(true); // Your actual test here
   });
 });</code></pre>
 
-                <h2 id="error-testing">Error Handling and Edge Cases</h2>
+                <h2 id="cleanup-patterns">Cleanup Patterns</h2>
 
-                <p>Test error conditions and edge cases:</p>
+                <p>Ensure proper test isolation with cleanup utilities:</p>
 
-                <pre><code class="language-typescript">import { createMock } from '@rageltd/bun-test-utils';
+                <pre><code class="language-typescript">import {
+  setupTestCleanup,
+  withMockCleanup,
+  clearMockRegistry
+} from '@rageltd/bun-test-utils';
 
-describe('Error Handling', () => {
-  it('should test function that throws errors', () => {
-    const mockFn = createMock(() => {
-      throw new Error('Test error');
-    });
-
-    expect(() => mockFn()).toThrow('Test error');
-    expect(mockFn).toHaveBeenCalled();
-  });
-
-  it('should test async function that rejects', async () => {
-    const mockAsyncFn = createMock(async () => {
-      throw new Error('Async error');
-    });
-
-    await expect(mockAsyncFn()).rejects.toThrow('Async error');
-  });
-
-  it('should test with different mock implementations', () => {
-    const mockFn = createMock();
-
-    // First call returns success
-    mockFn.mockReturnValueOnce('success');
-    // Second call throws error
-    mockFn.mockImplementationOnce(() => {
-      throw new Error('Second call error');
-    });
-
-    expect(mockFn()).toBe('success');
-    expect(() => mockFn()).toThrow('Second call error');
-  });
-});</code></pre>
-
-                <h2 id="test-data-management">Test Data Management</h2>
-
-                <p>Organize and manage test data effectively:</p>
-
-                <pre><code class="language-typescript">import { createPartialMock } from '@rageltd/bun-test-utils';
-
-// Test data factories
-const createMockUser = (overrides = {}) =>
-  createPartialMock(
-    {
-      id: '1',
-      name: 'Test User',
-      email: 'test@example.com',
-      active: true
-    },
-    overrides
-  );
-
-const createMockApiResponse = (data: any, overrides = {}) =>
-  createPartialMock(
-    {
-      success: true,
-      data,
-      message: 'Success',
-      timestamp: new Date().toISOString()
-    },
-    overrides
-  );
-
-describe('Test Data Management', () => {
-  it('should use test data factories', () => {
-    // Create standard test user
-    const user = createMockUser();
-    expect(user.name).toBe('Test User');
-
-    // Create user with overrides
-    const adminUser = createMockUser({
-      name: 'Admin User',
-      role: 'admin'
-    });
-    expect(adminUser.name).toBe('Admin User');
-    expect(adminUser.email).toBe('test@example.com'); // inherited
-  });
-
-  it('should create consistent API responses', () => {
-    const userData = createMockUser();
-    const response = createMockApiResponse(userData);
-
-    expect(response.success).toBe(true);
-    expect(response.data.name).toBe('Test User');
-  });
-});</code></pre>
-
-                <h2 id="cleanup-patterns">Cleanup and Isolation Patterns</h2>
-
-                <p>Ensure proper test isolation and cleanup:</p>
-
-                <pre><code class="language-typescript">import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
-
-// Global cleanup for the entire test file
-setupTestCleanup();
-
-describe('Cleanup Patterns', () => {
-  const mockModules = createModuleMocker();
-  let testState: any = {};
-
-  beforeEach(() => {
-    // Reset test state for each test
-    testState = {};
-  });
+// Pattern 1: Manual cleanup setup
+describe('Manual Cleanup Example', () => {
+  setupTestCleanup(); // Sets up automatic mock.restore()
 
   afterEach(() => {
-    // Additional cleanup if needed
-    testState = {};
+    clearMockRegistry(); // Clear custom registry
+  });
+
+  it('should clean up properly', () => {
+    // Test code here
+  });
+});
+
+// Pattern 2: Automatic cleanup wrapper
+withMockCleanup(() => {
+  describe('Automatic Cleanup Example', () => {
+    // Cleanup is handled automatically
+
+    it('should handle cleanup behind the scenes', () => {
+      // Test code here - cleanup happens automatically
+    });
+  });
+});</code></pre>
+
+                <h2 id="module-restoration">Module Restoration</h2>
+
+                <p>Handle complex module mocking scenarios with proper restoration:</p>
+
+                <pre><code class="language-typescript">import { createModuleMocker, restoreModules } from '@rageltd/bun-test-utils';
+
+// Pattern 1: Using createModuleMocker (recommended)
+const mockModules = createModuleMocker();
+
+describe('Module Mocker Pattern', () => {
+  beforeEach(async () => {
+    await mockModules.mock('@/config', () => ({
+      config: { apiUrl: 'http://test.api', timeout: 1000 }
+    }));
   });
 
   afterAll(() => {
-    // Cleanup all module mocks
-    mockModules.restoreAll();
+    mockModules.restoreAll(); // Restores all mocked modules
+  });
+});
+
+// Pattern 2: Manual restoration (advanced)
+describe('Manual Restoration Pattern', () => {
+  // Store originals at the top of test file
+  const originals = {
+    config: import('@/config'),
+    utils: import('@/utils')
+  };
+
+  beforeEach(async () => {
+    // Apply mocks
+    // ... mocking code
   });
 
-  it('should have clean state for each test', () => {
-    testState.value = 'test1';
-    expect(testState.value).toBe('test1');
-  });
-
-  it('should not see state from previous test', () => {
-    // testState should be empty due to beforeEach cleanup
-    expect(testState.value).toBeUndefined();
+  afterAll(async () => {
+    // Restore manually
+    restoreModules({
+      '@/config': await originals.config,
+      '@/utils': await originals.utils
+    });
   });
 });</code></pre>
 
-                <h2 id="testing-checklist">Testing Best Practices Checklist</h2>
-
-                <div class="callout callout-info">
-                    <h3>Before Writing Tests</h3>
-                    <ul>
-                        <li>✅ Import <code>setupTestCleanup(</ul>)</code> at the top of test files</li>
-                        <li>✅ Create module mocker instances for each test file</li>
-                        <li>✅ Use <code>beforeEach</code> for test setup</li>
-                        <li>✅ Use <code>afterAll</code> for module mock cleanup</li>
-                    </ul>
-                </div>
+                <h2 id="testing-best-practices">Testing Best Practices</h2>
 
                 <div class="callout callout-success">
-                    <h3>During Testing</h3>
+                    <h3>✅ Do's</h3>
                     <ul>
-                        <li>✅</ul> Test both success and error cases</li>
-                        <li>✅ Verify function calls with <code>toHaveBeenCalledWith</code></li>
-                        <li>✅ Use <code>waitFor</code> for async operations</li>
-                        <li>✅ Create reusable test data factories</li>
+                        <li>Always call <code>setupTestCleanup()</code> at the top of test files</li>
+                        <li>Use <code>createModuleMocker()</code> for consistent module mocking</li>
+                        <li>Call <code>restoreAll()</code> in <code>afterAll</code> hooks</li>
+                        <li>Mock only what you need to isolate the unit under test</li>
+                        <li>Use descriptive test names that explain the expected behavior</li>
+                        <li>Group related tests with <code>describe</code> blocks</li>
                     </ul>
                 </div>
 
-                <div class="callout callout-warning">
-                    <h3>Common Pitfalls to Avoid</h3>
+                <div class="callout callout-error">
+                    <h3>❌ Don'ts</h3>
                     <ul>
-                        <li>❌ Forgetting to restore module mocks</li>
-                        <li>❌ Not using <code>setupTestCleanup()</code></li>
-                        <li>❌ Sharing state between tests</li>
-                        <li>❌ Not testing error conditions</li>
+                        <li>Don't forget to restore mocks after tests</li>
+                        <li>Don't mock implementation details you don't need</li>
+                        <li>Don't share mock state between tests</li>
+                        <li>Don't rely on test execution order</li>
+                        <li>Don't mock everything - test real behavior when possible</li>
                     </ul>
                 </div>
 
-                <h2 id="next-steps">Next Steps</h2>
+                <h2 id="common-patterns">Common Testing Patterns</h2>
 
-                <p>Now that you understand basic testing patterns, explore more advanced examples:</p>
+                <h3 id="testing-error-conditions">Testing Error Conditions</h3>
 
-                <ul>
-                    <li><a href="react-components.html">React Components</a> - Testing React components and hooks</li>
-                    <li><a href="graphql-testing.html">GraphQL Testing</a> - Mocking GraphQL operations</li>
-                    <li><a href="module-mocking-examples.html">Module Mocking</a> - Advanced module mocking patterns</li>
-                    <li><a href="testing-patterns.html">Testing Patterns</a> - Best practices and patterns</li>
-                </ul>
+                <pre><code class="language-typescript">describe('Error Handling', () => {
+  beforeEach(async () => {
+    // Mock a service that can throw errors
+    await mockModules.mock('@/services/api', () => ({
+      apiClient: {
+        get: () => Promise.reject(new Error('Network error')),
+        post: () => { throw new Error('Validation error'); }
+      }
+    }));
+  });
+
+  it('should handle network errors gracefully', async () => {
+    // Test error handling behavior
+    await expect(async () => {
+      // Code that uses the mocked failing service
+    }).toThrow('Network error');
+  });
+
+  it('should handle validation errors', () => {
+    expect(() => {
+      // Code that triggers validation error
+    }).toThrow('Validation error');
+  });
+});</code></pre>
+
+                <h3 id="testing-different-scenarios">Testing Different Scenarios</h3>
+
+                <pre><code class="language-typescript">describe('Feature Tests', () => {
+  it('should handle success case', async () => {
+    await mockModules.mock('@/services/user', () => ({
+      userService: {
+        getUser: () => Promise.resolve({ id: 1, name: 'John Doe' })
+      }
+    }));
+
+    // Test successful user retrieval
+  });
+
+  it('should handle user not found', async () => {
+    await mockModules.mock('@/services/user', () => ({
+      userService: {
+        getUser: () => Promise.resolve(null)
+      }
+    }));
+
+    // Test null user handling
+  });
+
+  it('should handle service unavailable', async () => {
+    await mockModules.mock('@/services/user', () => ({
+      userService: {
+        getUser: () => Promise.reject(new Error('Service unavailable'))
+      }
+    }));
+
+    // Test service error handling
+  });
+});</code></pre>
+
+                <h2 id="summary">Summary</h2>
+
+                <p>Key takeaways for effective testing with <code>@rageltd/bun-test-utils</code>:</p>
+
+                <div class="callout callout-info">
+                    <ul>
+                        <li></ul>✅ Always set up proper cleanup with <code>setupTestCleanup()</code></li>
+                        <li>✅ Use <code>createModuleMocker()</code> for consistent module mocking</li>
+                        <li>✅ Restore all mocks in <code>afterAll</code> hooks</li>
+                        <li>✅ Test both success and error cases</li>
+                        <li>✅ Keep tests isolated and independent</li>
+                        <li>✅ Use clear, descriptive test names</li>
+                    </ul>
+                </div>
 
                 <div class="page-navigation">
-                    <a href="working-with-bun.html" class="nav-prev">Working with Bun</a>
-                    <a href="react-components.html" class="nav-next">React Components</a>
+                    <a href="quick-start.html" class="nav-prev">Quick Start</a>
+                    <a href="module-mocking-examples.html" class="nav-next">Module Mocking Examples</a>
                 </div>
             </div>
         </main>
@@ -515,6 +379,7 @@ describe('Cleanup Patterns', () => {
 
     <script src="js/gitbook.js"></script>
     <script>
+        // Initialize syntax highlighting
         hljs.highlightAll();
     </script>
 </body>

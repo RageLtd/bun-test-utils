@@ -14,6 +14,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@semantic-release/commit-analyzer": "^13.0.1",
@@ -22,7 +23,7 @@
     "@types/bun": "latest",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "lefthook": "^1.11.13",
+    "lefthook": "^1.11.14",
     "semantic-release": "^24.2.5",
     "typescript": "^5.8.3"
   },
@@ -37,7 +38,9 @@
     "url": "https://github.com/rageltd/bun-test-utils/issues"
   },
   "description": "A collection of test utilities for Bun projects",
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/rageltd/bun-test-utils#readme",
   "keywords": [
     "bun",
@@ -46,10 +49,9 @@
     "typescript",
     "mocking",
     "mock",
-    "spy",
-    "react",
-    "hooks",
-    "graphql"
+    "module-mocking",
+    "cleanup",
+    "test-isolation"
   ],
   "license": "The Unlicense",
   "publishConfig": {
@@ -67,7 +69,7 @@
     "test": "bun test",
     "test:build": "bun run build && echo 'Testing CJS:' && bun -e \"console.log(Object.keys(require('./dist/index.cjs')))\" && echo 'Testing ESM:' && bun -e \"import('./dist/index.js').then(m => console.log(Object.keys(m)))\"",
     "lint": "bunx @biomejs/biome check src/",
-    "lint:fix": "bunx @biomejs/biome check --apply src/",
+    "lint:fix": "bunx @biomejs/biome check --apply ./",
     "prepare": "bun scripts/setup-hooks.js",
     "commit": "cz",
     "release": "semantic-release",

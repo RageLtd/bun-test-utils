@@ -89,15 +89,15 @@ class MockRegistry {
 const mockRegistry = new MockRegistry();
 
 /**
- * Helper to create a module mocker with proper restoration
+ * Helper to create a module mocker with proper restoration.
  *
  * Usage:
  * ```typescript
  * const mockModules = createModuleMocker();
  *
  * beforeEach(async () => {
- *   await mockModules.mock("@pilot/hooks", () => ({
- *     useWiki: createMockHook("useWiki", { currentWiki: null }),
+ *   await mockModules.mock("./someModule", () => ({
+ *     someExport: jest.fn(),
  *   }));
  * });
  *
@@ -105,6 +105,7 @@ const mockRegistry = new MockRegistry();
  *   mockModules.restoreAll();
  * });
  * ```
+ * This utility ensures original modules are restored after tests, working around Bun's mock.restore() limitations.
  */
 export function createModuleMocker() {
   const originalModules = new Map<string, unknown>();
@@ -145,29 +146,24 @@ export function createModuleMocker() {
 }
 
 /**
- * Pattern for storing and restoring module mocks
+ * Restore a set of modules to their original implementations.
  *
  * Usage in test file:
  * ```typescript
  * // Store originals at the top of the test file
  * const originals = {
- *   hooks: await import("@pilot/hooks"),
- *   graphql: await import("@pilot/graphql"),
+ *   someModule: await import("./someModule"),
+ *   anotherModule: await import("./anotherModule"),
  * };
- *
- * beforeEach(() => {
- *   mock.module("@pilot/hooks", () => ({
- *     useWiki: createMockHook("useWiki", { currentWiki: null }),
- *   }));
- * });
  *
  * afterAll(() => {
  *   restoreModules({
- *     "@pilot/hooks": originals.hooks,
- *     "@pilot/graphql": originals.graphql,
+ *     "./someModule": originals.someModule,
+ *     "./anotherModule": originals.anotherModule,
  *   });
  * });
  * ```
+ * This is useful for restoring multiple modules after tests that use mocking.
  */
 export function restoreModules(modulesMap: Record<string, unknown>): void {
   mock.restore();
