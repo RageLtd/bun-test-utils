@@ -1,13 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
 import {
   clearMockRegistry,
-  createMock,
-  createMockComponent,
-  createMockHook,
   createModuleMocker,
-  createPartialMock,
-  createSpy,
-  waitFor,
+  setupTestCleanup,
+  withMockCleanup,
 } from "./index";
 
 describe("Integration Tests", () => {
@@ -21,59 +17,65 @@ describe("Integration Tests", () => {
     clearMockRegistry();
   });
 
-  it("should handle multiple utilities working together", async () => {
-    expect.assertions(6);
+  it("should handle module mocker and cleanup utilities working together", async () => {
+    expect.assertions(4);
 
     // Test module mocker
     const moduleMocker = createModuleMocker();
     expect(typeof moduleMocker.mock).toBe("function");
+    expect(typeof moduleMocker.restore).toBe("function");
+    expect(typeof moduleMocker.restoreAll).toBe("function");
 
-    // Test spy
-    const testObject = { method: () => "original" };
-    const spy = createSpy(testObject, "method");
-    testObject.method();
-    expect(spy).toHaveBeenCalledTimes(1);
-
-    // Test mock function
-    const mockFn = createMock(() => "mocked");
-    expect(mockFn()).toBe("mocked");
-
-    // Test mock component
-    const MockButton = createMockComponent("Button");
-    const buttonResult = MockButton({ children: "Click me" });
-    expect(buttonResult).toContain("Button");
-
-    // Test mock hook
-    const mockHook = createMockHook("useTest", { data: "test" });
-    expect(mockHook()).toEqual({ data: "test" });
-
-    // Test partial mock
-    const partialMock = createPartialMock<{
-      original: boolean;
-      override?: boolean;
-    }>({ original: true }, { override: true });
-    expect(partialMock).toEqual({ original: true, override: true });
-
-    // Test async utility
-    await waitFor(1);
+    // Test that setupTestCleanup doesn't throw
+    expect(() => setupTestCleanup()).not.toThrow();
   });
 
-  it("should handle cleanup scenarios", () => {
-    expect.assertions(3);
+  it("should handle cleanup scenarios with module mocker", () => {
+    expect.assertions(1);
 
-    // Create multiple utilities
+    // Create module mocker
     const moduleMocker = createModuleMocker();
-    const spy = createSpy({ test: () => {} }, "test");
-    const mockFn = createMock();
-
-    // Verify they all exist
-    expect(typeof moduleMocker.restoreAll).toBe("function");
-    expect(typeof spy).toBe("function");
-    expect(typeof mockFn).toBe("function");
 
     // Cleanup should not throw
-    moduleMocker.restoreAll();
-    clearMockRegistry();
-    mock.restore();
+    expect(() => {
+      moduleMocker.restoreAll();
+      clearMockRegistry();
+      mock.restore();
+    }).not.toThrow();
+  });
+
+  it("should handle withMockCleanup wrapper function", () => {
+    expect.assertions(1);
+
+    // Test that withMockCleanup executes the test suite function
+    let executed = false;
+    const testSuiteFn = () => {
+      executed = true;
+    };
+
+    withMockCleanup(testSuiteFn);
+
+    expect(executed).toBe(true);
+  });
+
+  it("should handle full workflow with all utilities", async () => {
+    expect.assertions(2);
+
+    let testExecuted = false;
+
+    // Use withMockCleanup to wrap a test suite
+    withMockCleanup(() => {
+      // Setup cleanup
+      setupTestCleanup();
+
+      // Create module mocker
+      const moduleMocker = createModuleMocker();
+
+      // Verify everything is working
+      expect(typeof moduleMocker.restoreAll).toBe("function");
+      testExecuted = true;
+    });
+
+    expect(testExecuted).toBe(true);
   });
 });

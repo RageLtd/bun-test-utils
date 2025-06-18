@@ -14,102 +14,19 @@ bun install @rageltd/bun-test-utils
 
 ## API Reference
 
-### Async Utilities
-
-#### `waitFor(ms?: number): Promise<void>`
-Utility to wait for async operations in tests.
-
-```typescript
-import { waitFor } from '@rageltd/bun-test-utils';
-
-// Wait for async operations to complete
-await waitFor(100);
-
-// Wait for next tick (default 0ms)
-await waitFor();
-```
-
-### Mock Utilities
-
-#### `createMock<T>(implementation?: T): Mock`
-Create a mock function with proper typing.
-
-```typescript
-import { createMock } from '@rageltd/bun-test-utils';
-
-// Simple mock
-const mockFn = createMock();
-
-// Mock with implementation
-const mockWithImpl = createMock((x: number) => x * 2);
-```
-
-### Hook Mocking
-
-#### `createMockHook<T>(hookName: string, returnValue: T): Mock`
-Create mock React hooks with return values.
-
-```typescript
-import { createMockHook } from '@rageltd/bun-test-utils';
-
-const mockUserHook = createMockHook('useUser', { 
-  id: 1, 
-  name: 'Test User' 
-});
-```
-
-### Component Mocking
-
-#### `createMockComponent(componentName: string): Component`
-Create mock React components for testing.
-
-```typescript
-import { createMockComponent } from '@rageltd/bun-test-utils';
-
-const MockButton = createMockComponent('Button');
-// Renders: <Button data-testid="mock-button" />
-```
-
-### GraphQL Mocking
-
-#### `createMockGraphQLHook(operationName: string, mockData?: unknown, loading?: boolean, error?: Error | null): GraphQLHook`
-Mock GraphQL operations with loading states and error handling.
-
-```typescript
-import { createMockGraphQLHook } from '@rageltd/bun-test-utils';
-
-// Regular query
-const mockQuery = createMockGraphQLHook('useGetUser', 
-  { user: { id: 1, name: 'John' } }
-);
-
-// Lazy query (returns [execute, result])
-const [executeQuery, queryResult] = createMockGraphQLHook('useLazyGetUser',
-  { user: { id: 1, name: 'John' } }
-);
-
-// With loading state
-const loadingQuery = createMockGraphQLHook('useGetUser', null, true);
-
-// With error
-const errorQuery = createMockGraphQLHook('useGetUser', 
-  null, false, new Error('Failed to fetch')
-);
-```
-
 ### Module Mocking
 
 #### `createModuleMocker(): ModuleMocker`
 Create a module mocker with proper cleanup for handling bun:test mocking issues.
 
 ```typescript
-import { createModuleMocker, createMockHook } from '@rageltd/bun-test-utils';
+import { createModuleMocker } from '@rageltd/bun-test-utils';
 
 const mockModules = createModuleMocker();
 
 // Mock a module
 await mockModules.mock('@/hooks', () => ({
-  useUser: createMockHook('useUser', { id: 1, name: 'Test' })
+  useUser: () => ({ id: 1, name: 'Test User' })
 }));
 
 // Restore specific module
@@ -138,37 +55,15 @@ restoreModules({
 });
 ```
 
-### Partial Mocks
-
-#### `createPartialMock<T>(original?: Partial<T>, overrides?: Partial<T>): T`
-Create type-safe partial mocks of objects.
+#### `clearMockRegistry(): void`
+Clear the mock registry (useful for test cleanup).
 
 ```typescript
-import { createPartialMock } from '@rageltd/bun-test-utils';
+import { clearMockRegistry } from '@rageltd/bun-test-utils';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-const mockUser = createPartialMock<User>({ id: 1 }, { name: 'Test User' });
-// Result: { id: 1, name: 'Test User' }
-```
-
-### Spy Utilities
-
-#### `createSpy<T, K>(object: T, methodName: K): Spy`
-Create a spy on an object method with automatic cleanup.
-
-```typescript
-import { createSpy } from '@rageltd/bun-test-utils';
-
-const userService = {
-  getUser: (id: number) => ({ id, name: 'User' })
-};
-
-const getUserSpy = createSpy(userService, 'getUser');
+afterEach(() => {
+  clearMockRegistry();
+});
 ```
 
 ### Cleanup Utilities
@@ -201,10 +96,9 @@ withMockCleanup(() => {
 
 ```typescript
 import { 
-  createMockHook, 
   createModuleMocker, 
   setupTestCleanup,
-  waitFor 
+  clearMockRegistry
 } from '@rageltd/bun-test-utils';
 
 // Setup cleanup once per file
@@ -215,20 +109,51 @@ const mockModules = createModuleMocker();
 describe('Component Tests', () => {
   beforeEach(async () => {
     await mockModules.mock('@/hooks', () => ({
-      useUser: createMockHook('useUser', { id: 1, name: 'Test User' })
+      useUser: () => ({ id: 1, name: 'Test User' })
     }));
+  });
+
+  afterEach(() => {
+    clearMockRegistry();
   });
 
   afterAll(() => {
     mockModules.restoreAll();
   });
 
-  it('should render user data', async () => {
+  it('should handle mocked modules', () => {
     // Your test here
-    await waitFor(100); // Wait for async operations
   });
 });
 ```
+
+### Using withMockCleanup Pattern
+
+```typescript
+import { withMockCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
+
+withMockCleanup(() => {
+  describe('My Test Suite', () => {
+    const mockModules = createModuleMocker();
+
+    beforeEach(async () => {
+      await mockModules.mock('@/services', () => ({
+        apiService: { getData: () => Promise.resolve({ data: 'test' }) }
+      }));
+    });
+
+    it('should work with automatic cleanup', () => {
+      // Test implementation
+    });
+  });
+});
+```
+
+## Known Issues
+
+This package addresses the known bug in bun:test where `mock.restore()` doesn't properly restore modules that were mocked with `mock.module()`.
+
+See: https://github.com/oven-sh/bun/issues/7823
 
 ## Development
 
@@ -287,5 +212,6 @@ CI will automatically handle testing, building, and releasing when merged to mai
 - 🚀 Built with Bun for performance
 - 📦 Dual package (ESM + CommonJS) support
 - 🔧 Full TypeScript support
-- 🧪 Comprehensive test utilities
+- 🧪 Module mocking utilities
+- 🔄 Automatic cleanup utilities
 - ⚡ Automated CI/CD with semantic versioning

@@ -60,38 +60,9 @@
             <h3 class="nav-section-title">API Reference</h3>
             <ul class="nav-subsection">
               <li class="nav-item">
-                <a href="async-utilities.html" class="nav-link"
-                  >Async Utilities</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="mock-utilities.html" class="nav-link"
-                  >Mock Utilities</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
-              </li>
-              <li class="nav-item">
-                <a href="component-mocking.html" class="nav-link"
-                  >Component Mocking</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="graphql-mocking.html" class="nav-link"
-                  >GraphQL Mocking</a
-                >
-              </li>
-              <li class="nav-item">
                 <a href="module-mocking.html" class="nav-link"
                   >Module Mocking</a
                 >
-              </li>
-              <li class="nav-item">
-                <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
-              </li>
-              <li class="nav-item">
-                <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
               </li>
               <li class="nav-item">
                 <a href="cleanup-utilities.html" class="nav-link active"
@@ -128,16 +99,6 @@
             <ul class="nav-subsection">
               <li class="nav-item">
                 <a href="basic-testing.html" class="nav-link">Basic Testing</a>
-              </li>
-              <li class="nav-item">
-                <a href="react-components.html" class="nav-link"
-                  >React Components</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="graphql-testing.html" class="nav-link"
-                  >GraphQL Testing</a
-                >
               </li>
               <li class="nav-item">
                 <a href="module-mocking-examples.html" class="nav-link"
@@ -215,9 +176,8 @@ setupTestCleanup();
 
 describe('User service tests', () => {
   test('first test', () => {
-    const mockFn = createMock();
     // Test implementation
-    // Mock will be automatically restored after this test
+    // Mocks will be automatically restored after this test
   });
 
   test('second test', () => {
@@ -237,8 +197,10 @@ const mockModules = createModuleMocker();
 
 describe('Component tests', () => {
   beforeEach(async () => {
-    await mockModules.mock('@/hooks', () => ({
-      useUser: createMockHook('useUser', defaultUser)
+    await mockModules.mock('@/services', () => ({
+      userService: {
+        getUser: () => Promise.resolve(defaultUser)
+      }
     }));
   });
 
@@ -435,8 +397,7 @@ setupTestCleanup();</code></pre>
             <pre><code class="language-typescript">// ❌ Bad - no cleanup, tests can interfere with each other
 describe('Tests without cleanup', () => {
   test('test 1', () => {
-    const mock = createMock();
-    // Mock persists to next test
+    // Mocks may persist to next test without cleanup
   });
 });</code></pre>
           </div>
@@ -675,21 +636,18 @@ afterEach(() => {
 
           <pre><code class="language-typescript">describe('Cleanup verification', () => {
   test('verifies cleanup works', () => {
-    const mockFn = createMock();
-
-    // Use the mock
-    mockFn('test');
-    expect(mockFn).toHaveBeenCalledWith('test');
+    // Create and use mocks
+    // Test implementation here
   });
 
   test('verifies clean state', () => {
     // This test should pass if cleanup worked
-    expect(createMock()).not.toHaveBeenCalled();
+    // No state from previous test should remain
   });
 });</code></pre>
 
           <div class="page-navigation">
-            <a href="spy-utilities.html" class="nav-prev">Spy Utilities</a>
+            <a href="module-mocking.html" class="nav-prev">Module Mocking</a>
             <a href="installation.html" class="nav-next">Installation</a>
           </div>
 
@@ -703,10 +661,6 @@ afterEach(() => {
             <li>
               <a href="testing-patterns.html">Testing Patterns</a> - Best
               practices for test organization
-            </li>
-            <li>
-              <a href="common-issues.html">Common Issues</a> - Troubleshooting
-              test problems
             </li>
             <li>
               <a href="working-with-bun.html">Working with Bun</a> - Bun-specific

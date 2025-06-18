@@ -60,38 +60,9 @@
             <h3 class="nav-section-title">API Reference</h3>
             <ul class="nav-subsection">
               <li class="nav-item">
-                <a href="async-utilities.html" class="nav-link"
-                  >Async Utilities</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="mock-utilities.html" class="nav-link"
-                  >Mock Utilities</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
-              </li>
-              <li class="nav-item">
-                <a href="component-mocking.html" class="nav-link"
-                  >Component Mocking</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="graphql-mocking.html" class="nav-link"
-                  >GraphQL Mocking</a
-                >
-              </li>
-              <li class="nav-item">
                 <a href="module-mocking.html" class="nav-link active"
                   >Module Mocking</a
                 >
-              </li>
-              <li class="nav-item">
-                <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
-              </li>
-              <li class="nav-item">
-                <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
               </li>
               <li class="nav-item">
                 <a href="cleanup-utilities.html" class="nav-link"
@@ -129,16 +100,7 @@
               <li class="nav-item">
                 <a href="basic-testing.html" class="nav-link">Basic Testing</a>
               </li>
-              <li class="nav-item">
-                <a href="react-components.html" class="nav-link"
-                  >React Components</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="graphql-testing.html" class="nav-link"
-                  >GraphQL Testing</a
-                >
-              </li>
+
               <li class="nav-item">
                 <a href="module-mocking-examples.html" class="nav-link"
                   >Module Mocking</a
@@ -252,19 +214,21 @@
 
           <h4 id="basic-module-mocking">Basic Module Mocking</h4>
 
-          <pre><code class="language-typescript">import { createModuleMocker, createMockHook } from '@rageltd/bun-test-utils';
+          <pre><code class="language-typescript">import { createModuleMocker } from '@rageltd/bun-test-utils';
 import { test, expect, beforeEach, afterAll } from 'bun:test';
 
 const mockModules = createModuleMocker();
 
 describe('UserProfile component', () => {
   beforeEach(async () => {
-    await mockModules.mock('@/hooks/useUser', () => ({
-      useUser: createMockHook('useUser', {
-        id: 1,
-        name: 'Test User',
-        email: 'test@example.com'
-      })
+    await mockModules.mock('@/services/userService', () => ({
+      userService: {
+        getUser: () => Promise.resolve({
+          id: 1,
+          name: 'Test User',
+          email: 'test@example.com'
+        })
+      }
     }));
   });
 
@@ -280,37 +244,38 @@ describe('UserProfile component', () => {
 
           <h4 id="mocking-multiple-modules">Mocking Multiple Modules</h4>
 
-          <pre><code class="language-typescript">import { createModuleMocker, createMockComponent, createMockHook } from '@rageltd/bun-test-utils';
+          <pre><code class="language-typescript">import { createModuleMocker } from '@rageltd/bun-test-utils';
 
 const mockModules = createModuleMocker();
 
 describe('Dashboard component', () => {
   beforeEach(async () => {
-    // Mock hooks
-    await mockModules.mock('@/hooks', () => ({
-      useAuth: createMockHook('useAuth', {
-        user: { id: 1, name: 'John' },
-        isAuthenticated: true
-      }),
-      useSettings: createMockHook('useSettings', {
-        theme: 'dark',
-        language: 'en'
-      })
+    // Mock authentication service
+    await mockModules.mock('@/services/auth', () => ({
+      authService: {
+        getCurrentUser: () => Promise.resolve({ id: 1, name: 'John' }),
+        isAuthenticated: () => true
+      }
     }));
 
-    // Mock components
-    await mockModules.mock('@/components/widgets', () => ({
-      Chart: createMockComponent('Chart'),
-      DataTable: createMockComponent('DataTable'),
-      NotificationPanel: createMockComponent('NotificationPanel')
+    // Mock settings service
+    await mockModules.mock('@/services/settings', () => ({
+      settingsService: {
+        getUserSettings: () => Promise.resolve({
+          theme: 'dark',
+          language: 'en'
+        })
+      }
     }));
 
     // Mock API service
     await mockModules.mock('@/services/api', () => ({
-      fetchDashboardData: createMock(() =>
-        Promise.resolve({ stats: { users: 100, sales: 5000 } })
-      ),
-      updateUserPreferences: createMock(() => Promise.resolve())
+      apiService: {
+        fetchDashboardData: () => Promise.resolve({
+          stats: { users: 100, sales: 5000 }
+        }),
+        updateUserPreferences: () => Promise.resolve({ success: true })
+      }
     }));
   });
 
@@ -318,7 +283,7 @@ describe('Dashboard component', () => {
     mockModules.restoreAll();
   });
 
-  test('renders dashboard with all components', async () => {
+  test('renders dashboard with all services', async () => {
     const { Dashboard } = await import('@/components/Dashboard');
     // Test implementation
   });
@@ -335,19 +300,22 @@ describe('PaymentForm', () => {
     // Mock payment providers based on test environment
     if (process.env.MOCK_STRIPE !== 'false') {
       await mockModules.mock('@stripe/stripe-js', () => ({
-        loadStripe: createMock(() => Promise.resolve({
-          elements: createMock(),
-          createPaymentMethod: createMock()
-        }))
+        loadStripe: () => Promise.resolve({
+          elements: () => ({}),
+          createPaymentMethod: () => Promise.resolve({ id: 'pm_test' })
+        })
       }));
     }
 
     // Always mock internal APIs
     await mockModules.mock('@/services/payment', () => ({
-      processPayment: createMock(() =>
-        Promise.resolve({ success: true, transactionId: 'tx_123' })
-      ),
-      validateCard: createMock(() => Promise.resolve(true))
+      paymentService: {
+        processPayment: () => Promise.resolve({
+          success: true,
+          transactionId: 'tx_123'
+        }),
+        validateCard: () => Promise.resolve(true)
+      }
     }));
   });
 
@@ -722,8 +690,8 @@ beforeEach(async () => {
 });</code></pre>
 
           <div class="page-navigation">
-            <a href="graphql-mocking.html" class="nav-prev">GraphQL Mocking</a>
-            <a href="partial-mocks.html" class="nav-next">Partial Mocks</a>
+            <a href="cleanup-utilities.html" class="nav-prev">Cleanup Utilities</a>
+            <a href="basic-testing.html" class="nav-next">Basic Testing</a>
           </div>
 
           <h2 id="see-also">See Also</h2>
@@ -732,14 +700,6 @@ beforeEach(async () => {
             <li>
               <a href="module-mocking-examples.html">Module Mocking Examples</a>
               - Comprehensive examples and patterns
-            </li>
-            <li>
-              <a href="hook-mocking.html">Hook Mocking</a> - For mocking React
-              hooks specifically
-            </li>
-            <li>
-              <a href="component-mocking.html">Component Mocking</a> - For
-              mocking React components
             </li>
             <li>
               <a href="cleanup-utilities.html">Cleanup Utilities</a> - For

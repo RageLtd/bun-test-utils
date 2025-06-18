@@ -52,28 +52,7 @@
                     <h3 class="nav-section-title">API Reference</h3>
                     <ul class="nav-subsection">
                         <li class="nav-item">
-                            <a href="async-utilities.html" class="nav-link">Async Utilities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mock-utilities.html" class="nav-link">Mock Utilities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="hook-mocking.html" class="nav-link">Hook Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-mocking.html" class="nav-link">Component Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="graphql-mocking.html" class="nav-link">GraphQL Mocking</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="module-mocking.html" class="nav-link">Module Mocking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="partial-mocks.html" class="nav-link">Partial Mocks</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="spy-utilities.html" class="nav-link">Spy Utilities</a>
                         </li>
                         <li class="nav-item">
                             <a href="cleanup-utilities.html" class="nav-link">Cleanup Utilities</a>
@@ -104,12 +83,6 @@
                     <ul class="nav-subsection">
                         <li class="nav-item">
                             <a href="basic-testing.html" class="nav-link">Basic Testing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="react-components.html" class="nav-link">React Components</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="graphql-testing.html" class="nav-link">GraphQL Testing</a>
                         </li>
                         <li class="nav-item">
                             <a href="module-mocking-examples.html" class="nav-link">Module Mocking</a>
@@ -172,14 +145,14 @@ bun install @rageltd/bun-test-utils</code></pre>
 
                 <pre><code class="language-typescript">// test/verify-installation.test.ts
 import { test, expect } from 'bun:test';
-import { waitFor, createMock } from '@rageltd/bun-test-utils';
+import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
 
-test('bun-test-utils is working', async () => {
-  const mockFn = createMock();
+test('bun-test-utils is working', () => {
+  setupTestCleanup();
+  const mockModules = createModuleMocker();
 
-  await waitFor(10);
-
-  expect(mockFn).toBeDefined();
+  expect(mockModules).toBeDefined();
+  expect(typeof mockModules.mock).toBe('function');
 });</code></pre>
 
                 <p>Run the test:</p>
@@ -326,7 +299,7 @@ bun install @rageltd/bun-test-utils</code></pre>
                 </div>
 
                 <pre><code class="language-typescript">// ✅ Correct - named imports
-import { createMock, waitFor } from '@rageltd/bun-test-utils';
+import { setupTestCleanup, createModuleMocker } from '@rageltd/bun-test-utils';
 
 // ❌ Incorrect - default import
 import bunTestUtils from '@rageltd/bun-test-utils';</code></pre>
@@ -367,7 +340,7 @@ import bunTestUtils from '@rageltd/bun-test-utils';</code></pre>
                 <div class="callout callout-info">
                     <ul>
                         <li><a href="quick-start.html">Quick Start Guide</a> - Write your first test</li>
-                        <li><a href="async-utilities.html">API Reference</a> - Explore available utilities</li>
+                        <li><a href="module-mocking.html">API Reference</a> - Explore available utilities</li>
                         <li><a href="testing-patterns.html">Testing Patterns</a> - Learn best practices</li>
                     </ul>
                 </div>
