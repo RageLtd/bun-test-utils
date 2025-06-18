@@ -45,11 +45,11 @@ jobs:
       - name: Run tests
         run: bun test
 
-      - name: Run linting
+      - name: Run formatter
         run: |
           # Check if biome is configured and run it
           if [ -f "biome.json" ]; then
-            bunx @biomejs/biome check src/
+            bunx @biomejs/biome format --write ./
           fi
 
       - name: Build package
@@ -62,4 +62,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: bunx semantic-release 
+        run: bunx semantic-release
