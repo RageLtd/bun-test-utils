@@ -20,7 +20,8 @@
       "!**/coverage",
       "!**/logs",
       "!**/tsconfig*.json",
-      "!**/package-lock.json"
+      "!**/package-lock.json",
+      "!**/package.json"
     ]
   },
   "formatter": {
