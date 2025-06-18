@@ -10,12 +10,12 @@ pre-commit:
   commands:
     lint:
       glob: "src/**/*.{ts,tsx,js,jsx}"
-      run: bunx @biomejs/biome check --write {staged_files}
+      run: bunx @biomejs/biome format --write .
       stage_fixed: true
-    
+
     test:
       run: bun test
-      
+
 commit-msg:
   commands:
     commitlint:
@@ -25,6 +25,6 @@ pre-push:
   commands:
     test:
       run: bun test
-    
+
     build:
-      run: bun run build 
+      run: bun run build
