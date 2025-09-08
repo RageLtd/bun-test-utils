@@ -8,9 +8,9 @@ updates:
       day: "monday"
     open-pull-requests-limit: 5
     reviewers:
-      - "rageltd"
+      - "@RageLtd"
     assignees:
-      - "rageltd"
+      - "@RageLtd"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -31,8 +31,8 @@ updates:
       day: "monday"
     open-pull-requests-limit: 5
     reviewers:
-      - "rageltd"
+      - "@RageLtd"
     assignees:
-      - "rageltd"
+      - "@RageLtd"
     commit-message:
       prefix: "ci"
