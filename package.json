@@ -18,7 +18,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/npm": "^13.1.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "@types/bun": "latest",
     "commitizen": "^4.3.1",
